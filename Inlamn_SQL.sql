@@ -51,12 +51,6 @@ kom.folkmangd < 4000
 
 -- 1. Vad heter residensstaden i Blekinge län? 
 
-SELECT namn
-FROM Tatorter
-WHERE kod LIKE (SELECT Lan.residensstad
-FROM Lan
-WHERE Lan.namn LIKE "Blekinge lan"
-
 SELECT Lan.namn
 FROM Lan
 JOIN Tatorter ON Lan.residensstad=Tatorter.kod
@@ -70,18 +64,12 @@ WHERE kommun ISNULL
 
 -- 3. Vad heter Sveriges minsta kommun (till folkmängd räknat)
 
-SELECT namn, MIN(folkmangd)
-FROM Kommuner
-
 SELECT namn
 FROM Kommuner
 ORDER BY folkmangd ASC
 LIMIT 1
 
 -- 4. Vad heter den nordligaste tätorten i landet? (Använd latituden för tätorter!)
-
-SELECT namn, MAX(latitud)
-from Tatorter
 
 SELECT namn
 FROM Tatorter
