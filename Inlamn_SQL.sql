@@ -95,8 +95,7 @@ LIMIT 1
 
 -- 5. Hur många bor det i residensstaden i Värmlands län
 
-SELECT 
-Tatorter.folkmangd
+SELECT Tatorter.folkmangd
 FROM Lan
 JOIN Tatorter ON Lan.residensstad = Tatorter.kod
 WHERE Lan.namn LIKE "varmlands lan"
