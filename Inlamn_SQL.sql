@@ -56,8 +56,7 @@ FROM Kommuner
 WHERE Kommuner.folkmangd < 4000 AND Kommuner.lan LIKE (
 SELECT Lan.kod
 from Lan
-WHERE Lan.namn='Vasterbottens lan'
-) )
+WHERE Lan.namn='Vasterbottens lan' ) )
 
 -- 1. Vad heter residensstaden i Blekinge län? 
 
@@ -99,3 +98,16 @@ SELECT Tatorter.folkmangd
 FROM Lan
 JOIN Tatorter ON Lan.residensstad = Tatorter.kod
 WHERE Lan.namn LIKE "varmlands lan"
+
+SELECT Tatorter.folkmangd
+FROM Tatorter
+WHERE Tatorter.kod LIKE 
+(SELECT Lan.residensstad
+FROM Lan
+WHERE Lan.namn LIKE "varmlands%")
+
+
+
+
+
+
