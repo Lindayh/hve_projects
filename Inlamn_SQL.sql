@@ -7,7 +7,7 @@ WHERE namn LIKE "blekinge lan"
 -- 2. Vad är folkmängden för Skånelän?
 
 SELECT folkmangd
-FROM lan
+FROM Lan
 WHERE namn LIKE "skane lan"
 
 -- 3. Vilka tätorter har namn som slutar på stad?
@@ -42,12 +42,22 @@ ORDER BY folkmangd ASC
 
 --7. Vilka tätorter i Västerbottens län har mer än 1000 invånare och ligger i kommuner som har mindre än 4000 invånare?
 
-SELECT tat.namn
+SELECT tat.namn 
 FROM Tatorter tat
 JOIN Kommuner kom ON tat.kommun=kom.kod
 JOIN Lan ON kom.lan=Lan.kod
-WHERE Lan.namn LIKE "vasterbottens lan" AND tat.folkmangd > 1000 AND
-kom.folkmangd < 4000
+WHERE Lan.namn LIKE "vasterbottens lan" AND tat.folkmangd > 1000 AND kom.folkmangd < 4000
+
+SELECT Tatorter.namn
+FROM Tatorter
+WHERE Tatorter.folkmangd >1000 AND Tatorter.kommun IN (
+SELECT Kommuner.kod 
+FROM Kommuner
+WHERE Kommuner.folkmangd < 4000 AND Kommuner.lan LIKE (
+SELECT Lan.kod
+from Lan
+WHERE Lan.namn='Vasterbottens lan'
+) )
 
 -- 1. Vad heter residensstaden i Blekinge län? 
 
