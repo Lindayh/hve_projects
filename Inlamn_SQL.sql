@@ -51,10 +51,17 @@ kom.folkmangd < 4000
 
 -- 1. Vad heter residensstaden i Blekinge län? 
 
-SELECT Lan.namn
+SELECT Tatorter.namn
 FROM Lan
 JOIN Tatorter ON Lan.residensstad=Tatorter.kod
 WHERE Lan.namn = 'Blekinge lan'
+
+SELECT Tatorter.namn
+FROM Tatorter
+WHERE Tatorter.kod LIKE (SELECT Lan.residensstad
+FROM Lan
+WHERE Lan.namn LIKE "blekinge lan")
+
 
 -- 2. Finns det någon kommun utan tätorter? Vilken i så fall?
 
