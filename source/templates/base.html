@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Reviews</title>
+    <title>{{title}}</title>
 <style>
 body {
-    background-image: url('https://wallpapercave.com/wp/VmZHnTO.jpg');
-    background-repeat: no-repeat;
+    /* background-image: url('https://wallpapercave.com/wp/VmZHnTO.jpg'); */
+    /* background-repeat: no-repeat; */
+    background-color: #002029;
         }
 </style>
 
@@ -16,7 +17,20 @@ body {
 
 <body>
 
-    <h1 style="color: white; text-align: center; border: 2px; font-family: system-ui; margin-top: 50px;">Welcome !</h1>
+    <h1 style="color: white; text-align: center; font-family: system-ui; background-color: #004052; border-radius: 30px; 
+    width: 30%; margin-left:auto; margin-right: auto; margin-top: 40px; padding: 5px;">
+        {{h1_text}}
+    </h1>
+
+
+    <div style="color: white; text-align: center; font-family: system-ui; margin-top: 40px; padding-left: 30%; padding-right:30%">
+        {% for i in data %}   
+        <li style="text-align: left;  margin: 10px; padding: 20px; border-radius: 30px; background-color: #00303D;">{{i.title}}, {{i.author}}
+        <p style="margin-inline: 15pt; ">Genre: {{i.genre}} </p>
+        <p style="margin-inline: 15pt; text-align: justify;">Summary: {{i.summary}} <br><br>   ISBN: {{i.ISBN}}, Year: {{i.year}}</p>
+        </li>
+        {% endfor %} 
+    </div>
 
 </body>
 
