@@ -37,7 +37,7 @@ def book_id_get(book_id):
             temp.append(value)
             print(type(value['book_ID']))           ;print(type(temp))
             return render_template("base.html", title='Book List', h1_text='Books list', data=temp)
-    return render_template("base.html")
+    return render_template("base.html", title='Book List', h1_text='Books list')
 
 
 # PUT /books/{book_id} -Uppdaterar information om en enskild bok.

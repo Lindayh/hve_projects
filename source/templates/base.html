@@ -24,7 +24,7 @@ body {
         {% for i in data %}   
         <li style="text-align: left;  margin: 10px; padding: 20px; border-radius: 30px; background-color: #00303D;">{{i.title}}, {{i.author}}
         <p style="margin-inline: 15pt; ">Genre: {{i.genre}} </p>
-        <p style="margin-inline: 15pt; text-align: justify;">Summary: {{i.summary}} <br><br>   ISBN: {{i.ISBN}}, Year: {{i.year}}</p>
+        <p style="margin-inline: 15pt; text-align: justify;">Summary: {{i.summary}} <br><br>Year: {{i.year}} - Book ID: {{i.book_ID}}</p>
         </li>
         {% endfor %} 
 
