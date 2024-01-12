@@ -30,7 +30,7 @@ def books():
     return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID.')    
 
 
-# POST /books -Lägger till en eller flera böcker i databasen.                 
+# POST /books -Lägger till en eller flera böcker i databasen.    ^^               
 # @app.route('/books', methods=["POST"])
 # def books_add_to_db():
 #     # db_f.add_books()
@@ -45,21 +45,16 @@ def book_id_show(book_id):
             if book_id == str(value['book_ID']):
                 temp = []
                 temp.append(value)        
-                return render_template("base.html", title='Book List', h1_text='Books list', data=temp, extend_input=' ')
+                return render_template("base.html", title='Book List', h1_text='Books list', data=temp, extend_input=True, extend_upper='You can use the form below to update the current book.')
             
+
     if request.method=='PUT':
         db_f.update_books(book_id)
         return render_template("base.html", title='Book List', h1_text='Books list', extend_input=' ')
 
     # return render_template("base.html", title='Book List', h1_text='Books list')
-    return render_template("base.html", title='Book List', h1_text='Books list', extend_lower='Invalid book ID')
+    return render_template("base.html", title='Book List', h1_text='Books list', extend_upper='Invalid book ID')
 
-
-# # PUT /books/{book_id} -Uppdaterar information om en enskild bok.
-# @app.route('/books/<book_id>', methods=["PUT"])
-# def books_id_update(book_id):
-#     db_f.update_books(book_id)
-#     return render_template("base.html", title='Book List', h1_text='Books list', extend_input=' ')
 
 
 
@@ -70,16 +65,16 @@ def book_id_show(book_id):
 
 
 # region /reviews
+
 # POST /reviews -Lägger till en ny recension till en bok.
-# @app.route('/books/reviews', methods=["POST"])
-
-
-# GET /reviews -Hämtar alla recensioner som finns i databasen
-# @app.route('/books/reviews', methods=["GET"])
-
+# GET /reviews - Hämtar alla recensioner som finns i databasen
+# @app.route('/books/reviews', methods=["POST", "GET"])
+# def books_reviews():
+#     if request.method=='POST':
+#     if request.method=='GET':
 
 # GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
-# @app.route('/books/reviews/<book_I>', methods=["GET"])
+# @app.route('/books/reviews/<book_ID>', methods=["GET"])
 # endregion
 
 
