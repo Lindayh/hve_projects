@@ -17,10 +17,21 @@ def get_books():
         cursor.execute(query)
         connection.commit()
 
-        # book_data=cursor.fetchall()
         book_data = [dict(row) for row in cursor.fetchall()]
     return book_data
 
+def add_books(title, author, year, genre,summary):
+    with sqlite3.connect('source/bookReviews.db') as connection:
+        connection.row_factory = sqlite3.Row
+        cursor = connection.cursor()
+
+        query = f""" INSERT INTO book ('title','author','year','genre','summary')
+        VALUES
+        ('{title}','{author}','{year},'{genre}','{summary})
+        """
+
+        cursor.execute(query)
+        connection.commit()
 
 
 if __name__=='__main__':
