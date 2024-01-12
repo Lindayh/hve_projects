@@ -20,6 +20,16 @@ body {
         {{h1_text}}
     </h1>
 
+    {% if extend_upper %}
+        
+        <div style="color: white; text-align: center; font-family: system-ui; margin-top: 40px; padding-left: 30%; padding-right:30%"> 
+            <p style="text-align: center;  margin: 10px; padding: 20px; border-radius: 30px; background-color: #00303D;">{{extend_upper | safe }} </p>
+        </div>
+
+        {% endif %}
+
+
+
     <div style="color: white; text-align: center; font-family: system-ui; margin-top: 40px; padding-left: 30%; padding-right:30%">
         {% for i in data %}   
         <li style="text-align: left;  margin: 10px; padding: 20px; border-radius: 30px; background-color: #00303D;">{{i.title}}, {{i.author}}
@@ -28,10 +38,10 @@ body {
         </li>
         {% endfor %} 
 
-        {% if extend %}
-        
+        {% if extend_lower %}
+    
         <div style="color: white; text-align: center; font-family: system-ui; margin-top: 40px; padding-left: 30%; padding-right:30%"> 
-            <p style="text-align: center;  margin: 10px; padding: 20px; border-radius: 30px; background-color: #00303D;">{{extend}} </p>
+            <p style="text-align: center;  margin: 10px; padding: 20px; border-radius: 30px; background-color: #00303D;">{{extend_lower}} </p>
         </div>
 
         {% endif %}

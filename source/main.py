@@ -16,7 +16,6 @@ def root():
 def books():
     booksData = db_f.get_books()
     
-
     filtered_books = []
 
     if request.args:
@@ -28,7 +27,7 @@ def books():
 
         return render_template("base.html", title='Book List', h1_text='Books list', data=filtered_books)
     
-    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData)    
+    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.')    
 
 
 
@@ -52,7 +51,7 @@ def book_id_get(book_id):
             return render_template("base.html", title='Book List', h1_text='Books list', data=temp)
 
     # return render_template("base.html", title='Book List', h1_text='Books list')
-    return render_template("base.html", title='Book List', h1_text='Books list', extend='Invalid book ID')
+    return render_template("base.html", title='Book List', h1_text='Books list', extend_lower='Invalid book ID')
 
 
 # PUT /books/{book_id} -Uppdaterar information om en enskild bok.
@@ -91,17 +90,6 @@ if __name__ == "__main__":
     app.run(debug=True)
 
     # booksData = db_f.get_books()
-    # filter = {'genre': 'Horror'}             # ;print(filter, type(filter))
-    
-    # filter = str(list(filter.values())[0])
-
-    # filtered_books = []
-
-    
-    # for index, value in enumerate(booksData):
-    #     # print(value)
-    #     if filter in value.values():
-    #         filtered_books.append(value)
 
 
 
