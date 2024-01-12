@@ -6,18 +6,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def root():
-    return render_template("base.html", title='Book Reviews', h1_text='Welcome !')
-
-@app.route('/books')
-def books():
-    data = db_f.get_books()
-    return render_template("base.html", title='Book List', h1_text='Books list', data=data)
-    
+    return render_template("base.html", title='Book Reviews', h1_text='Welcome !') 
 
 # GET /books - Hämtar alla böcker i databasen. 
 # Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query. 
 # Exempelvis: /books?genre=biography
-# @app.route('/books', methods=["GET"])
+@app.route('/books', methods=['GET'])
+def books():
+    data = db_f.get_books()
+    return render_template("base.html", title='Book List', h1_text='Books list', data=data)
+
 
 # if request.method == 'POST':
 
@@ -37,7 +35,9 @@ def book_id_get(book_id):
             temp.append(value)
             print(type(value['book_ID']))           ;print(type(temp))
             return render_template("base.html", title='Book List', h1_text='Books list', data=temp)
-    return render_template("base.html", title='Book List', h1_text='Books list')
+
+    # return render_template("base.html", title='Book List', h1_text='Books list')
+    return render_template("base.html", title='Book List', h1_text='Books list', extend='Invalid book ID')
 
 
 # PUT /books/{book_id} -Uppdaterar information om en enskild bok.
