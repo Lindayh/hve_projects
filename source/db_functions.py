@@ -33,6 +33,16 @@ def add_books(title, author, year, genre,summary):
         cursor.execute(query)
         connection.commit()
 
+def update_books(id):
+    with sqlite3.connect('source/bookReviews.db') as connection:
+        connection.row_factory = sqlite3.Row
+        cursor = connection.cursor()
+
+        query = f"""         """
+
+        cursor.execute(query)
+        connection.commit()
+
 
 if __name__=='__main__':
     books_data = get_books()

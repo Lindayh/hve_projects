@@ -27,11 +27,8 @@ def books():
 
         return render_template("base.html", title='Book List', h1_text='Books list', data=filtered_books)
     
-    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.')    
+    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID.')    
 
-
-
-# if request.method == 'POST':
 
 # POST /books -Lägger till en eller flera böcker i databasen.                 
 # @app.route('/books', methods=["POST"])
@@ -40,22 +37,31 @@ def books():
 
 
 # GET /books/{book_id} -Hämtar en enskild bok.              
-@app.route('/books/<book_id>', methods=["GET"])
-def book_id_get(book_id):
+@app.route('/books/<book_id>', methods=['GET','PUT'])
+def book_id_show(book_id):
     data = db_f.get_books()
-    for index,value in enumerate(data):
-        if book_id == str(value['book_ID']):
-            temp = []
-            temp.append(value)
-            print(type(value['book_ID']))           ;print(type(temp))
-            return render_template("base.html", title='Book List', h1_text='Books list', data=temp)
+    if request.method=='GET':
+        for index,value in enumerate(data):
+            if book_id == str(value['book_ID']):
+                temp = []
+                temp.append(value)        
+                return render_template("base.html", title='Book List', h1_text='Books list', data=temp, extend_input=' ')
+            
+    if request.method=='PUT':
+        db_f.update_books(book_id)
+        return render_template("base.html", title='Book List', h1_text='Books list', extend_input=' ')
 
     # return render_template("base.html", title='Book List', h1_text='Books list')
     return render_template("base.html", title='Book List', h1_text='Books list', extend_lower='Invalid book ID')
 
 
-# PUT /books/{book_id} -Uppdaterar information om en enskild bok.
+# # PUT /books/{book_id} -Uppdaterar information om en enskild bok.
 # @app.route('/books/<book_id>', methods=["PUT"])
+# def books_id_update(book_id):
+#     db_f.update_books(book_id)
+#     return render_template("base.html", title='Book List', h1_text='Books list', extend_input=' ')
+
+
 
 
 # DELETE /books/{book_id} -Tar bort en enskild bok
