@@ -45,6 +45,17 @@ def update_books(id, new_title, new_author, new_year, new_genre, new_summary):
         cursor.execute(query)
         connection.commit()
 
+def delete_books(id):
+ with sqlite3.connect('source/bookReviews.db') as connection:
+        connection.row_factory = sqlite3.Row
+        cursor = connection.cursor()
+
+        query = f"""DELETE FROM book
+            WHERE book_ID LIKE {id}       """
+
+        cursor.execute(query)
+        connection.commit()   
+
 
     
 

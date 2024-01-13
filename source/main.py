@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import db_functions as db_f
 
 
@@ -60,8 +60,23 @@ def book_id_show(book_id):
             title, author, year, genre, summary = (dict(request.form)).values()
             db_f.update_books(book_id,title, author, year, genre, summary)
 
+        return redirect(url_for('book_id_show', book_id=book_id))
 
-        return render_template("base.html", title='Book List', h1_text='Books list', data=temp, update_button=True, extend_upper='You can use the form below to update the current book.', book_id=book_id, book_input=True)
+
+        # return render_template("base.html", title='Book List', h1_text='Books list', data=temp, update_button=True, extend_upper='You can use the form below to update the current book.', book_id=book_id, book_input=True)
+    
+
+
+@app.route('/books/<book_id>', methods=['DELETE'])
+def book_delete_by_id(book_id):
+    print("DELETE method triggered")
+
+    return redirect(url_for('book_id_show', book_id=book_id))
+
+        # Steps: Check if query works
+        # Check if method gets triggerred:
+            # Connect the button in jinja   
+
 
             
     
