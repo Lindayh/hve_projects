@@ -33,18 +33,29 @@ def add_books(title, author, year, genre,summary):
         cursor.execute(query)
         connection.commit()
 
-def update_books(id):
+def update_books(id, new_title, new_author, new_year, new_genre, new_summary):
     with sqlite3.connect('source/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
-        query = f"""         """
+        query = f"""UPDATE book 
+            SET title='{new_title}',author='{new_author}', year='{new_year}', genre='{new_genre}', summary='{new_summary}'
+            WHERE book_ID LIKE {id}       """
 
         cursor.execute(query)
         connection.commit()
 
 
-if __name__=='__main__':
-    books_data = get_books()
+    
 
-    print(books_data[0])
+
+
+if __name__=='__main__':
+    books_data = update_books(7, 'title','author', 'year', 'genre', 'summary')
+
+    # Connect the function to the button
+    # Get the info from the form
+    # title, author, year, genre, summary = 'WIP', 'WIP', 'WIP', 'WIP', 'WIP'
+    # print(title, author, year, genre, summary )
+
+

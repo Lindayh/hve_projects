@@ -30,5 +30,10 @@ VALUES
 ('Dune','Frank Herbert','2015','Sci-Fi','In a universe where the most valuable spice "melange" is essential for interstellar travel, the noble House Atreides is betrayed and forced to fight for survival on the desert planet Arrakis, where the spice is produced.');
 
 
+INSERT INTO book ('title','author','year','genre','summary')
+VALUES 
+('Random Book','Writer McScribbly','425 BCE','Classics','My nice summary');
+
+
 SELECT * FROM book;
 DROP TABLE book;

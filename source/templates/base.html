@@ -20,17 +20,16 @@ body {
         {{h1_text}}
     </h1>
 
-    {% if extend_upper %}
-        
+    {% if extend_upper %}        
         <div style="color: white; text-align: center; font-family: system-ui; margin-top: 40px; padding-left: 35%; padding-right:35%"> 
             <p style="text-align: center;  margin: 10px; padding: 20px; border-radius: 30px; background-color: #00303D;">{{extend_upper | safe }} </p>
         </div>
-
     {% endif %}
 
-    {% if extend_input %}
 
-    <form style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <!-- BOOK INPUT FORM -->
+    {% if book_input %}
+    <form action="{{ url_for('book_id_show', book_id=book_id) }}" method="POST"  id='book_input' style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
             <input type="text" id="title" name="title" placeholder="Title" style="width: 5%; height: 30px; margin: 5px;">
             <input type="text" id="author" name="author" placeholder="Author" style="width: 5%; height: 30px; margin: 5px;">
@@ -38,12 +37,11 @@ body {
             <input type="text" id="genre" name="genre" placeholder="Genre" style="width: 5%; height: 30px; margin: 5px;">
             <input type="text" id="summary" name="summary" placeholder="Summary" style="width: 15%; height: 30px; margin: 5px;">
         </div>
-    
+
         <div>
-            <button type="button" style="height: 35px; margin: 10px;">Update book</button>
+            <button type="submit" style="height: 35px; margin: 10px;">Update book</button>
         </div>
     </form>
-
     {% endif %}
 
 
