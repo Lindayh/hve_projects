@@ -29,11 +29,11 @@ body {
 
     <!-- BOOK INPUT FORM -->
     {% if book_input %}
-    <form action="{{ url_for('book_id_show', book_id=book_id) }}" method="POST"  id='book_input' style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <form action="{{ url_for('book_id_show', book_id=book_id) }}" method="POST" id='book_input' style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
             <input type="text" id="title" name="title" placeholder="Title" style="width: 5%; height: 30px; margin: 5px;">
             <input type="text" id="author" name="author" placeholder="Author" style="width: 5%; height: 30px; margin: 5px;">
-            <input type="text" id="year" name="year" placeholder="Year" style="width: 5%; height: 30px; margin: 5px;">
+            <input type="text" id="year" name="year"8 placeholder="Year" style="width: 5%; height: 30px; margin: 5px;">
             <input type="text" id="genre" name="genre" placeholder="Genre" style="width: 5%; height: 30px; margin: 5px;">
             <input type="text" id="summary" name="summary" placeholder="Summary" style="width: 15%; height: 30px; margin: 5px;">
         </div>

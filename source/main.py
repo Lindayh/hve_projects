@@ -27,7 +27,7 @@ def books():
 
         return render_template("base.html", title='Book List', h1_text='Books list', data=filtered_books)
     
-    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID<br><br>You can add books to the database with the form below.', book_input=True)    
+    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID<br><br>You can add books to the database with the form below.')    
 
 
 # POST /books -Lägger till en eller flera böcker i databasen.    ^^               
@@ -44,15 +44,24 @@ def book_id_show(book_id):
     if request.method=='GET':
         for index,value in enumerate(data):
             if book_id == str(value['book_ID']):
-                temp.append(value)        
+                temp.append(value)    
+
                 return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
+        
+
+    form_values = list((request.form).values())
+    empty_values = ['', '', '', '', '']
 
     # PUT funkar inte med Jinja så fixade 'POST' som extra för att uppdatera boken från front-end
-    if request.method=='POST':
+    if form_values == empty_values:
+        print('empty values')
+        return render_template("base.html", title='Book List', h1_text='Books list', data=temp, update_button=True, extend_upper='You can use the form below to update the current book.', book_id=book_id, book_input=True)
+    else:
+        print("Updating book")
         title, author, year, genre, summary = (dict(request.form)).values()
-        
         db_f.update_books(book_id,title, author, year, genre, summary)
-        return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
+        return render_template("base.html", title='Book List', h1_text='Books list', data=temp, update_button=True, extend_upper='You can use the form below to update the current book.', book_id=book_id, book_input=True)
+            
     
     # PUT method som uppdaterar boken på databasen med Postman
 
