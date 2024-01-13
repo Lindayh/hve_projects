@@ -12,6 +12,11 @@ def root():
 # GET /books - Hämtar alla böcker i databasen. 
 # Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query. 
 # Exempelvis: /books?genre=biography
+
+# POST /books -Lägger till en eller flera böcker i databasen.    ^^               
+# @app.route('/books', methods=["POST"])
+# def books_add_to_db():
+#     # db_f.add_books()
 @app.route('/books', methods=['GET'])
 def books():
     booksData = db_f.get_books()
@@ -30,11 +35,6 @@ def books():
     return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID<br><br>You can add books to the database with the form below.')    
 
 
-# POST /books -Lägger till en eller flera böcker i databasen.    ^^               
-# @app.route('/books', methods=["POST"])
-# def books_add_to_db():
-#     # db_f.add_books()
-
 
 # GET /books/{book_id} -Hämtar en enskild bok.              
 @app.route('/books/<book_id>', methods=['GET', 'POST'])
@@ -42,11 +42,17 @@ def book_id_show(book_id):
     data = db_f.get_books()
     temp = []   
 
-    if request.method=='POST':
-        form_values = list((request.form).values())         #count '' occurrencies and then if on that
+    if request.method=='GET':
+        for index,value in enumerate(data):
+                if book_id == str(value['book_ID']):
+                    temp.append(value)    
 
-        # PUT funkar inte med Jinja så fixade 'POST' som extra för att uppdatera boken från front-end
-        # if all(value == '' for value in form_values):
+                    return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
+
+    # PUT funkar inte med Jinja så fixade 'POST' som extra för att uppdatera boken från front-end
+    if request.method=='POST':
+        form_values = list((request.form).values())      
+
         if form_values.count('')>0:
             print('Empty values')
         else:
@@ -56,16 +62,18 @@ def book_id_show(book_id):
 
 
         return render_template("base.html", title='Book List', h1_text='Books list', data=temp, update_button=True, extend_upper='You can use the form below to update the current book.', book_id=book_id, book_input=True)
-        
-    if request.method=='GET':
-        for index,value in enumerate(data):
-                if book_id == str(value['book_ID']):
-                    temp.append(value)    
 
-                    return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
             
     
-    # PUT method som uppdaterar boken på databasen med Postman
+# PUT method som uppdaterar boken på databasen med Postman
+@app.route('/books/<book_id>', methods=['PUT'])
+def book_id_update(book_id):
+    data = request.args     ;print(data)
+    title, author, year, genre, summary = 'WIP', 'WIP', 'WIP', 'WIP', 'WIP' 
+    db_f.update_books(book_id,title, author, year, genre, summary)
+
+    # return what?
+
 
     
 
