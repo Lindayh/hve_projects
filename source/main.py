@@ -41,7 +41,9 @@ def books():
 def book_id_show(book_id):
     data = db_f.get_books()
     temp = []   
-
+    
+    # To fix later: just do a query WHERE book_ID = book_id
+    # + test if book_id is out of range 
     if request.method=='GET':
         for index,value in enumerate(data):
                 if book_id == str(value['book_ID']):
@@ -63,7 +65,7 @@ def book_id_show(book_id):
         return redirect(url_for('book_id_show', book_id=book_id))
 
 
-        # return render_template("base.html", title='Book List', h1_text='Books list', data=temp, update_button=True, extend_upper='You can use the form below to update the current book.', book_id=book_id, book_input=True)
+    return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
     
 
 
