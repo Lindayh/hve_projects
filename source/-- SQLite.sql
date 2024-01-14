@@ -34,6 +34,10 @@ INSERT INTO book ('title','author','year','genre','summary')
 VALUES 
 ('Random Book','Writer McScribbly','425 BCE','Classics','My nice summary');
 
+SELECT review.reviewID, review.user, book.title, review.book_ID, review.description
+FROM review
+INNER JOIN book ON book.book_ID like review.book_ID
+WHERE review.book_ID LIKE 14
 
 SELECT * FROM book;
 SELECT * FROM review;

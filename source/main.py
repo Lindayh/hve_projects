@@ -99,11 +99,11 @@ def book_id_update(book_id):
 
 # region /reviews
 
-# ! Current WIP
-# *TODO - GET /reviews - Hämtar alla recensioner som finns i databasen
-# @app.route('/books/reviews', methods=["GET"])
-# def books_reviews():
-#     if request.method=='GET':
+# GET /reviews - Hämtar alla recensioner som finns i databasen
+@app.route('/reviews', methods=["GET"])
+def show_reviews():
+    reviews = db_f.show_reviews()
+    return reviews
     
 # POST /reviews - Lägger till en ny recension till en bok.
 @app.route('/reviews', methods=["POST"])
@@ -118,19 +118,28 @@ def add_reviews():
     else:
         return f'Empty values. All params are needed: user, book_ID, rating, description'
 
-# *TODO - GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
-# @app.route('/books/reviews/<book_ID>', methods=["GET"])
+# ! Current W.I.P.
+# GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
+@app.route('/reviews/<int:book_id>', methods=["GET"])
+def review_by_ID(book_id):
+    reviews = db_f.show_review_by_id(book_id)
+    print(len(reviews))
+    if len(reviews) == 0:
+        return f'No reviews for this book.'
+    return reviews
+    
+
 # endregion
 
 
-# *TODO - GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
+# -TODO- GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
 # @app.route('/books/reviews/top', methods=["GET"])
 
 
-# *TODO - GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
+# -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 # @app.route('/books/author', methods=["GET"])
 
-# *TODO VG :
+# -TODO- VG :
     # ● Samtliga endpoints är testade. Skriv gärna en kommentar om hur du resonerat när du designat testet. Kommentaren behöver bara vara 1 -2 rader.
     # ● Det finns en decorator som skriver ut vilken body varje request har i konsolen för utvalda requests, om det finns en body.
     # ● Varje endpoint ger användarvänliga felmeddelanden ifall input eller ett externt beroende fallerar.
