@@ -42,7 +42,7 @@ def books():
 
         return render_template("base.html", title='Book List', h1_text='Books list', data=filtered_books)
 
-    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID<br><br>You can add books to the database with the form below.')
+    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID')
 
 
 # GET /books/{book_id} -Hämtar en enskild bok.
@@ -83,7 +83,6 @@ def book_delete_by_id(book_id):
     return f"Book with ID {book_id} was removed from the database."
     # ! VG: error if invalid index
 
-
 # PUT /books/{book_id} som uppdaterar boken på databasen
 @app.route('/books/<book_id>', methods=['PUT'])
 def book_id_update(book_id):
@@ -95,18 +94,29 @@ def book_id_update(book_id):
     else:
         return 'Empty values. All params are needed: title, author, year, genre, summary'
     
-
 # endregion
 
 
 # region /reviews
 
-# *TODO - POST /reviews -Lägger till en ny recension till en bok.
+# ! Current WIP
 # *TODO - GET /reviews - Hämtar alla recensioner som finns i databasen
-# @app.route('/books/reviews', methods=["POST", "GET"])
+# @app.route('/books/reviews', methods=["GET"])
 # def books_reviews():
-#     if request.method=='POST':
 #     if request.method=='GET':
+    
+# POST /reviews - Lägger till en ny recension till en bok.
+@app.route('/reviews', methods=["POST"])
+def add_reviews():
+    # if request.method=='GET':
+    data = request.args   #;print((dict(data)))  ;print((dict(data)).values())
+
+    if list(data.values()).count('')==0:
+        user, book_ID, rating, description = (dict(data)).values()
+        print(user, book_ID, rating, description)
+        return db_f.add_review(user, book_ID, rating, description)
+    else:
+        return f'Empty values. All params are needed: user, book_ID, rating, description'
 
 # *TODO - GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
 # @app.route('/books/reviews/<book_ID>', methods=["GET"])

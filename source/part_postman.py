@@ -3,10 +3,6 @@ import db_functions as db_f
 
 app = Flask(__name__)
 
-
-
-
-
 def dont_run():
     @app.route('/books', methods=['GET'])
     def books_get():
@@ -34,6 +30,27 @@ def dont_run():
             return f"Record added to database successfully, with following:\n {dict(data)}"
         else:
             return 'Empty values. All params are needed: title, author, year, genre, summary'
+        
+    # POST /reviews - Lägger till en ny recension till en bok.
+    @app.route('/reviews', methods=["POST"])
+    def add_reviews():
+        # if request.method=='GET':
+        data = request.args   #;print((dict(data)))  ;print((dict(data)).values())
+
+        if list(data.values()).count('')==0:
+            user, book_ID, rating, description = (dict(data)).values()
+            print(user, book_ID, rating, description)
+            return db_f.add_review(user, book_ID, rating, description)
+        else:
+            return f'Empty values. All params are needed: user, book_ID, rating, description'
+
+# *TODO - GET /reviews - Hämtar alla recensioner som finns i databasen
+
+            
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

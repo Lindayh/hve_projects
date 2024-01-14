@@ -1,12 +1,14 @@
 import sqlite3
+from sqlite3 import IntegrityError
 
-
+# *todo - Fix decorator?
 def connect_db(func):
     connection = sqlite3.connect('source/bookReviews.db')
     cursor = connection.cursor()
     func()
     connection.close()
 
+# region books functions
 def get_books():
     with sqlite3.connect('source/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
@@ -56,6 +58,33 @@ def delete_books(id):
 
         cursor.execute(query)
         connection.commit()   
+# endregion
+        
+def add_review(user, book_ID, rating, description):
+    with sqlite3.connect('source/bookReviews.db') as connection:
+        # connection.row_factory = sqlite3.Row
+        connection.execute("PRAGMA foreign_keys = 1")   # Tvinga foreign key integrity
+        cursor = connection.cursor()
+        try:
+            query = f""" INSERT INTO review ('user', 'book_ID', 'rating', 'description')
+            VALUES
+            ('{user}','{book_ID}','{rating}','{description}')
+            """
+            cursor.execute(query)
+            connection.commit()
+            return f"Review added successfully with data: \n User: {user}\nBook_ID: {book_ID}\nRating: {rating}\nReview: {description}"   
+        except IntegrityError:
+            try:
+                rating = int(rating)
+                if rating > 5 or rating < 0:
+                    return "Invalid rating. Must be between 0 and 5."
+            except ValueError:
+                return "Invalid rating. Must be a number between 0 and 5."
+            return f'Invalid book_ID. No book with such ID.'
+        
+                
+
+
 
 
     
@@ -63,11 +92,13 @@ def delete_books(id):
 
 
 if __name__=='__main__':
-    books_data = update_books(7, 'title','author', 'year', 'genre', 'summary')
+    # books_data = update_books(7, 'title','author', 'year', 'genre', 'summary')
 
     # Connect the function to the button
     # Get the info from the form
     # title, author, year, genre, summary = 'WIP', 'WIP', 'WIP', 'WIP', 'WIP'
     # print(title, author, year, genre, summary )
+
+    print(add_review('Sakir The Cat', '55', '5', 'Meow Meow 5/5'))
 
 

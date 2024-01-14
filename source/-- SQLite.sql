@@ -12,10 +12,10 @@ summary TEXT
 CREATE TABLE review(
 reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
 user TEXT,
-book_ID INTEGER,
-rating INTEGER CHECK (rating <= 5), 
+rating INTEGER DEFAULT 0 CHECK (rating <= 5), 
+book_ID,
 description VARCHAR(200),
-FOREIGN KEY (ISBN) REFERENCES book(book_ID)
+FOREIGN KEY (book_ID) REFERENCES book(book_ID)
 )
 
 DROP TABLE book;
@@ -36,4 +36,5 @@ VALUES
 
 
 SELECT * FROM book;
+SELECT * FROM review;
 DROP TABLE book;
