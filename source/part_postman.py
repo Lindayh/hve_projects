@@ -65,6 +65,7 @@ app = Flask(__name__)
 
 
 
+# * Notes: Error handling if bs keys are written from postman.
 
 if __name__ == "__main__":
     app.run(debug=True)
