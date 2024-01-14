@@ -12,19 +12,21 @@ def root():
 # GET /books - Hämtar alla böcker i databasen.
 # Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query. Exempelvis: /books?genre=biography
 
-# -Done- POST /books - Lägger till en eller flera böcker i databasen.   
+# POST /books - Lägger till en eller flera böcker i databasen.   
 # ? Note: maybe linking all the html tags to the functions will make it possible to distinguish the return for a postman request
 # ? try to return a list with string for postman and render_template
 @app.route('/books', methods=["POST"])
 def books_add_to_db():
     data = request.args   ;print((dict(data)))
-    try:
+    if list(data.values()).count('')==0:
         title, author, year, genre, summary = (dict(data)).values()
         db_f.add_books(title, author, year, genre, summary)
         return f"Record added to database successfully, with following:\n {dict(data)}"
-    except:
+    else:
         return 'Empty values. All params are needed: title, author, year, genre, summary'
 
+# GET /books -Hämtar alla böcker i databasen.
+# ? -Note- maybe it works to put the params/args from postman as well? (request.args) -works-
 @app.route('/books', methods=['GET'])
 def books():
     booksData = db_f.get_books()
@@ -39,14 +41,12 @@ def books():
                 filtered_books.append(value)
 
         return render_template("base.html", title='Book List', h1_text='Books list', data=filtered_books)
-    
-    if request.method=='POST':
-        print('POST method triggered')
 
     return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID<br><br>You can add books to the database with the form below.')
 
 
 # GET /books/{book_id} -Hämtar en enskild bok.
+# PUT /books/{book_id} -Uppdaterar information om en enskild bok.
 @app.route('/books/<book_id>', methods=['GET', 'POST'])
 def book_id_show(book_id):
     data = db_f.get_books()
@@ -61,7 +61,7 @@ def book_id_show(book_id):
 
                     return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
 
-    # PUT funkar inte med Jinja så fixade 'POST' som extra för att uppdatera boken från front-end
+    # HTML accepterar inte 'PUT' så fixade 'POST' som extra för att uppdatera boken från front-end
     if request.method=='POST':
         form_values = list((request.form).values())
 
@@ -76,21 +76,24 @@ def book_id_show(book_id):
 
     return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
 
-
+# DELETE /books/{book_id} -Tar bort en enskild bok
 @app.route('/books/<book_id>', methods=['DELETE'])
 def book_delete_by_id(book_id):
     db_f.delete_books(book_id)
     return f"Book with ID {book_id} was removed from the database."
 
 
-# -TODO- PUT method som uppdaterar boken på databasen med Postman
+# PUT /books/{book_id} som uppdaterar boken på databasen
 @app.route('/books/<book_id>', methods=['PUT'])
 def book_id_update(book_id):
-    data = request.args     ;print(data)
-    title, author, year, genre, summary = 'WIP', 'WIP', 'WIP', 'WIP', 'WIP'
-    db_f.update_books(book_id,title, author, year, genre, summary)
-    return 'PUT method triggered'
-    # return redirect(url_for('book_id_show', book_id=book_id))
+    data = request.args   
+    if list(data.values()).count('')==0:
+        title, author, year, genre, summary = (dict(data)).values()
+        db_f.update_books(book_id, title, author, year, genre, summary)
+        return f"Record added to database successfully, with following:\n {dict(data)}"
+    else:
+        return 'Empty values. All params are needed: title, author, year, genre, summary'
+    
 
 # endregion
 
