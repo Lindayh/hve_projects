@@ -114,8 +114,7 @@ def show_reviews():
 # POST /reviews - Lägger till en ny recension till en bok.
 @app.route('/reviews', methods=["POST"])
 def add_reviews():
-    # if request.method=='GET':
-    data = request.args   #;print((dict(data)))  ;print((dict(data)).values())
+    data = request.args   
 
     if list(data.values()).count('')==0:
         user, book_ID, rating, description = (dict(data)).values()

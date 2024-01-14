@@ -65,7 +65,13 @@ app = Flask(__name__)
 
 
 
-# * Notes: Error handling if bs keys are written from postman.
+# * Notes: What to test =
+    # * Invalid keys from postman. 
+    # * At the start of a func that needs args from postman -> check if args are present -> if request.args: ...
+    # * Try before unpacking dictionary -> try:  var01, var02 = (dict(data)).values()
+        # * ^ Should also solve any empty field -> not acceptable
+    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
