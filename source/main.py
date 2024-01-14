@@ -83,16 +83,22 @@ def book_delete_by_id(book_id):
     return f"Book with ID {book_id} was removed from the database."
     # ! VG: error if invalid index
 
-# PUT /books/{book_id} som uppdaterar boken på databasen
-@app.route('/books/<book_id>', methods=['PUT'])
+# PUT /books/{book_id} - Uppdaterar boken på databasen
+@app.route('/books/<int:book_id>', methods=['PUT'])
 def book_id_update(book_id):
-    data = request.args   
-    if list(data.values()).count('')==0:
-        title, author, year, genre, summary = (dict(data)).values()
-        db_f.update_books(book_id, title, author, year, genre, summary)
-        return f"Record added to database successfully, with following:\n {dict(data)}"
-    else:
-        return 'Empty values. All params are needed: title, author, year, genre, summary'
+    if request.args:
+        data = request.args         ;data_keys=request.args.keys()          ;print(list(data_keys))
+        book_keys = ['title','author','year', 'genre', 'summary']           ;print(list(data_keys) == book_keys)
+        if list(data_keys) == book_keys:
+            try:
+                title, author, year, genre, summary = (dict(data)).values()
+                db_f.update_books(book_id, title, author, year, genre, summary)
+                return f"Record updated successfully, with following:\n {dict(data)}"
+            except:
+                return 'Empty values. All params are needed: title, author, year, genre, summary'
+        else:
+            return f'Invalid keys. Expected keys: title, author, year, genre, summary.'
+    return 'Empty values. All params are needed: title, author, year, genre, summary.'
     
 # endregion
 
@@ -118,7 +124,7 @@ def add_reviews():
     else:
         return f'Empty values. All params are needed: user, book_ID, rating, description'
 
-# ! Current W.I.P.
+
 # GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
 @app.route('/reviews/<int:book_id>', methods=["GET"])
 def review_by_ID(book_id):
