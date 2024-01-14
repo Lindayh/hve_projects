@@ -10,13 +10,21 @@ def root():
 
 # region /books
 # GET /books - Hämtar alla böcker i databasen.
-# Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query.
-# Exempelvis: /books?genre=biography
+# Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query. Exempelvis: /books?genre=biography
 
-# POST /books -Lägger till en eller flera böcker i databasen.    ^^
-# @app.route('/books', methods=["POST"])
-# def books_add_to_db():
-#     # db_f.add_books()
+# -Done- POST /books - Lägger till en eller flera böcker i databasen.   
+# ? Note: maybe linking all the html tags to the functions will make it possible to distinguish the return for a postman request
+# ? try to return a list with string for postman and render_template
+@app.route('/books', methods=["POST"])
+def books_add_to_db():
+    data = request.args   ;print((dict(data)))
+    try:
+        title, author, year, genre, summary = (dict(data)).values()
+        db_f.add_books(title, author, year, genre, summary)
+        return f"Record added to database successfully, with following:\n {dict(data)}"
+    except:
+        return 'Empty values. All params are needed: title, author, year, genre, summary'
+
 @app.route('/books', methods=['GET'])
 def books():
     booksData = db_f.get_books()
@@ -31,9 +39,11 @@ def books():
                 filtered_books.append(value)
 
         return render_template("base.html", title='Book List', h1_text='Books list', data=filtered_books)
+    
+    if request.method=='POST':
+        print('POST method triggered')
 
     return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID<br><br>You can add books to the database with the form below.')
-
 
 
 # GET /books/{book_id} -Hämtar en enskild bok.
@@ -42,7 +52,7 @@ def book_id_show(book_id):
     data = db_f.get_books()
     temp = []
 
-    # FIXME: To fix later: just do a query WHERE book_ID = book_id
+    # *TODO: To fix later: just do a query WHERE book_ID = book_id
     # + test if book_id is out of range
     if request.method=='GET':
         for index,value in enumerate(data):
@@ -73,39 +83,40 @@ def book_delete_by_id(book_id):
     return f"Book with ID {book_id} was removed from the database."
 
 
-# ! TODO - PUT method som uppdaterar boken på databasen med Postman
+# -TODO- PUT method som uppdaterar boken på databasen med Postman
 @app.route('/books/<book_id>', methods=['PUT'])
 def book_id_update(book_id):
     data = request.args     ;print(data)
     title, author, year, genre, summary = 'WIP', 'WIP', 'WIP', 'WIP', 'WIP'
     db_f.update_books(book_id,title, author, year, genre, summary)
-    # return what?
+    return 'PUT method triggered'
+    # return redirect(url_for('book_id_show', book_id=book_id))
 
 # endregion
 
 
 # region /reviews
 
-# ! TODO - POST /reviews -Lägger till en ny recension till en bok.
-# ! TODO - GET /reviews - Hämtar alla recensioner som finns i databasen
+# *TODO - POST /reviews -Lägger till en ny recension till en bok.
+# *TODO - GET /reviews - Hämtar alla recensioner som finns i databasen
 # @app.route('/books/reviews', methods=["POST", "GET"])
 # def books_reviews():
 #     if request.method=='POST':
 #     if request.method=='GET':
 
-# ! TODO - GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
+# *TODO - GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
 # @app.route('/books/reviews/<book_ID>', methods=["GET"])
 # endregion
 
 
-# ! TODO - GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
+# *TODO - GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
 # @app.route('/books/reviews/top', methods=["GET"])
 
 
-# ! TODO - GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
+# *TODO - GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 # @app.route('/books/author', methods=["GET"])
 
-# VG :
+# *TODO VG :
     # ● Samtliga endpoints är testade. Skriv gärna en kommentar om hur du resonerat när du designat testet. Kommentaren behöver bara vara 1 -2 rader.
     # ● Det finns en decorator som skriver ut vilken body varje request har i konsolen för utvalda requests, om det finns en body.
     # ● Varje endpoint ger användarvänliga felmeddelanden ifall input eller ett externt beroende fallerar.
