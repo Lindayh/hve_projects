@@ -81,6 +81,7 @@ def book_id_show(book_id):
 def book_delete_by_id(book_id):
     db_f.delete_books(book_id)
     return f"Book with ID {book_id} was removed from the database."
+    # ! VG: error if invalid index
 
 
 # PUT /books/{book_id} som uppdaterar boken på databasen
