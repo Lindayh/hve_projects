@@ -150,7 +150,7 @@ def top_reviews():
 
 # ! Current WIP
 # -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
-# @app.route('/books/author', methods=["GET"])
+# @app.route('/author', methods=["GET"])
 
 # -TODO- VG :
     # ● Samtliga endpoints är testade. Skriv gärna en kommentar om hur du resonerat när du designat testet. Kommentaren behöver bara vara 1 -2 rader.

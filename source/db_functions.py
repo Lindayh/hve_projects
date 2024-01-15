@@ -42,7 +42,7 @@ def update_books(id, new_title, new_author, new_year, new_genre, new_summary):
         cursor = connection.cursor()
 
         query = f"""UPDATE book 
-            SET title='{new_title}',author='{new_author}', year='{new_year}', genre='{new_genre}', summary='{new_summary}'
+            SET title=\"{new_title}\",author=\"{new_author}\", year=\"{new_year}\", genre=\"{new_genre}\", summary=\"{new_summary}\"
             WHERE book_ID LIKE {id}       """
 
         cursor.execute(query)
@@ -129,6 +129,7 @@ def run_show_query(query):
 
 
 if __name__=='__main__':
+    placeholder = 'WIP'
     # books_data = update_books(7, 'title','author', 'year', 'genre', 'summary')
 
     # Connect the function to the button
@@ -139,6 +140,6 @@ if __name__=='__main__':
     # print(add_review('Sakir The Cat', '55', '5', 'Meow Meow 5/5'))
 
     
-    print(run_show_query(query))
+    # print(run_show_query(query))
 
 
