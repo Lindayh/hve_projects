@@ -136,11 +136,19 @@ def review_by_ID(book_id):
 
 # endregion
 
+# GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
+@app.route('/books/top', methods=["GET"])
+def top_reviews():
+    query = f""" SELECT review.book_ID, book.title, book.author, round(avg(review.rating),2) as 'Average review'
+    FROM review
+    INNER JOIN book ON book.book_ID like review.book_ID
+    GROUP BY review.book_ID
+    ORDER BY avg(review.rating) DESC
+    LIMIT 5     """
+    data = db_f.run_show_query(query)
+    return data
+
 # ! Current WIP
-# -TODO- GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
-# @app.route('/books/reviews/top', methods=["GET"])
-
-
 # -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 # @app.route('/books/author', methods=["GET"])
 
