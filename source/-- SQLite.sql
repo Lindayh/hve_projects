@@ -42,3 +42,13 @@ WHERE review.book_ID LIKE 14
 SELECT * FROM book;
 SELECT * FROM review;
 DROP TABLE book;
+
+DELETE FROM book
+WHERE book_ID LIKE 7
+
+SELECT review.book_ID, book.title, book.author, round(avg(review.rating),2) as 'Average review'
+FROM review
+INNER JOIN book ON book.book_ID like review.book_ID
+GROUP BY review.book_ID
+ORDER BY avg(review.rating) DESC
+LIMIT 5
