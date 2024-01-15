@@ -74,31 +74,48 @@ def dont_run():
 
 # -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 @app.route('/author', methods=["GET"])
-def get_authors():
-    dataList= []
+def get_authors_wikipedia():
+
     if list(request.args.keys()) == ['author']:
 
         author = (list(request.args.values()))[0]   #;print(author)
-        # Author
-        url = "https://en.wikipedia.org/w/api.php"
-        params = {
-            'action': 'query',
-            'format': 'json',
-            'prop': 'extracts',
-            'titles': {author},
-            'exintro' : 1,
-            'explaintext' : 1,
-            'redirects':1
-        }
-        response = requests.get(url, params=params)
+        
+        # Author bio
+        url = f'https://openlibrary.org/search/authors.json?q={author}'
+        response = requests.get(url)            
         data = response.json()
+        key = data['docs'][0]['key']                #;print(key)
+        name = (data['docs'][0]['name'])
+                   
+        
 
-        page_id = list(data['query']['pages'].keys())[0]
-        extract = data['query']['pages'][page_id]['extract']
-        print(f'{extract}\n\n')
+        url = f'https://openlibrary.org/authors/{key}.json'
+        response = requests.get(url)            
+        data = response.json()
+        bio = data['bio']['value']
 
-        return extract
+        text = f'Author: {name}\nBiography: {bio}'
 
+
+        # Works
+        # url = f'https://openlibrary.org/authors/{key}/works.json'
+        # response = requests.get(url)            
+        # data = response.json()
+
+        # works = []
+        # for index,value in enumerate (data['entries']):
+        #     if 'description' in value.keys():
+        #         if isinstance(value['description'], str):
+        #             works.append({'title': value['title'], 'summary': value['description']})
+        #             # works['summary'].append(value['description'])
+        #             # print(f'Book: {value['title']} \nSummary: {value['description']} \n\n')
+
+        # print(works[1]['summary'])
+        # text = f'Author\'s biography:\n {bio}\nSome of his works:'
+        # text = [{'biography': bio}, works]
+
+
+        return text
     else:
         return 'Invalid search term. Expected: author'
     
@@ -116,6 +133,14 @@ def get_authors():
 if __name__ == "__main__":
     app.run(debug=True)
 
+    
+
+ 
+
+
+
+
+    
 
 
 

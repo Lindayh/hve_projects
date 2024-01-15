@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import db_functions as db_f
+import requests
 
 
 app = Flask(__name__)
@@ -150,7 +151,39 @@ def top_reviews():
 
 # ! Current WIP
 # -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
-# @app.route('/author', methods=["GET"])
+@app.route('/author', methods=["GET"])
+def get_authors_wikipedia():
+
+    if list(request.args.keys()) == ['author']:
+        if True:
+            author = (list(request.args.values()) )  ;print(author)
+            
+            # Author bio
+            url = f'https://openlibrary.org/search/authors.json?q={author}'
+            response = requests.get(url)            
+            data = response.json()
+            key = data['docs'][0]['key']                ;print(key)
+            name = (data['docs'][0]['name'])            ; print(name)
+                    
+            
+
+            url = f'https://openlibrary.org/authors/{key}.json'
+            response = requests.get(url)            
+            data = response.json()
+
+            if isinstance(data['bio'], str):        # Struktur är olika beroende på författaren
+                bio = data['bio']  
+            else:
+                bio = data['bio']['value']               
+            
+
+            text = f'Author: {name}\nBiography: {bio}'
+
+            return text
+        
+    else:
+        return 'Invalid search term. Expected: author'
+        
 
 # -TODO- VG :
     # ● Samtliga endpoints är testade. Skriv gärna en kommentar om hur du resonerat när du designat testet. Kommentaren behöver bara vara 1 -2 rader.
