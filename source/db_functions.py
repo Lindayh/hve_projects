@@ -27,9 +27,9 @@ def add_books(title, author, year, genre, summary):
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
-        query = f""" INSERT INTO book ('title','author','year','genre','summary')
+        query = f""" INSERT INTO book (\"title\",\"author\",\"year\",\"genre\",\"summary\")
         VALUES
-        ('{title}','{author}','{year}','{genre}','{summary}')
+        (\"{title}\",\"{author}\",\"{year}\",\"{genre}\",\"{summary}\")
         """
         print(query)
 
@@ -66,9 +66,9 @@ def add_review(user, book_ID, rating, description):
         connection.execute("PRAGMA foreign_keys = 1")   # Tvinga foreign key integrity
         cursor = connection.cursor()
         try:
-            query = f""" INSERT INTO review ('user', 'book_ID', 'rating', 'description')
+            query = f""" INSERT INTO review (\"user\", \"book_ID\", \"rating\", \"description\")
             VALUES
-            ('{user}','{book_ID}','{rating}','{description}')
+            (\"{user}\",\"{book_ID}\",\"{rating}\",\"{description}\")
             """
             cursor.execute(query)
             connection.commit()
@@ -87,7 +87,7 @@ def show_reviews():
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
-        query = f"""SELECT review.reviewID, review.user, book.title, review.book_ID, review.description
+        query = f"""SELECT review.reviewID, review.user, book.title, review.book_ID, review.rating, review.description
         FROM review
         INNER JOIN book ON book.book_ID like review.book_ID"""
 
@@ -102,7 +102,7 @@ def show_review_by_id(id):
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
-        query = f"""SELECT review.reviewID, review.user, book.title, review.book_ID, review.description
+        query = f"""SELECT review.reviewID, review.user, book.title, review.book_ID, review.rating, review.description
         FROM review
         INNER JOIN book ON book.book_ID like review.book_ID
         WHERE review.book_ID LIKE {id}"""
@@ -113,11 +113,15 @@ def show_review_by_id(id):
         reviews = [dict(row) for row in cursor.fetchall()]
     return reviews
 
+def run_show_query(query):            
+    with sqlite3.connect('source/bookReviews.db') as connection:
+        cursor = connection.cursor()
 
-        
-                
+        cursor.execute(query)
+        connection.commit()
 
-
+        data = cursor.fetchall()
+    return data
 
 
     
@@ -132,6 +136,9 @@ if __name__=='__main__':
     # title, author, year, genre, summary = 'WIP', 'WIP', 'WIP', 'WIP', 'WIP'
     # print(title, author, year, genre, summary )
 
-    print(add_review('Sakir The Cat', '55', '5', 'Meow Meow 5/5'))
+    # print(add_review('Sakir The Cat', '55', '5', 'Meow Meow 5/5'))
+
+    
+    print(run_show_query(query))
 
 
