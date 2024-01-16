@@ -9,45 +9,47 @@ import requests
     
 endpoint = 'http://127.0.0.1:5000'
 
-def test_home():                   # Skickar en GET
-    response = requests.get(endpoint)
-    assert response.status_code == 200
-
 
 # NOTE - Mock response? You know how
-# GET /books - Visar en lista över böcker + filter 
-@mark.parametrize('category, filter',[('title','Dracula'),('author','Bram Stoker'),('genre','Horror'),('year', '2012')])              
-def test_GET_books(category,filter):        
-    response = requests.get(endpoint + f'/books?{category}={filter}')
+# GET /books - Visar en lista över böcker 
+
+def test_books_list():                   # Skickar en GET
+    response = requests.get(endpoint + f'/books?')
+    assert response.status_code == 200
+    # assert that you get a list
+
+    assert response.json()
+
+# /books?key=value test
+@mark.parametrize('dictionary',[{'title':'Dracula'},{'author':'Bram Stoker'},{'genre':'Horror'},{'year': '2012'}])              
+def test_GET_books_correct(dictionary):
+    key = list(dictionary.keys())[0]               
+    value = list(dictionary.values())[0]         
+    response = requests.get(endpoint + f'/books?{key}={value}')
     assert response.status_code == 200  # Check connection
 
-    print(response.json()[0][category])
-    data = response.json()[0]
-
-    assert data[category] == filter
+    # print(response.json())
+    assert value in response.json()[0]
 
 
-
-# @mark.xfail
-@mark.parametrize('category, filter',[('wrong_key','Dracula'),('wrong_key', 'wrong_filter')])              
-def test_GET_books_wrong(category,filter):          
-    response = requests.get(endpoint + f'/books?{category}={filter}')
+@mark.parametrize('dictionary',[{'title':'non_existing_title'}])              
+def test_GET_books_wrong_value(dictionary):
+    key = list(dictionary.keys())[0]               
+    value = list(dictionary.values())[0]         
+    response = requests.get(endpoint + f'/books?{key}={value}')
     assert response.status_code == 200  # Check connection
 
-    # print(response.json()[0][category])
-    # data = response.json()[0]
-    return response.json()
+    assert response.text == "Search returned no results."
 
-
-# WIP Current test
-print ( test_GET_books_wrong('wrong_key', 'Dracula')  ) # (response.json() still getting Dracula row. 
-
-# print ( test_GET_books_wrong('wrong_key', 'wrong_filter')  )   # Empty list 
-
-
-
+@mark.parametrize('dictionary',[{'wrong_key':'Dracula'},{'wrong_key': 'wrong_filter'}])              
+def test_GET_books_wrong_keys(dictionary):
+    key = list(dictionary.keys())[0]               
+    value = list(dictionary.values())[0]                # ;print(f'Key: {key}, value: {value}')       
     
+    response = requests.get(endpoint + f'/books?{key}={value}')
+    assert response.status_code == 200  
 
+    assert response.text == 'Wrong key.'
 
 
 
@@ -57,10 +59,6 @@ print ( test_GET_books_wrong('wrong_key', 'Dracula')  ) # (response.json() still
 # ])
 # def test_POST_books(data):
 #     app.books_add_to_db()
-
-
-
-
 
 # region bye
 # def test_PUT_books_id():

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import db_functions as db_f
 import requests
+from sqlite3 import OperationalError
 
 app = Flask(__name__)
 
@@ -37,13 +38,18 @@ def books():
         key = (list(args.keys()))[0]
         value = (list(args.values()))[0]
 
-        query = f"""  SELECT * FROM book
-        WHERE {key} LIKE \'{value}\'
-        """
-        print(key)
-        data = db_f.run_show_query(query)
+        try:
+            query = f"""  SELECT * FROM book
+            WHERE {key} LIKE \'{value}\'
+            """
+            data = db_f.run_show_query(query)           ;print(len(data))
+            if len(data) == 0 :
+                return "Search returned no results."
 
-        return data
+            return data
+        except:
+            return 'Wrong key.'
+
 
     return booksData
 
