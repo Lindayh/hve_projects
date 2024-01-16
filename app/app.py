@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 import db_functions as db_f
 import requests
 
-
 app = Flask(__name__)
 
+# FIXME - HTML stuff
 @app.route('/')
 def root():
     return render_template("base.html", title='Book Reviews', h1_text='Welcome !')
@@ -13,27 +13,30 @@ def root():
 # GET /books - Hämtar alla böcker i databasen.
 # Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query. Exempelvis: /books?genre=biography
 
-# LINK POST /books - Lägger till en eller flera böcker i databasen.   
-# ? Note: maybe linking all the html tags to the functions will make it possible to distinguish the return for a postman request
-# ? try to return a list with string for postman and render_template
+# LINK POST /books - Lägger till en eller flera böcker i databasen.  
 @app.route('/books', methods=["POST"])
 def books_add_to_db():
-    data = request.args   #;print((dict(data)))
-    if list(data.values()).count('')==0:
-        title, author, year, genre, summary = (dict(data)).values()
-        db_f.add_books(title, author, year, genre, summary)
-        return f"Record added to database successfully, with following:\n {dict(data)}"
-    else:
-        return 'Empty values. All params are needed: title, author, year, genre, summary'
 
-# GET /books -Hämtar alla böcker i databasen.
+    if request.json:
+        data = request.json   #;print(list(data.keys()))
+        if list(data.keys()) == ['title', 'author', 'year', 'genre', 'summary']:
+            title, author, year, genre, summary = (dict(data)).values()
+            db_f.add_books(title, author, year, genre, summary)
+            return f"Record added to database successfully, with following:\n {dict(data)}"
+        else:
+            return 'Empty or wrong params. Expected keys: "title", "author", "year", "genre", "summary"'
+    else:
+        return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary"'
+
+# FIXME Remove part for html 
+# GET /books - Hämtar alla böcker i databasen + filter med URL (=args)
 @app.route('/books', methods=['GET'])
 def books():
     booksData = db_f.get_books()
 
     filtered_books = []
 
-    if request.args:
+    if request.args:                                  
         filter = dict(request.args)
         filter = str(list(filter.values())[0])
         for index, value in enumerate(booksData):
@@ -52,7 +55,7 @@ def book_id_show(book_id):
     data = db_f.get_books()
     temp = []
 
-    # *TODO: To fix later: just do a query WHERE book_ID = book_id
+    # FIXME: To fix later: just do a query WHERE book_ID = book_id
     # + test if book_id is out of range
     if request.method=='GET':
         for index,value in enumerate(data):
@@ -61,7 +64,7 @@ def book_id_show(book_id):
 
                     return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
 
-    # REVIEW - Remove this later
+    # FIXME - Remove later: if request.method=='POST':
     # HTML accepterar inte 'PUT' så fixade 'POST' som extra för att uppdatera boken från front-end
     if request.method=='POST':
         form_values = list((request.form).values())

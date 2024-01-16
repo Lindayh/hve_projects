@@ -31,7 +31,7 @@ def add_books(title, author, year, genre, summary):
         VALUES
         (\"{title}\",\"{author}\",\"{year}\",\"{genre}\",\"{summary}\")
         """
-        print(query)
+        #print(query)
 
         cursor.execute(query)
         connection.commit()
