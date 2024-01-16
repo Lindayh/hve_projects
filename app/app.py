@@ -7,11 +7,9 @@ app = Flask(__name__)
 # FIXME - HTML stuff
 @app.route('/')
 def root():
-    return render_template("base.html", title='Book Reviews', h1_text='Welcome !')
+    return 'Hey'
 
 # region /books
-# GET /books - Hämtar alla böcker i databasen.
-# Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query. Exempelvis: /books?genre=biography
 
 # LINK POST /books - Lägger till en eller flera böcker i databasen.  
 @app.route('/books', methods=["POST"])
@@ -34,18 +32,20 @@ def books_add_to_db():
 def books():
     booksData = db_f.get_books()
 
-    filtered_books = []
+    if request.args:
+        args = dict(request.args)
+        key = (list(args.keys()))[0]
+        value = (list(args.values()))[0]
 
-    if request.args:                                  
-        filter = dict(request.args)
-        filter = str(list(filter.values())[0])
-        for index, value in enumerate(booksData):
-            if filter in value.values():
-                filtered_books.append(value)
+        query = f"""  SELECT * FROM book
+        WHERE {key} LIKE \'{value}\'
+        """
+        print(key)
+        data = db_f.run_show_query(query)
 
-        return render_template("base.html", title='Book List', h1_text='Books list', data=filtered_books)
+        return data
 
-    return render_template("base.html", title='Book List', h1_text='Books list', data=booksData, extend_upper='You can filter by adding text to the url.<br>E.g. books?genre=Horror will show all Horror books.<br> books/5 will show the book with that specifid ID')
+    return booksData
 
 
 # GET /books/{book_id} -Hämtar en enskild bok.
