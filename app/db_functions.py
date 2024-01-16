@@ -3,14 +3,14 @@ from sqlite3 import IntegrityError
 
 # *todo - Fix decorator?
 def connect_db(func):
-    connection = sqlite3.connect('source/bookReviews.db')
+    connection = sqlite3.connect('app/bookReviews.db')
     cursor = connection.cursor()
     func()
     connection.close()
 
 # region books functions
 def get_books():
-    with sqlite3.connect('source/bookReviews.db') as connection:
+    with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
@@ -23,7 +23,7 @@ def get_books():
     return book_data
 
 def add_books(title, author, year, genre, summary):
-    with sqlite3.connect('source/bookReviews.db') as connection:
+    with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
@@ -37,7 +37,7 @@ def add_books(title, author, year, genre, summary):
         connection.commit()
 
 def update_books(id, new_title, new_author, new_year, new_genre, new_summary):
-    with sqlite3.connect('source/bookReviews.db') as connection:
+    with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
@@ -49,7 +49,7 @@ def update_books(id, new_title, new_author, new_year, new_genre, new_summary):
         connection.commit()
 
 def delete_books(id):
- with sqlite3.connect('source/bookReviews.db') as connection:
+ with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
@@ -61,7 +61,7 @@ def delete_books(id):
 # endregion
         
 def add_review(user, book_ID, rating, description):
-    with sqlite3.connect('source/bookReviews.db') as connection:
+    with sqlite3.connect('app/bookReviews.db') as connection:
         # connection.row_factory = sqlite3.Row
         connection.execute("PRAGMA foreign_keys = 1")   # Tvinga foreign key integrity
         cursor = connection.cursor()
@@ -83,7 +83,7 @@ def add_review(user, book_ID, rating, description):
             return f'Invalid book_ID. No book with such ID.'
         
 def show_reviews():
-    with sqlite3.connect('source/bookReviews.db') as connection:
+    with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
@@ -98,7 +98,7 @@ def show_reviews():
     return reviews
 
 def show_review_by_id(id):
-    with sqlite3.connect('source/bookReviews.db') as connection:
+    with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
@@ -114,7 +114,7 @@ def show_review_by_id(id):
     return reviews
 
 def run_show_query(query):            
-    with sqlite3.connect('source/bookReviews.db') as connection:
+    with sqlite3.connect('app/bookReviews.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute(query)

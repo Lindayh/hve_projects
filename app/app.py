@@ -13,7 +13,7 @@ def root():
 # GET /books - Hämtar alla böcker i databasen.
 # Du ska kunna filtrera på titel, författare och/eller genre via en parameteri search-query. Exempelvis: /books?genre=biography
 
-# POST /books - Lägger till en eller flera böcker i databasen.   
+# LINK POST /books - Lägger till en eller flera böcker i databasen.   
 # ? Note: maybe linking all the html tags to the functions will make it possible to distinguish the return for a postman request
 # ? try to return a list with string for postman and render_template
 @app.route('/books', methods=["POST"])
