@@ -119,7 +119,15 @@ def get_authors_wikipedia():
     else:
         return 'Invalid search term. Expected: author'
     
-
+@app.route('/test', methods=["POST"])
+def test_request_json():
+    # if request.args:
+    #     data = request.args
+    #     return data
+    if request.json:
+        data = request.json         ;print(type(data))
+        return data
+    return 'Nothing to show'
 
 
 # * Notes: What to test =

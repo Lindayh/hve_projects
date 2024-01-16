@@ -27,7 +27,6 @@ def books_add_to_db():
         return 'Empty values. All params are needed: title, author, year, genre, summary'
 
 # GET /books -Hämtar alla böcker i databasen.
-# ? -Note- maybe it works to put the params/args from postman as well? (request.args) -works-
 @app.route('/books', methods=['GET'])
 def books():
     booksData = db_f.get_books()
@@ -62,6 +61,7 @@ def book_id_show(book_id):
 
                     return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
 
+    # REVIEW - Remove this later
     # HTML accepterar inte 'PUT' så fixade 'POST' som extra för att uppdatera boken från front-end
     if request.method=='POST':
         form_values = list((request.form).values())
@@ -84,22 +84,33 @@ def book_delete_by_id(book_id):
     return f"Book with ID {book_id} was removed from the database."
     # ! VG: error/message if invalid index
 
+# WIP - To JSON
 # PUT /books/{book_id} - Uppdaterar boken på databasen
 @app.route('/books/<int:book_id>', methods=['PUT'])
 def book_id_update(book_id):
-    if request.args:
-        data = request.args         ;data_keys=request.args.keys()          ;print(list(data_keys))
-        book_keys = ['title','author','year', 'genre', 'summary']           ;print(list(data_keys) == book_keys)
+    if request.json:
+
+        data = request.json      
+        data_keys=request.json.keys()          ;print(list(data_keys))
+        book_keys = ['title', 'author','year', 'genre', 'summary']           ;print(list(data_keys) == book_keys)
+
+        # Kolla om book_ID existerar i db:n
+        query = f""" SELECT * FROM book WHERE book_ID LIKE {book_id}
+        """
+        print(len(db_f.run_show_query(query)))
+        if len(db_f.run_show_query(query)) == 0:
+            return "No book with such id."
+
         if list(data_keys) == book_keys:
             try:
                 title, author, year, genre, summary = (dict(data)).values()
                 db_f.update_books(book_id, title, author, year, genre, summary)
                 return f"Record updated successfully, with following:\n {dict(data)}"
             except:
-                return 'Empty values. All params are needed: title, author, year, genre, summary'
+                return 'Empty values. All params are needed: "title", "author", "year", "genre", "summary"'
         else:
-            return f'Invalid keys. Expected keys: title, author, year, genre, summary.'
-    return 'Empty values. All params are needed: title, author, year, genre, summary.'
+            return f'Invalid keys. Expected keys: "title", "author", "year", "genre", "summary".'
+    return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary".'
     
 # endregion
 
