@@ -84,7 +84,7 @@ def book_delete_by_id(book_id):
     return f"Book with ID {book_id} was removed from the database."
     # ! VG: error/message if invalid index
 
-# WIP - To JSON
+
 # PUT /books/{book_id} - Uppdaterar boken på databasen
 @app.route('/books/<int:book_id>', methods=['PUT'])
 def book_id_update(book_id):
