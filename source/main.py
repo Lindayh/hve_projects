@@ -18,7 +18,7 @@ def root():
 # ? try to return a list with string for postman and render_template
 @app.route('/books', methods=["POST"])
 def books_add_to_db():
-    data = request.args   ;print((dict(data)))
+    data = request.args   #;print((dict(data)))
     if list(data.values()).count('')==0:
         title, author, year, genre, summary = (dict(data)).values()
         db_f.add_books(title, author, year, genre, summary)
