@@ -43,8 +43,11 @@ SELECT * FROM book;
 SELECT * FROM review;
 DROP TABLE book;
 
+
 DELETE FROM book
-WHERE book_ID LIKE 7
+WHERE title like "New_title"
+
+
 
 SELECT review.book_ID, book.title, book.author, round(avg(review.rating),2) as 'Average review'
 FROM review
