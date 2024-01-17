@@ -82,7 +82,7 @@ def add_review(user, book_ID, rating, description):
                 return "Invalid rating. Must be a number between 0 and 5."
             return f'Invalid book_ID. No book with such ID.'
         
-def show_reviews():
+def show_all_reviews():
     with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()

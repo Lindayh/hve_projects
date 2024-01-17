@@ -136,7 +136,7 @@ def book_id_update(book_id):
 # GET /reviews - Hämtar alla recensioner som finns i databasen
 @app.route('/reviews', methods=["GET"])
 def show_reviews():
-    reviews = show_reviews()
+    reviews = show_all_reviews()
     return reviews
     
 # POST /reviews - Lägger till en ny recension till en bok.

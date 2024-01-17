@@ -79,7 +79,6 @@ def test_DELETE_books_id(endpoint):
 
     assert data == []
 
-@mark.wip
 @mark.parametrize('invalid_id',[9999,'text',9999.45])
 def test_DELETE_books_id_invalid_id(endpoint, invalid_id):
     invalid_id = 9999
