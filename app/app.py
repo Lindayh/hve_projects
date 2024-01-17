@@ -19,9 +19,12 @@ def books_add_to_db():
     if request.json:
         data = request.json   #;print(list(data.keys()))
         if list(data.keys()) == ['title', 'author', 'year', 'genre', 'summary']:
-            title, author, year, genre, summary = (dict(data)).values()
-            add_books(title, author, year, genre, summary)
-            return f"Record added to database successfully, with following:\n {dict(data)}"
+            if list(data.values()).count('')==0:
+                title, author, year, genre, summary = (dict(data)).values()
+                add_books(title, author, year, genre, summary)
+                return f"Record added to database successfully, with following:\n {dict(data)}"
+            else:
+                return f'Empty values.'
         else:
             return 'Empty or wrong params. Expected keys: "title", "author", "year", "genre", "summary"'
     else:

@@ -8,13 +8,15 @@ from app import get_books, run_show_query
 # TODO
 # NOTE Parametrize för alla endpoints som behöver externt data.
 # NOTE - Mock response? You know how
-    
-endpoint = 'http://127.0.0.1:5000'
+
+@pytest.fixture
+def endpoint():
+    return 'http://127.0.0.1:5000'
 
 
 # GET /books - Visar en lista över böcker 
 
-def test_GET_books_list():                   # Skickar en GET
+def test_GET_books_list(endpoint):                   # Skickar en GET
     response = requests.get(endpoint + f'/books?')
     assert response.status_code == 200
 
@@ -22,7 +24,7 @@ def test_GET_books_list():                   # Skickar en GET
 
 # /books?key=value test
 @mark.parametrize('dictionary',[{'title':'Dracula'},{'author':'Bram Stoker'},{'genre':'Horror'},{'year': '2012'}])              
-def test_GET_books_filter_correct(dictionary):
+def test_GET_books_filter_correct(dictionary, endpoint):
     key = list(dictionary.keys())[0]               
     value = list(dictionary.values())[0]         
     response = requests.get(endpoint + f'/books?{key}={value}')
@@ -31,16 +33,17 @@ def test_GET_books_filter_correct(dictionary):
     assert value in response.json()[0]
 
 @mark.parametrize('dictionary',[{'title':'non_existing_title'}])              
-def test_GET_books_filter_wrong_value(dictionary):
+def test_GET_books_filter_wrong_value(dictionary, endpoint):
     key = list(dictionary.keys())[0]               
-    value = list(dictionary.values())[0]         
+    value = list(dictionary.values())[0]   
+
     response = requests.get(endpoint + f'/books?{key}={value}')
     assert response.status_code == 200 
 
     assert response.text == "Search returned no results."
 
 @mark.parametrize('dictionary',[{'wrong_key':'Dracula'},{'wrong_key': 'wrong_filter'}])              
-def test_GET_books_filter_wrong_keys(dictionary):
+def test_GET_books_filter_wrong_keys(dictionary, endpoint):
     key = list(dictionary.keys())[0]               
     value = list(dictionary.values())[0]                     
     
@@ -51,11 +54,8 @@ def test_GET_books_filter_wrong_keys(dictionary):
 
 
 # POST /books - Lägger till en bok i databasen
-@mark.parametrize('dictionary', [{'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'}])
-# {''},               # Too few keys
-# {''}                # Too many keys
-# ])
-def test_POST_books(dictionary):
+@mark.parametrize('dictionary', [{'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'},])
+def test_POST_books(dictionary, endpoint):
     data_01 = get_books()               
 
     response = requests.post(endpoint + '/books', json=dictionary)
@@ -69,11 +69,9 @@ def test_POST_books(dictionary):
     """
     run_show_query(query)
 
-
-@mark.wip
 @mark.xfail
-@mark.parametrize('dictionary', [{'title':'Pytest_title'}, {'wrong_key':'Pytest_fail' }])
-def test_POST_books(dictionary):
+@mark.parametrize('dictionary', [{'title':'Pytest_title'}, {'wrong_key':'Pytest_fail', 'too_few_keys':'value' }, {'':''}, {'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary', 'extra_key':'extra_value'}, {'':'','':'','':'','':'','':''},{'title':'', 'author':'', 'year': '', 'genre': '', 'summary':''}])
+def test_POST_books_xfail(dictionary, endpoint):
     data_01 = get_books()               
 
     response = requests.post(endpoint + '/books', json=dictionary)
