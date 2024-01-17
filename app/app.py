@@ -70,7 +70,7 @@ def book_id_show(book_id):
                 if book_id == str(value['book_ID']):
                     temp.append(value)
 
-                    return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
+                    return temp
 
     # FIXME - Remove later: if request.method=='POST':
     # HTML accepterar inte 'PUT' så fixade 'POST' som extra för att uppdatera boken från front-end
@@ -86,7 +86,7 @@ def book_id_show(book_id):
 
         return redirect(url_for('book_id_show', book_id=book_id))
 
-    return render_template("base.html", title='Book List', h1_text='Books list', data=temp, book_input=True, extend_upper='You can use the form below to update the current book.', book_id=book_id)
+    return 'No book with such ID.'
 
 # DELETE /books/{book_id} -Tar bort en enskild bok
 @app.route('/books/<book_id>', methods=['DELETE'])

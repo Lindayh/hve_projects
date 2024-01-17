@@ -4,6 +4,7 @@ from unittest.mock import patch
 from unittest import mock
 import requests
 from app import get_books, run_show_query
+from flask import request
 
 # TODO
 # NOTE Parametrize för alla endpoints som behöver externt data.
@@ -22,7 +23,7 @@ def test_GET_books_list(endpoint):                   # Skickar en GET
 
     assert response.json()      # assert that you get a list?
 
-# /books?key=value test
+# GET /books?key=value test  
 @mark.parametrize('dictionary',[{'title':'Dracula'},{'author':'Bram Stoker'},{'genre':'Horror'},{'year': '2012'}])              
 def test_GET_books_filter_correct(dictionary, endpoint):
     key = list(dictionary.keys())[0]               
@@ -54,7 +55,7 @@ def test_GET_books_filter_wrong_keys(dictionary, endpoint):
 
 
 # POST /books - Lägger till en bok i databasen
-@mark.parametrize('dictionary', [{'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'},])
+@mark.parametrize('dictionary', [{'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'}])
 def test_POST_books(dictionary, endpoint):
     data_01 = get_books()               
 
@@ -79,7 +80,6 @@ def test_POST_books_xfail(dictionary, endpoint):
     
     data_02 = get_books()               
     assert len(data_02) > len(data_01)
-
 
 
 

@@ -3,15 +3,16 @@ from pytest import mark
 from unittest.mock import patch
 from unittest import mock
 import requests
-from db_functions import get_books, run_show_query
+from app import get_books, run_show_query
+from flask import request
 
+@pytest.fixture
+def endpoint():
+    return 'http://127.0.0.1:5000'
 
-
-endpoint = 'http://127.0.0.1:5000'
-
-dictionary={"title":'Pytest_title'}
-
-def test_GET_books_id(endpoint, book_id:int):
+# GET
+@mark.wip
+def test_GET_books_id(endpoint, book_id:int=1):
     response = requests.get(endpoint + f'/books/{book_id}')
     assert response.status_code == 200
 
@@ -21,13 +22,18 @@ def test_GET_books_id(endpoint, book_id:int):
     """
     data = run_show_query(query)           
 
-    print (response.json()[0]['book_ID']  == data[0][0] )
+    assert response.json()[0]['book_ID']  == data[0][0]
 
-def test_GET_books_id_wrong(endpoint,book_id:int):
+# Book id som finns inte på dbn
+def test_GET_books_id_wrong(endpoint):
+    book_id = 9999
     response = requests.get(endpoint + f'/books/{book_id}')
     assert response.status_code == 200
 
     assert response.text == 'No book with such ID.'
 
+# PUT
 
-test_GET_books_id_wrong(endpoint, book_id=2568)
+    
+# DELETE
+
