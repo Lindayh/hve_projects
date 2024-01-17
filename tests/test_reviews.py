@@ -11,6 +11,9 @@ def endpoint():
     return 'http://127.0.0.1:5000'
 
 # POST /reviews - Lägger till en ny recension till en bok.
+@mark.parametrize('dictionary')
+def test_POST_reviews(endpoint, dictionary):
+    response = requests.post(f'{endpoint}/reviews', json=dictionary)
 
 
 # GET /reviews - Hämtar alla recensioner som finns i databasen

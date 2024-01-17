@@ -9,15 +9,13 @@ from random import randint
 
 # POST /reviews - Lägger till en ny recension till en bok.
 def test_POST_reviews(endpoint, dictionary):
-    placeholder = True
+
+    response = requests.post(f'{endpoint}/reviews', json=dictionary)
 
 
-
-
-
-
+def test_POST_reviews_wrong_keys(endpoint, dictionary):
    
-
+    response = requests.post(f'{endpoint}/reviews', json=dictionary)
 
     
 # NOTE check properly tests with run_query 
@@ -25,8 +23,11 @@ def test_POST_reviews(endpoint, dictionary):
 if __name__ == '__main__':
     endpoint = 'http://127.0.0.1:5000'
 
-    dictionary = {}
+    dictionary = [{},
+                  {}
+                  ]
 
+    test_POST_reviews(endpoint,dictionary)
 
 
 

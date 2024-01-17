@@ -142,14 +142,22 @@ def show_reviews():
 # POST /reviews - Lägger till en ny recension till en bok.
 @app.route('/reviews', methods=["POST"])
 def add_reviews():
-    data = request.args   
 
-    if list(data.values()).count('')==0:
-        user, book_ID, rating, description = (dict(data)).values()
-        print(user, book_ID, rating, description)
-        return add_review(user, book_ID, rating, description)
+    if request.json:
+        data = request.json  #;print(list(data.keys()))
+
+        if list(data.keys()) == ["user", "book_ID", "rating", "description"]:
+            user, book_ID, rating, description = (dict(data)).values()
+            print(data)
+            if data['user'] == '':
+                return f'Username missing.'
+            elif data['description'] == '':
+                return f'Description missing.'
+            return add_review(user, book_ID, rating, description)
+        else:
+            return f'Empty values. Expected keys: "user", "book_ID", "rating", "description"'
     else:
-        return f'Empty values. All params are needed: user, book_ID, rating, description'
+        return 'Missing values. Expected keys: "user", "book_ID", "rating", "description"'
 
 
 # GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
