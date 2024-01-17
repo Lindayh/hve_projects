@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
-import db_functions as db_f
+from .db_functions import *
 import requests
-from sqlite3 import OperationalError
+
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def books_add_to_db():
         data = request.json   #;print(list(data.keys()))
         if list(data.keys()) == ['title', 'author', 'year', 'genre', 'summary']:
             title, author, year, genre, summary = (dict(data)).values()
-            db_f.add_books(title, author, year, genre, summary)
+            add_books(title, author, year, genre, summary)
             return f"Record added to database successfully, with following:\n {dict(data)}"
         else:
             return 'Empty or wrong params. Expected keys: "title", "author", "year", "genre", "summary"'
@@ -31,7 +31,7 @@ def books_add_to_db():
 # GET /books - Hämtar alla böcker i databasen + filter med URL (=args)
 @app.route('/books', methods=['GET'])
 def books():
-    booksData = db_f.get_books()
+    booksData = get_books()
 
     if request.args:
         args = dict(request.args)
@@ -42,14 +42,13 @@ def books():
             query = f"""  SELECT * FROM book
             WHERE {key} LIKE \'{value}\'
             """
-            data = db_f.run_show_query(query)           ;print(len(data))
+            data = run_show_query(query)          
             if len(data) == 0 :
                 return "Search returned no results."
 
             return data
         except:
             return 'Wrong key.'
-
 
     return booksData
 
@@ -58,7 +57,7 @@ def books():
 # PUT /books/{book_id} -Uppdaterar information om en enskild bok.
 @app.route('/books/<book_id>', methods=['GET', 'POST'])
 def book_id_show(book_id):
-    data = db_f.get_books()
+    data = get_books()
     temp = []
 
     # FIXME: To fix later: just do a query WHERE book_ID = book_id
@@ -80,7 +79,7 @@ def book_id_show(book_id):
         else:
             print(f"Updating book with ID {book_id}: {dict(request.form)}")
             title, author, year, genre, summary = (dict(request.form)).values()
-            db_f.update_books(book_id,title, author, year, genre, summary)
+            update_books(book_id,title, author, year, genre, summary)
 
         return redirect(url_for('book_id_show', book_id=book_id))
 
@@ -89,7 +88,7 @@ def book_id_show(book_id):
 # DELETE /books/{book_id} -Tar bort en enskild bok
 @app.route('/books/<book_id>', methods=['DELETE'])
 def book_delete_by_id(book_id):
-    db_f.delete_books(book_id)
+    delete_books(book_id)
     return f"Book with ID {book_id} was removed from the database."
     # ! VG: error/message if invalid index
 
@@ -106,14 +105,14 @@ def book_id_update(book_id):
         # Kolla om book_ID existerar i db:n
         query = f""" SELECT * FROM book WHERE book_ID LIKE {book_id}
         """
-        print(len(db_f.run_show_query(query)))
-        if len(db_f.run_show_query(query)) == 0:
+        print(len(run_show_query(query)))
+        if len(run_show_query(query)) == 0:
             return "No book with such id."
 
         if list(data_keys) == book_keys:
             try:
                 title, author, year, genre, summary = (dict(data)).values()
-                db_f.update_books(book_id, title, author, year, genre, summary)
+                update_books(book_id, title, author, year, genre, summary)
                 return f"Record updated successfully, with following:\n {dict(data)}"
             except:
                 return 'Empty values. All params are needed: "title", "author", "year", "genre", "summary"'
@@ -129,7 +128,7 @@ def book_id_update(book_id):
 # GET /reviews - Hämtar alla recensioner som finns i databasen
 @app.route('/reviews', methods=["GET"])
 def show_reviews():
-    reviews = db_f.show_reviews()
+    reviews = show_reviews()
     return reviews
     
 # POST /reviews - Lägger till en ny recension till en bok.
@@ -140,7 +139,7 @@ def add_reviews():
     if list(data.values()).count('')==0:
         user, book_ID, rating, description = (dict(data)).values()
         print(user, book_ID, rating, description)
-        return db_f.add_review(user, book_ID, rating, description)
+        return add_review(user, book_ID, rating, description)
     else:
         return f'Empty values. All params are needed: user, book_ID, rating, description'
 
@@ -148,7 +147,7 @@ def add_reviews():
 # GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
 @app.route('/reviews/<int:book_id>', methods=["GET"])
 def review_by_ID(book_id):
-    reviews = db_f.show_review_by_id(book_id)
+    reviews = show_review_by_id(book_id)
     print(len(reviews))
     if len(reviews) == 0:
         return f'No reviews for this book.'
@@ -166,7 +165,7 @@ def top_reviews():
     GROUP BY review.book_ID
     ORDER BY avg(review.rating) DESC
     LIMIT 5     """
-    data = db_f.run_show_query(query)
+    data = run_show_query(query)
     return data
 
 # ! Current WIP

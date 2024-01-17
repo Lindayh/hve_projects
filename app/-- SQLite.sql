@@ -21,6 +21,13 @@ FOREIGN KEY (book_ID) REFERENCES book(book_ID)
 DROP TABLE book;
 DROP table review
 
+
+SELECT * FROM book;
+SELECT * FROM review;
+
+DELETE FROM book
+WHERE title like "Pytest_title"
+
 INSERT INTO book ('title','author','year','genre','summary')
 VALUES 
 ('Necronomicon','H.P. Lovecraft','2008','Horror','Collection of tales that blend elements of horror, science fiction, and cosmic terror'),
@@ -39,13 +46,6 @@ FROM review
 INNER JOIN book ON book.book_ID like review.book_ID
 WHERE review.book_ID LIKE 14
 
-SELECT * FROM book;
-SELECT * FROM review;
-DROP TABLE book;
-
-
-DELETE FROM book
-WHERE title like "New_title"
 
 
 
