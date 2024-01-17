@@ -3,7 +3,7 @@ from pytest import mark
 from unittest.mock import patch
 from unittest import mock
 import requests
-from app import get_books, run_show_query
+from app import get_books, run_query
 from flask import request
 
 # TODO
@@ -31,7 +31,7 @@ def test_GET_books_filter_correct(dictionary, endpoint):
     response = requests.get(endpoint + f'/books?{key}={value}')
     assert response.status_code == 200 
 
-    assert value in response.json()[0]
+    assert value in response.json()[0].values()
 
 @mark.parametrize('dictionary',[{'title':'non_existing_title'}])              
 def test_GET_books_filter_wrong_value(dictionary, endpoint):
@@ -68,7 +68,7 @@ def test_POST_books(dictionary, endpoint):
     query = f"""DELETE FROM book
     WHERE title like "Pytest_title"
     """
-    run_show_query(query)
+    run_query(query)
 
 @mark.xfail
 @mark.parametrize('dictionary', [{'title':'Pytest_title'}, {'wrong_key':'Pytest_fail', 'too_few_keys':'value' }, {'':''}, {'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary', 'extra_key':'extra_value'}, {'':'','':'','':'','':'','':''},{'title':'', 'author':'', 'year': '', 'genre': '', 'summary':''}])

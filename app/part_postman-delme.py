@@ -69,7 +69,7 @@ def dont_run():
         GROUP BY review.book_ID
         ORDER BY avg(review.rating) DESC
         LIMIT 5     """
-        data = db_f.run_show_query(query)
+        data = db_f.run_query(query)
         return data
 
 # -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.

@@ -3,7 +3,7 @@ from pytest import mark
 from unittest.mock import patch
 from unittest import mock
 import requests
-from db_functions import get_books, run_show_query
+from db_functions import get_books, run_query
 from random import randint
 
 
@@ -21,9 +21,9 @@ def test_PUT_books_id_right(endpoint=endpoint, book_id=135):
     WHERE book_ID LIKE {book_id}
     """ 
 
-    data_01 = run_show_query(query)
+    data_01 = run_query(query)
     response = requests.put(f'{endpoint}/books/{book_id}', json=dictionary)
-    data_02 = run_show_query(query)
+    data_02 = run_query(query)
 
     assert data_01 != data_02
 
@@ -44,15 +44,23 @@ def test_PUT_books_id_wrong_keys(endpoint=endpoint,book_id:int=135):
 
     print("Invalid keys" in response.text)
 
-test_PUT_books_id_wrong_keys()
+# test_PUT_books_id_wrong_keys()
 
-
-
-
-
-
-    
 
 # id som finns inte
+
+
+
+# --------------------------------------------------------------------
+
+def test_GET_books_filter_correct(dictionary, endpoint):
+    key = list(dictionary.keys())[0]               
+    value = list(dictionary.values())[0]         
+    response = requests.get(endpoint + f'/books?{key}={value}')
+    assert response.status_code == 200 
+
+    assert value in response.json()[0].values()
+
+test_GET_books_filter_correct({'title':'Dracula'},endpoint=endpoint)
 
 

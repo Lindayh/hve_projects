@@ -113,14 +113,15 @@ def show_review_by_id(id):
         reviews = [dict(row) for row in cursor.fetchall()]
     return reviews
 
-def run_show_query(query):            
+def run_query(query):            
     with sqlite3.connect('app/bookReviews.db') as connection:
+        connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
 
         cursor.execute(query)
         connection.commit()
 
-        data = cursor.fetchall()
+        data = [dict(row) for row in cursor.fetchall()]
     return data
 
 
@@ -140,6 +141,6 @@ if __name__=='__main__':
     # print(add_review('Sakir The Cat', '55', '5', 'Meow Meow 5/5'))
 
     
-    # print(run_show_query(query))
+    # print(run_query(query))
 
 

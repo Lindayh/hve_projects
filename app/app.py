@@ -45,7 +45,7 @@ def books():
             query = f"""  SELECT * FROM book
             WHERE {key} LIKE \'{value}\'
             """
-            data = run_show_query(query)          
+            data = run_query(query)          
             if len(data) == 0 :
                 return "Search returned no results."
 
@@ -108,8 +108,8 @@ def book_id_update(book_id):
         # Kolla om book_ID existerar i db:n
         query = f""" SELECT * FROM book WHERE book_ID LIKE {book_id}
         """
-        print(len(run_show_query(query)))
-        if len(run_show_query(query)) == 0:
+        print(len(run_query(query)))
+        if len(run_query(query)) == 0:
             return "No book with such id."
 
         if list(data_keys) == book_keys:
@@ -168,7 +168,7 @@ def top_reviews():
     GROUP BY review.book_ID
     ORDER BY avg(review.rating) DESC
     LIMIT 5     """
-    data = run_show_query(query)
+    data = run_query(query)
     return data
 
 # ! Current WIP

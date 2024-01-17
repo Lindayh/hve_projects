@@ -3,7 +3,7 @@ from pytest import mark
 from unittest.mock import patch
 from unittest import mock
 import requests
-from app import get_books, run_show_query
+from app import get_books, run_query
 from flask import request
 from random import randint
 
@@ -20,9 +20,9 @@ def test_GET_books_id(endpoint, book_id:int=1):
     FROM book
     WHERE book_ID like {book_id}
     """
-    data = run_show_query(query)           
+    data = run_query(query)           
 
-    assert response.json()[0]['book_ID']  == data[0][0]
+    assert response.json()[0]['book_ID']  == data[0]['book_ID']
 
 # Book id som finns inte på dbn
 def test_GET_books_id_wrong(endpoint):
@@ -42,9 +42,9 @@ def test_PUT_books_id_right(endpoint, book_id=135):
     WHERE book_ID LIKE {book_id}
     """ 
 
-    data_01 = run_show_query(query)
+    data_01 = run_query(query)
     response = requests.put(f'{endpoint}/books/{book_id}', json=dictionary)
-    data_02 = run_show_query(query)
+    data_02 = run_query(query)
 
     assert data_01 != data_02
 
