@@ -26,6 +26,8 @@ def test_POST_reviews_succeed(endpoint):
     run_query(f"""DELETE FROM review
                 WHERE reviewID LIKE 
                 (SELECT max(reviewID) FROM review)       """)
+    
+# alla möjliga fel värde/nycklar (POST kvar bara)
 
 
 # GET /reviews - Hämtar alla recensioner som finns i databasen
