@@ -25,11 +25,18 @@ DROP table review
 SELECT * FROM book;
 SELECT * FROM review;
 
+DELETE FROM review
+WHERE reviewID>=22
+
 DELETE FROM book
 WHERE title like "%title%"
 
 DELETE FROM book
 WHERE book_ID like 142
+
+DELETE FROM review
+WHERE reviewID LIKE 
+(SELECT max(reviewID) FROM review) 
 
 INSERT INTO book ('title','author','year','genre','summary')
 VALUES 

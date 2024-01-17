@@ -11,9 +11,21 @@ def endpoint():
     return 'http://127.0.0.1:5000'
 
 # POST /reviews - Lägger till en ny recension till en bok.
-@mark.parametrize('dictionary')
-def test_POST_reviews(endpoint, dictionary):
-    response = requests.post(f'{endpoint}/reviews', json=dictionary)
+@mark.wip
+def test_POST_reviews_succeed(endpoint):
+    len_01 = len(run_query(f"SELECT * FROM review")) 
+
+    dictionary = {"user":"Test_user","book_ID":1, "rating":4, "description":"Awsomm"}     
+
+    requests.post(f'{endpoint}/reviews', json=dictionary)
+
+    len_02 = len(run_query(f"SELECT * FROM review"))          
+
+    assert len_02 == len_01+1
+
+    run_query(f"""DELETE FROM review
+                WHERE reviewID LIKE 
+                (SELECT max(reviewID) FROM review)       """)
 
 
 # GET /reviews - Hämtar alla recensioner som finns i databasen
