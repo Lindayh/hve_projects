@@ -131,16 +131,4 @@ def run_query(query):
 
 if __name__=='__main__':
     placeholder = 'WIP'
-    # books_data = update_books(7, 'title','author', 'year', 'genre', 'summary')
-
-    # Connect the function to the button
-    # Get the info from the form
-    # title, author, year, genre, summary = 'WIP', 'WIP', 'WIP', 'WIP', 'WIP'
-    # print(title, author, year, genre, summary )
-
-    # print(add_review('Sakir The Cat', '55', '5', 'Meow Meow 5/5'))
-
-    
-    # print(run_query(query))
-
 

@@ -92,8 +92,13 @@ def book_id_show(book_id):
 @app.route('/books/<book_id>', methods=['DELETE'])
 def book_delete_by_id(book_id):
     delete_books(book_id)
-    return f"Book with ID {book_id} was removed from the database."
-    # ! VG: error/message if invalid index
+
+    data = run_query(f"""SELECT * FROM book WHERE book_ID LIKE {book_id}""")
+    if data == []:
+        return f'No book with such ID.'
+    else:
+        return f"Book with ID {book_id} was removed from the database."
+
 
 
 # PUT /books/{book_id} - Uppdaterar boken på databasen

@@ -26,7 +26,10 @@ SELECT * FROM book;
 SELECT * FROM review;
 
 DELETE FROM book
-WHERE title like "Pytest_title"
+WHERE title like "%title%"
+
+DELETE FROM book
+WHERE book_ID like 142
 
 INSERT INTO book ('title','author','year','genre','summary')
 VALUES 
