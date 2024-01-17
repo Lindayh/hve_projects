@@ -7,7 +7,7 @@ from app import get_books, run_show_query
 from flask import request
 
 # TODO
-# NOTE Parametrize för alla endpoints som behöver externt data.
+# NOTE - Parametrize för alla endpoints som behöver externt data.
 # NOTE - Mock response? You know how
 
 @pytest.fixture
