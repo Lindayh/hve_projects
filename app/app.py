@@ -1,14 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, request, redirect, url_for
 from .db_functions import *
 import requests
-
 
 app = Flask(__name__)
 
 # FIXME - HTML stuff
 @app.route('/')
 def root():
-    return 'Hey'
+    return 'Welcome!'
 
 # region /books
 
@@ -188,36 +187,47 @@ def top_reviews():
 @app.route('/author', methods=["GET"])
 def get_authors_API():
 
+    if request.json:
+        body = request.json
 
-    if request.json():
-    # if list(request.json.keys()) == ['author'] and list(request.json.values()) != ''  :
-            try:
-                author = (list(request.json.values()) )  ;print(author)
-            except IndexError:
-                return 'Index error'
+        if list(request.json.values()) == [''] or list(request.json.keys()) == ['']:
+            return 'Empty value or key.'
+        else:
+            search_value = list(request.json.values())
+            search_key = list(request.json.keys())
+
+            if list(request.json.keys()) == ['author']:
+                try:
+                    search_value = (list(request.json.values()) )  ;print(search_value)
                 
-            
-            # Author bio
-            url = f'https://openlibrary.org/search/authors.json?q={author}'
-            response = requests.get(url)            
-            data = response.json()
-            key = data['docs'][0]['key']                ;print(key)
-            name = (data['docs'][0]['name'])            ; print(name)
+                    # Author bio
+                    url = f'https://openlibrary.org/search/authors.json?q={search_value}'
+                    response = requests.get(url)            
+                    data = response.json()
+                    key = data['docs'][0]['key']                #;print(key)
+                    name = (data['docs'][0]['name'])            #;print(name)
 
-            url = f'https://openlibrary.org/authors/{key}.json'
-            response = requests.get(url)            
-            data = response.json()
+                    url = f'https://openlibrary.org/authors/{key}.json'
+                    response = requests.get(url)            
+                    data = response.json()
 
-            if isinstance(data['bio'], str):        # Struktur är olika beroende på författaren
-                bio = data['bio']  
+                    if isinstance(data['bio'], str):        # Struktur är olika beroende på författaren
+                        bio = data['bio']  
+                    else:
+                        bio = data['bio']['value']               
+
+                    result = {'name':name, 'bio':bio}
+
+                    print(f'Data received: {body}')
+                    return result
+                except IndexError:
+                    return 'Empty value'
+                except KeyError:
+                    return "Couldn't find any result with the search term provided."
             else:
-                bio = data['bio']['value']               
-
-            result = {'name':name, 'bio':bio}#f'Author: {name}\nBiography: {bio}'
-            return result
-        
+                return 'Wrong key. Expected: "author"'  
     else:
-        return 'Invalid search term. Expected: author'
+        return 'No key was given. Expected: "author"'
         
 
 # -TODO- VG :

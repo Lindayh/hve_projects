@@ -72,63 +72,48 @@ def dont_run():
         data = db_f.run_query(query)
         return data
 
-# -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
-@app.route('/author', methods=["GET"])
-def get_authors_wikipedia():
+    # GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
+    @app.route('/author', methods=["GET"])
+    def get_authors_API():
 
-    if list(request.args.keys()) == ['author']:
+        if request.json:
 
-        author = (list(request.args.values()))[0]   #;print(author)
-        
-        # Author bio
-        url = f'https://openlibrary.org/search/authors.json?q={author}'
-        response = requests.get(url)            
-        data = response.json()
-        key = data['docs'][0]['key']                #;print(key)
-        name = (data['docs'][0]['name'])
-                   
-        
+            if list(request.json.values()) == [''] or list(request.json.keys()) == ['']:
+                return 'Empty value or key.'
+            else:
+                search_value = list(request.json.values())
+                search_key = list(request.json.keys())
 
-        url = f'https://openlibrary.org/authors/{key}.json'
-        response = requests.get(url)            
-        data = response.json()
-        bio = data['bio']['value']
+                if list(request.json.keys()) == ['author']:
+                    try:
+                        author = (list(request.json.values()) )  ;print(author)
+                    
+                        # Author bio
+                        url = f'https://openlibrary.org/search/authors.json?q={author}'
+                        response = requests.get(url)            
+                        data = response.json()
+                        key = data['docs'][0]['key']                ;print(key)
+                        name = (data['docs'][0]['name'])            ; print(name)
 
-        text = f'Author: {name}\nBiography: {bio}'
+                        url = f'https://openlibrary.org/authors/{key}.json'
+                        response = requests.get(url)            
+                        data = response.json()
 
+                        if isinstance(data['bio'], str):        # Struktur är olika beroende på författaren
+                            bio = data['bio']  
+                        else:
+                            bio = data['bio']['value']               
 
-        # Works
-        # url = f'https://openlibrary.org/authors/{key}/works.json'
-        # response = requests.get(url)            
-        # data = response.json()
-
-        # works = []
-        # for index,value in enumerate (data['entries']):
-        #     if 'description' in value.keys():
-        #         if isinstance(value['description'], str):
-        #             works.append({'title': value['title'], 'summary': value['description']})
-        #             # works['summary'].append(value['description'])
-        #             # print(f'Book: {value['title']} \nSummary: {value['description']} \n\n')
-
-        # print(works[1]['summary'])
-        # text = f'Author\'s biography:\n {bio}\nSome of his works:'
-        # text = [{'biography': bio}, works]
-
-
-        return text
-    else:
-        return 'Invalid search term. Expected: author'
-    
-@app.route('/test', methods=["POST"])
-def test_request_json():
-    # if request.args:
-    #     data = request.args
-    #     return data
-    if request.json:
-        data = request.json         ;print(type(data))
-        return data
-    return 'Nothing to show'
-
+                        result = {'name':name, 'bio':bio}#f'Author: {name}\nBiography: {bio}'
+                        return result
+                    except IndexError:
+                        return 'Empty value'
+                    except KeyError:
+                        return "Couldn't find any result with the search term provided."
+                else:
+                    return 'Wrong key. Expected: "author"'  
+        else:
+            return 'No key was given. Expected: "author"'
 
 # * Notes: What to test =
     # * Invalid keys from postman.
