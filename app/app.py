@@ -4,14 +4,21 @@ import requests
 
 app = Flask(__name__)
 
-# FIXME - HTML stuff
+def print_body(func):
+    def wrapper():
+        func()
+        print(request.json)
+    
+    return wrapper
+
+
+
 @app.route('/')
 def root():
     return 'Welcome!'
 
 # region /books
-
-# LINK POST /books - Lägger till en eller flera böcker i databasen.  
+# POST /books - Lägger till en eller flera böcker i databasen.  
 @app.route('/books', methods=["POST"])
 def books_add_to_db():
 
@@ -29,8 +36,7 @@ def books_add_to_db():
     else:
         return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary"'
 
-# FIXME Remove part for html 
-# GET /books - Hämtar alla böcker i databasen + filter med URL (=args)
+# GET /books - Hämtar alla böcker i databasen + filter med URL
 @app.route('/books', methods=['GET'])
 def books():
     booksData = get_books()
@@ -62,28 +68,12 @@ def book_id_show(book_id):
     data = get_books()
     temp = []
 
-    # FIXME: To fix later: just do a query WHERE book_ID = book_id
-    # + test if book_id is out of range
     if request.method=='GET':
         for index,value in enumerate(data):
                 if book_id == str(value['book_ID']):
                     temp.append(value)
 
                     return temp
-
-    # FIXME - Remove later: if request.method=='POST':
-    # HTML accepterar inte 'PUT' så fixade 'POST' som extra för att uppdatera boken från front-end
-    if request.method=='POST':
-        form_values = list((request.form).values())
-
-        if form_values.count('')>0:
-            print('Empty values')
-        else:
-            print(f"Updating book with ID {book_id}: {dict(request.form)}")
-            title, author, year, genre, summary = (dict(request.form)).values()
-            update_books(book_id,title, author, year, genre, summary)
-
-        return redirect(url_for('book_id_show', book_id=book_id))
 
     return 'No book with such ID.'
 
@@ -97,8 +87,6 @@ def book_delete_by_id(book_id):
         return f'No book with such ID.'
     else:
         return f"Book with ID {book_id} was removed from the database."
-
-
 
 # PUT /books/{book_id} - Uppdaterar boken på databasen
 @app.route('/books/<int:book_id>', methods=['PUT'])
@@ -129,9 +117,7 @@ def book_id_update(book_id):
     
 # endregion
 
-
 # region /reviews
-
 # GET /reviews - Hämtar alla recensioner som finns i databasen
 @app.route('/reviews', methods=["GET"])
 def show_reviews():
@@ -158,7 +144,6 @@ def add_reviews():
     else:
         return 'Missing keys. Expected keys: "user", "book_ID", "rating", "description"'
 
-
 # GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
 @app.route('/reviews/<int:book_id>', methods=["GET"])
 def review_by_ID(book_id):
@@ -167,10 +152,9 @@ def review_by_ID(book_id):
     if len(reviews) == 0:
         return f'No reviews for this book.'
     return reviews
-    
-
 # endregion
 
+# region top + author
 # GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
 @app.route('/books/top', methods=["GET"])
 def top_reviews():
@@ -228,21 +212,11 @@ def get_authors_API():
                 return 'Wrong key. Expected: "author"'  
     else:
         return 'No key was given. Expected: "author"'
-        
 
-# -TODO- VG :
-    # ● Samtliga endpoints är testade. Skriv gärna en kommentar om hur du resonerat när du designat testet. Kommentaren behöver bara vara 1 -2 rader.
-    # ● Det finns en decorator som skriver ut vilken body varje request har i konsolen för utvalda requests, om det finns en body.
-    # ● Varje endpoint ger användarvänliga felmeddelanden ifall input eller ett externt beroende fallerar.
-    # ● GET /author hämtar information från API asynkront.
-    # ● GET /books och /books/{book_id} returnerar också det genomsnittliga betyget för böckerna/boken.
-
-
+# endregion 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-    # booksData = db_f.get_books()
 
 
 

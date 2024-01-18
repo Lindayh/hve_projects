@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 import db_functions as db_f
 import asyncio
 import requests
+import time
+
 
 app = Flask(__name__)
 
@@ -123,8 +125,17 @@ def dont_run():
     # ! * Error if ' are in the text from postman  -> \" instead of ' in queries
 
 
+
+
+
+
+# async that waits for input
+    # > connect to final url
+    # > await input ?
+
 if __name__ == "__main__":
     app.run(debug=True)
+
 
     
 
