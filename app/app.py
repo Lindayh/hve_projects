@@ -6,9 +6,9 @@ app = Flask(__name__)
 
 def print_body(func):
     def wrapper():
-        func()
-        print(request.json)
-    
+        func_output = func()
+        print(f"Json data received: \n{func_output}") 
+        return f'Record added successfully, with following: \nTitle: {func_output['title']}\nAuthor: {func_output['author']}\nYear: {func_output['year']}\nGenre: {func_output['genre']} \nSummary: {func_output['summary']}'
     return wrapper
 
 
@@ -19,15 +19,20 @@ def root():
 
 # region /books
 # POST /books - Lägger till en eller flera böcker i databasen.  
+# @app.route('/books', methods=["POST"])
+# print_body(books_add_to_db)
 @app.route('/books', methods=["POST"])
+@print_body
 def books_add_to_db():
-
     if request.json:
         data = request.json   #;print(list(data.keys()))
         if list(data.keys()) == ['title', 'author', 'year', 'genre', 'summary']:
             if list(data.values()).count('')==0:
                 title, author, year, genre, summary = (dict(data)).values()
                 add_books(title, author, year, genre, summary)
+
+                
+                return request.json
                 return f"Record added to database successfully, with following:\n {dict(data)}"
             else:
                 return f'Empty values.'
