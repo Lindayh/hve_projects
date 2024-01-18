@@ -5,10 +5,7 @@ from unittest import mock
 import requests
 from app import get_books, run_query
 from flask import request
-
-@pytest.fixture
-def endpoint():
-    return 'http://127.0.0.1:5000'
+from tests import endpoint
 
 # POST /reviews - Lägger till en ny recension till en bok.
 def test_POST_reviews_succeed(endpoint):

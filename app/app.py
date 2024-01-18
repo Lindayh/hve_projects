@@ -184,14 +184,18 @@ def top_reviews():
     data = run_query(query)
     return data
 
-# ! Current WIP
-# -TODO- GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
+# GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 @app.route('/author', methods=["GET"])
-def get_authors_wikipedia():
+def get_authors_API():
 
-    if list(request.args.keys()) == ['author']:
-        if True:
-            author = (list(request.args.values()) )  ;print(author)
+
+    if request.json():
+    # if list(request.json.keys()) == ['author'] and list(request.json.values()) != ''  :
+            try:
+                author = (list(request.json.values()) )  ;print(author)
+            except IndexError:
+                return 'Index error'
+                
             
             # Author bio
             url = f'https://openlibrary.org/search/authors.json?q={author}'
@@ -199,8 +203,6 @@ def get_authors_wikipedia():
             data = response.json()
             key = data['docs'][0]['key']                ;print(key)
             name = (data['docs'][0]['name'])            ; print(name)
-                    
-            
 
             url = f'https://openlibrary.org/authors/{key}.json'
             response = requests.get(url)            
@@ -210,11 +212,9 @@ def get_authors_wikipedia():
                 bio = data['bio']  
             else:
                 bio = data['bio']['value']               
-            
 
-            text = f'Author: {name}\nBiography: {bio}'
-
-            return text
+            result = {'name':name, 'bio':bio}#f'Author: {name}\nBiography: {bio}'
+            return result
         
     else:
         return 'Invalid search term. Expected: author'
