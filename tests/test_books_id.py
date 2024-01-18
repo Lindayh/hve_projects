@@ -3,10 +3,7 @@ from pytest import mark
 import requests
 from app import run_query
 from random import randint
-
-@pytest.fixture
-def endpoint():
-    return 'http://127.0.0.1:5000'
+from tests import endpoint
 
 # GET /books/{book_id} - Hämtar en enskild bok.
 def test_GET_books_id(endpoint, book_id:int=1):
@@ -30,7 +27,7 @@ def test_GET_books_id_wrong(endpoint):
     assert response.text == 'No book with such ID.'
 
 # PUT /books/{book_id} - Uppdaterar information om en enskild bok.
-def test_PUT_books_id_right(endpoint, book_id=135):
+def test_PUT_books_id_right(endpoint, book_id=168):
     dictionary = {'title':'Updated_title_', 'author':'Updated_author','year':f'{randint(0,2024)}', 'genre':'updated_genre', 'summary':'Updated_summary'}
 
     query = f""" SELECT *
@@ -54,7 +51,7 @@ def test_PUT_books_id_invalid_id(endpoint,book_id:int=9999):
                                 {'':'','':'','':'','':'','':''},
                                 {"title":"Something"},
                                 {'wrong_key':'Updated_title', 'author':'Updated_author','year':'Updated_year', 'genre':'Updated_genre', 'summary':'Updated_summary', 'extra_key':'extra_value'}   ])              
-def test_PUT_books_id_wrong_keys(endpoint, dictionary, book_id:int=135,):
+def test_PUT_books_id_wrong_keys(endpoint, dictionary, book_id:int=168):
 
     response = requests.put(f'{endpoint}/books/{book_id}', json=dictionary)
 

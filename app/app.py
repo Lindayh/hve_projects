@@ -155,9 +155,9 @@ def add_reviews():
                 return f'Description missing.'
             return add_review(user, book_ID, rating, description)
         else:
-            return f'Empty values. Expected keys: "user", "book_ID", "rating", "description"'
+            return f'Invalid or missing keys. Expected keys: "user", "book_ID", "rating", "description"'
     else:
-        return 'Missing values. Expected keys: "user", "book_ID", "rating", "description"'
+        return 'Missing keys. Expected keys: "user", "book_ID", "rating", "description"'
 
 
 # GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
