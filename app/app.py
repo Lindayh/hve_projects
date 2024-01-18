@@ -12,7 +12,6 @@ def print_body(func):
     return wrapper
 
 
-
 @app.route('/')
 def root():
     return 'Welcome!'
@@ -42,11 +41,18 @@ def books_add_to_db():
         return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary"'
 
 # GET /books - Hämtar alla böcker i databasen + filter med URL
+# + returnerar också det genomsnittliga betyget för böckerna/boken
 @app.route('/books', methods=['GET'])
 def books():
-    booksData = get_books()
+    books_with_avg = run_query(f""" SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
+                                    FROM book b
+                                    LEFT JOIN review r USING (book_ID)
+                                    GROUP BY b.title
+                                    ORDER BY b.book_ID
+                                    """)
 
-    if request.args:
+
+    if request.args:                    # filter
         args = dict(request.args)
         key = (list(args.keys()))[0]
         value = (list(args.values()))[0]
@@ -63,7 +69,7 @@ def books():
         except:
             return 'Wrong key.'
 
-    return booksData
+    return books_with_avg
 
 
 # GET /books/{book_id} -Hämtar en enskild bok.

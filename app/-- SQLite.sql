@@ -56,12 +56,36 @@ FROM review
 INNER JOIN book ON book.book_ID like review.book_ID
 WHERE review.book_ID LIKE 14
 
-
-
-
 SELECT review.book_ID, book.title, book.author, round(avg(review.rating),2) as 'Average review'
 FROM review
 INNER JOIN book ON book.book_ID like review.book_ID
 GROUP BY review.book_ID
 ORDER BY avg(review.rating) DESC
 LIMIT 5
+
+
+-- VG - GET /books visar all böcker + deras genomslittiga reviews
+SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
+FROM book b
+INNER JOIN review r ON b.book_ID LIKE r.book_ID
+GROUP BY b.title
+
+SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
+FROM book b
+LEFT JOIN review r USING (book_ID)
+GROUP BY b.title
+ORDER BY b.book_ID
+
+
+
+UNION ALL
+SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
+FROM review r
+LEFT JOIN book b USING(book_ID)
+GROUP BY b.book_ID
+
+
+
+
+
+
