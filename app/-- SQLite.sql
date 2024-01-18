@@ -32,7 +32,7 @@ DELETE FROM book
 WHERE title like "%title%"
 
 DELETE FROM book
-WHERE book_ID like 142
+WHERE book_ID >= 183
 
 DELETE FROM review
 WHERE reviewID LIKE 
