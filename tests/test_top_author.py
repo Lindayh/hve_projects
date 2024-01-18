@@ -19,9 +19,17 @@ def test_GET_author(endpoint, dictionary={'author':'Lovecraft'}):
 
     assert list(response.json().keys()) == ['bio', 'name']
 
-@mark.wip
+
 @mark.parametrize('dictionary',[{'wrong_key':'wrong_value'}, {'':''}, {'author':''}])
 def test_GET_author_wrong(endpoint, dictionary):
     response = requests.get(f'{endpoint}/author',json=dictionary)
+    print(list(dictionary.values()))
+    value = list(dictionary.values())[0]
 
-    assert "Invalid search term" in response.text
+
+    url = f'https://openlibrary.org/search/authors.json?q={value}'
+    response_API = requests.get(url)
+
+    assert response_API.json()['numFound'] == 0
+
+

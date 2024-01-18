@@ -198,7 +198,7 @@ def get_authors_API():
 
             if list(request.json.keys()) == ['author']:
                 try:
-                    search_value = (list(request.json.values()) )  ;print(search_value)
+                    search_value = (list(request.json.values()) )  #;print(search_value)
                 
                     # Author bio
                     url = f'https://openlibrary.org/search/authors.json?q={search_value}'
