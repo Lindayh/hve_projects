@@ -51,7 +51,6 @@ def books():
                                     ORDER BY b.book_ID
                                     """)
 
-
     if request.args:                    # filter
         args = dict(request.args)
         key = (list(args.keys()))[0]
@@ -73,20 +72,27 @@ def books():
 
 
 # GET /books/{book_id} -Hämtar en enskild bok.
-# PUT /books/{book_id} -Uppdaterar information om en enskild bok.
-@app.route('/books/<book_id>', methods=['GET', 'POST'])
+@app.route('/books/<book_id>', methods=['GET'])
 def book_id_show(book_id):
-    data = get_books()
-    temp = []
+    print (type (book_id))
+    try:
+        book_id = int(book_id)
+        book_with_avg = run_query(f""" SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
+                                    FROM book b
+                                    LEFT JOIN review r USING (book_ID)
+                                    WHERE b.book_ID LIKE {book_id}
+                                    GROUP BY b.title
+                                    ORDER BY b.book_ID    """) 
+        if book_with_avg == []:
+            return "No book with such ID."
+        else:
+            return book_with_avg
+    except ValueError:
+        return 'Invalid ID.'
 
-    if request.method=='GET':
-        for index,value in enumerate(data):
-                if book_id == str(value['book_ID']):
-                    temp.append(value)
 
-                    return temp
+    
 
-    return 'No book with such ID.'
 
 # DELETE /books/{book_id} -Tar bort en enskild bok
 @app.route('/books/<book_id>', methods=['DELETE'])

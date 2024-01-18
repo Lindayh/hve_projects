@@ -73,8 +73,16 @@ GROUP BY b.title
 SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
 FROM book b
 LEFT JOIN review r USING (book_ID)
+WHERE b.book_ID LIKE 1
 GROUP BY b.title
 ORDER BY b.book_ID
+
+
+
+
+
+
+
 
 
 
