@@ -6,7 +6,7 @@ import requests
 from db_functions import get_books, run_query
 from random import randint
 
-    
+
 
 
 

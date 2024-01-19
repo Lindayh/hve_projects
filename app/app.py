@@ -17,6 +17,35 @@ def root():
     return 'Welcome!'
 
 # region /books
+
+# GET /books - Hämtar alla böcker i databasen + filter med URL
+# + returnerar också det genomsnittliga betyget för böckerna/boken
+@app.route('/books', methods=['GET'])
+def books():
+    books_with_avg = run_query(f""" SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
+                                    FROM book b
+                                    LEFT JOIN review r USING (book_ID)
+                                    GROUP BY b.title
+                                    ORDER BY b.book_ID
+                                    """)
+
+    if request.args:                    # filter
+        filtered_books = []
+        args = request.args                  
+        args_keys = set(args.keys())        
+        args_values = set(args.values())
+        valid_keys = set({'title','author', 'year', 'genre'})     
+
+        if args_keys.issubset(valid_keys):      
+            for index, value in enumerate(books_with_avg):
+                if args_values.issubset(set(value.values())):
+                    filtered_books.append(value)
+            return filtered_books
+        else:
+            return 'Invalid filter terms. Terms accepted: "title", "author", "year", "genre"'
+
+    return books_with_avg
+
 # POST /books - Lägger till en eller flera böcker i databasen.  
 # @app.route('/books', methods=["POST"])
 # print_body(books_add_to_db)
@@ -39,37 +68,6 @@ def books_add_to_db():
             return 'Empty or wrong params. Expected keys: "title", "author", "year", "genre", "summary"'
     else:
         return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary"'
-
-# GET /books - Hämtar alla böcker i databasen + filter med URL
-# + returnerar också det genomsnittliga betyget för böckerna/boken
-@app.route('/books', methods=['GET'])
-def books():
-    books_with_avg = run_query(f""" SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
-                                    FROM book b
-                                    LEFT JOIN review r USING (book_ID)
-                                    GROUP BY b.title
-                                    ORDER BY b.book_ID
-                                    """)
-
-    if request.args:                    # filter
-        args = dict(request.args)
-        key = (list(args.keys()))[0]
-        value = (list(args.values()))[0]
-
-        try:
-            query = f"""  SELECT * FROM book
-            WHERE {key} LIKE \'{value}\'
-            """
-            data = run_query(query)          
-            if len(data) == 0 :
-                return "Search returned no results."
-
-            return data
-        except:
-            return 'Wrong key.'
-
-    return books_with_avg
-
 
 # GET /books/{book_id} -Hämtar en enskild bok.
 @app.route('/books/<book_id>', methods=['GET'])

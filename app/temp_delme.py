@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-import db_functions as db_f
+from db_functions import run_query
 import asyncio
 import requests
 import time
@@ -124,8 +124,31 @@ def dont_run():
         # * ^ Should also solve any empty field -> not acceptable
     # ! * Error if ' are in the text from postman  -> \" instead of ' in queries
 
+    @app.route('/books', methods=['GET'])
+    def books():
+        books_with_avg = run_query(f""" SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
+                                        FROM book b
+                                        LEFT JOIN review r USING (book_ID)
+                                        GROUP BY b.title
+                                        ORDER BY b.book_ID
+                                        """)
 
+        if request.args:                    # filter
+            filtered_books = []
+            args = request.args                  
+            args_keys = set(args.keys())        
+            args_values = set(args.values())
+            valid_keys = set({'title','author', 'year', 'genre'})     
 
+            if args_keys.issubset(valid_keys):      
+                for index, value in enumerate(books_with_avg):
+                    if args_values.issubset(set(value.values())):
+                        filtered_books.append(value)
+                return filtered_books
+            else:
+                return 'Invalid filter terms. Terms accepted: "title", "author", "year", "genre"'
+
+        return books_with_avg
 
 
 
@@ -135,6 +158,9 @@ def dont_run():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
 
 
     
