@@ -71,7 +71,7 @@ def dont_run():
         GROUP BY review.book_ID
         ORDER BY avg(review.rating) DESC
         LIMIT 5     """
-        data = db_f.run_query(query)
+        data = run_query(query)
         return data
 
     # GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
@@ -117,13 +117,6 @@ def dont_run():
         else:
             return 'No key was given. Expected: "author"'
 
-# * Notes: What to test =
-    # * Invalid keys from postman.
-    # * At the start of a func that needs args from postman -> check if args are present -> if request.args: ...
-    # * Try before unpacking dictionary -> try:  var01, var02 = (dict(data)).values()
-        # * ^ Should also solve any empty field -> not acceptable
-    # ! * Error if ' are in the text from postman  -> \" instead of ' in queries
-
     @app.route('/books', methods=['GET'])
     def books():
         books_with_avg = run_query(f""" SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
@@ -152,6 +145,14 @@ def dont_run():
 
 
 
+
+# * Notes: What to test =
+    # * Invalid keys from postman.
+    # * At the start of a func that needs args from postman -> check if args are present -> if request.args: ...
+    # * Try before unpacking dictionary -> try:  var01, var02 = (dict(data)).values()
+        # * ^ Should also solve any empty field -> not acceptable
+    # ! * Error if ' are in the text from postman  -> \" instead of ' in queries
+    
 # async that waits for input
     # > connect to final url
     # > await input ?

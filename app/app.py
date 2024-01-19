@@ -18,7 +18,7 @@ def root():
 
 # region /books
 
-# GET /books - Hämtar alla böcker i databasen + filter med URL
+# 1. GET /books - Hämtar alla böcker i databasen + filter med URL                   # TODO - Check tests again 
 # + returnerar också det genomsnittliga betyget för böckerna/boken
 @app.route('/books', methods=['GET'])
 def books():
@@ -46,7 +46,8 @@ def books():
 
     return books_with_avg
 
-# POST /books - Lägger till en eller flera böcker i databasen.  
+
+# 2. POST /books - Lägger till en eller flera böcker i databasen.  
 # @app.route('/books', methods=["POST"])
 # print_body(books_add_to_db)
 @app.route('/books', methods=["POST"])
@@ -69,7 +70,8 @@ def books_add_to_db():
     else:
         return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary"'
 
-# GET /books/{book_id} -Hämtar en enskild bok.
+
+# 3. GET /books/{book_id} -Hämtar en enskild bok.
 @app.route('/books/<book_id>', methods=['GET'])
 def book_id_show(book_id):
     print (type (book_id))
@@ -89,21 +91,7 @@ def book_id_show(book_id):
         return 'Invalid ID.'
 
 
-    
-
-
-# DELETE /books/{book_id} -Tar bort en enskild bok
-@app.route('/books/<book_id>', methods=['DELETE'])
-def book_delete_by_id(book_id):
-    delete_books(book_id)
-
-    data = run_query(f"""SELECT * FROM book WHERE book_ID LIKE {book_id}""")
-    if data == []:
-        return f'No book with such ID.'
-    else:
-        return f"Book with ID {book_id} was removed from the database."
-
-# PUT /books/{book_id} - Uppdaterar boken på databasen
+# 4. PUT /books/{book_id} - Uppdaterar boken på databasen
 @app.route('/books/<int:book_id>', methods=['PUT'])
 def book_id_update(book_id):
     if request.json:
@@ -128,18 +116,26 @@ def book_id_update(book_id):
                 return 'Empty values. All params are needed: "title", "author", "year", "genre", "summary"'
         else:
             return f'Invalid keys. Expected keys: "title", "author", "year", "genre", "summary".'
-    return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary".'
-    
+    return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary".'   
+
+
+# 5. DELETE /books/{book_id} -Tar bort en enskild bok
+@app.route('/books/<book_id>', methods=['DELETE'])
+def book_delete_by_id(book_id):
+    delete_books(book_id)
+
+    data = run_query(f"""SELECT * FROM book WHERE book_ID LIKE {book_id}""")
+    if data == []:
+        return f'No book with such ID.'
+    else:
+        return f"Book with ID {book_id} was removed from the database."
+ 
 # endregion
 
 # region /reviews
-# GET /reviews - Hämtar alla recensioner som finns i databasen
-@app.route('/reviews', methods=["GET"])
-def show_reviews():
-    reviews = show_all_reviews()
-    return reviews
+
     
-# POST /reviews - Lägger till en ny recension till en bok.
+# 6. POST /reviews - Lägger till en ny recension till en bok.
 @app.route('/reviews', methods=["POST"])
 def add_reviews():
 
@@ -158,8 +154,16 @@ def add_reviews():
             return f'Invalid or missing keys. Expected keys: "user", "book_ID", "rating", "description"'
     else:
         return 'Missing keys. Expected keys: "user", "book_ID", "rating", "description"'
+    
 
-# GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
+# 7. GET /reviews - Hämtar alla recensioner som finns i databasen
+@app.route('/reviews', methods=["GET"])
+def show_reviews():
+    reviews = show_all_reviews()
+    return reviews
+
+
+# 8. GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
 @app.route('/reviews/<int:book_id>', methods=["GET"])
 def review_by_ID(book_id):
     reviews = show_review_by_id(book_id)
@@ -170,7 +174,9 @@ def review_by_ID(book_id):
 # endregion
 
 # region top + author
-# GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
+
+
+# 9. GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
 @app.route('/books/top', methods=["GET"])
 def top_reviews():
     query = f""" SELECT review.book_ID, book.title, book.author, round(avg(review.rating),2) as 'Average review'
@@ -182,7 +188,7 @@ def top_reviews():
     data = run_query(query)
     return data
 
-# GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
+# 10. GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 @app.route('/author', methods=["GET"])
 def get_authors_API():
 
