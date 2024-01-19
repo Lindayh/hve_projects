@@ -21,7 +21,7 @@ def test_GET_books_list(endpoint):                   # Skickar en GET
     assert response.json()      # assert that you get a list?
 
 # GET /books?key=value test  
-@mark.parametrize('dictionary',[{'title':'Dracula'},{'author':'Bram Stoker'},{'genre':'Horror'},{'year': '2012'}])              
+@mark.parametrize('dictionary',[{'title':'Dracula'},{'author':'Bram Stoker'},{'genre':'Horror'},{'year': '2012'}, {'title':'Dracula', 'author':'Bram Stoker'}])              
 def test_GET_books_filter_correct(dictionary, endpoint):
     key = list(dictionary.keys())[0]               
     value = list(dictionary.values())[0]         
@@ -48,7 +48,7 @@ def test_GET_books_filter_wrong_keys(dictionary, endpoint):
     response = requests.get(endpoint + f'/books?{key}={value}')
     assert response.status_code == 200  
 
-    assert response.text == 'Wrong key.'
+    assert 'Invalid filter terms' in response.text
 
 
 # POST /books - Lägger till en bok i databasen

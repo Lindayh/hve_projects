@@ -40,7 +40,11 @@ def books():
             for index, value in enumerate(books_with_avg):
                 if args_values.issubset(set(value.values())):
                     filtered_books.append(value)
-            return filtered_books
+
+            if filtered_books == []:
+                return 'Search returned no results.'
+            else:
+                return filtered_books
         else:
             return 'Invalid filter terms. Terms accepted: "title", "author", "year", "genre"'
 
