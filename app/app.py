@@ -169,17 +169,28 @@ def add_reviews():
         return 'Missing keys. Expected keys: "user", "book_ID", "rating", "description"'
     
 
-# 7. GET /reviews - Hämtar alla recensioner som finns i databasen
+# 7. GET /reviews - Hämtar alla recensioner som finns i databasen 
 @app.route('/reviews', methods=["GET"])
 def show_reviews():
-    reviews = show_all_reviews()
+    reviews = run_query(""" SELECT review.reviewID, review.user, book.title, review.book_ID, review.rating, review.description
+                            FROM review
+                            INNER JOIN book ON book.book_ID like review.book_ID""")
     return reviews
 
 
-# 8. GET /reviews/{book_id} -Hämtar alla recensioner för en enskild bok.
-@app.route('/reviews/<int:book_id>', methods=["GET"])
+# 8. GET /reviews/{book_id} - Hämtar alla recensioner för en enskild bok.
+@app.route('/reviews/<book_id>', methods=["GET"])
 def review_by_ID(book_id):
-    reviews = show_review_by_id(book_id)
+
+    try:
+        book_id = int(book_id)
+    except:
+        return "Invalid ID. Must be a integer number."
+    
+    reviews = run_query(f"""SELECT review.reviewID, review.user, book.title, review.book_ID, review.rating, review.description
+                        FROM review
+                        INNER JOIN book ON book.book_ID like review.book_ID
+                        WHERE review.book_ID LIKE {book_id}""")
     print(len(reviews))
     if len(reviews) == 0:
         return f'No reviews for this book.'
