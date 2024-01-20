@@ -7,8 +7,12 @@ app = Flask(__name__)
 def print_body(func):
     def wrapper():
         func_output = func()
-        print(f"Json data received: \n{func_output}") 
-        return f'Record added successfully, with following: \nTitle: {func_output['title']}\nAuthor: {func_output['author']}\nYear: {func_output['year']}\nGenre: {func_output['genre']} \nSummary: {func_output['summary']}'
+        if isinstance(func_output, dict):
+            print(f"Json data received: \n{func_output}") 
+            return f'Record added successfully, with following: \nTitle: {func_output['title']}\nAuthor: {func_output['author']}\nYear: {func_output['year']}\nGenre: {func_output['genre']} \nSummary: {func_output['summary']}'
+        else:
+            return func_output
+        
     return wrapper
 
 
@@ -18,7 +22,7 @@ def root():
 
 # region /books
 
-# 1. GET /books - Hämtar alla böcker i databasen + filter med URL                   # TODO - Check tests again 
+# 1. GET /books - Hämtar alla böcker i databasen + filter med URL                 
 # + returnerar också det genomsnittliga betyget för böckerna/boken
 @app.route('/books', methods=['GET'])
 def books():
@@ -53,10 +57,10 @@ def books():
 
 # 2. POST /books - Lägger till en eller flera böcker i databasen.  
 # @app.route('/books', methods=["POST"])
-# print_body(books_add_to_db)
 @app.route('/books', methods=["POST"])
 @print_body
 def books_add_to_db():
+
     if request.json:
         data = request.json   #;print(list(data.keys()))
         if list(data.keys()) == ['title', 'author', 'year', 'genre', 'summary']:
@@ -66,16 +70,16 @@ def books_add_to_db():
 
                 
                 return request.json
-                return f"Record added to database successfully, with following:\n {dict(data)}"
             else:
                 return f'Empty values.'
         else:
             return 'Empty or wrong params. Expected keys: "title", "author", "year", "genre", "summary"'
     else:
         return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary"'
-
+    
 
 # 3. GET /books/{book_id} -Hämtar en enskild bok.
+# + avg rating
 @app.route('/books/<book_id>', methods=['GET'])
 def book_id_show(book_id):
     print (type (book_id))
@@ -101,7 +105,7 @@ def book_id_update(book_id):
     if request.json:
 
         data = request.json      
-        data_keys=request.json.keys()          ;print(list(data_keys))
+        data_keys= data.keys()          ;print(list(data_keys))
         book_keys = ['title', 'author','year', 'genre', 'summary']           ;print(list(data_keys) == book_keys)
 
         # Kolla om book_ID existerar i db:n
@@ -111,7 +115,7 @@ def book_id_update(book_id):
         if len(run_query(query)) == 0:
             return "No book with such id."
 
-        if list(data_keys) == book_keys:
+        if list(data_keys) == book_keys and list(data.values()).count('') == 0:
             try:
                 title, author, year, genre, summary = (dict(data)).values()
                 update_books(book_id, title, author, year, genre, summary)
@@ -119,7 +123,7 @@ def book_id_update(book_id):
             except:
                 return 'Empty values. All params are needed: "title", "author", "year", "genre", "summary"'
         else:
-            return f'Invalid keys. Expected keys: "title", "author", "year", "genre", "summary".'
+            return f'Invalid keys or values. Expected keys: "title", "author", "year", "genre", "summary".'
     return 'Empty values. Expected keys: "title", "author", "year", "genre", "summary".'   
 
 
