@@ -147,23 +147,40 @@ def dont_run():
 
 
 @app.route('/author', methods=["GET"])
-async def get_works_API():
-
-    task = asyncio.create_task(get_bio_API())
-    await asyncio.sleep(1)
-
+async def get_author_info_API():
     try:
-        author = request.json['author']         ;print(author)
-
-        response = requests.get(f'https://openlibrary.org/search.json?author={author}&sort=rating')                   
-        works = response.json()['docs']
+        author = request.json['author']
+        print(f"Getting author's info")
         
-        top_3_works = [ works[0]['title'], works[1]['title'], works[2]['title'] ]       ;print(top_3_works) 
+        loop = asyncio.get_event_loop()
+        works_task = loop.create_task(get_works_API(author))
+        bio_task = loop.create_task(get_bio_API())
+        
 
-        return top_3_works  
-    except:
-        return 'No results were found.'
+        # Wait for both tasks to complete
+        await asyncio.gather(bio_task, works_task)
+
+        # Combine the results and return
+        result = {'author': bio_task.result()['name'],'bio': bio_task.result()['bio'], 'top_works': works_task.result()}
+        return result
+
+    except KeyError:
+        return 'No author provided in the request.'
+    except Exception as e:
+        return f'Error: {str(e)}'
+
+
+async def get_works_API(author):
+    print('Getting works info')
+    author = request.json['author']         ;print(author)
+
+    response = requests.get(f'https://openlibrary.org/search.json?author={author}&sort=rating')                   
+    works = response.json()['docs']
     
+    top_3_works = [ works[0]['title'], works[1]['title'], works[2]['title'] ]       ;print(top_3_works) 
+
+    return top_3_works  
+
 async def get_bio_API():
     if request.json:
         body = request.json
@@ -172,29 +189,28 @@ async def get_bio_API():
             return 'Empty value or key.'
         else:
             search_value = list(request.json.values())
-            search_key = list(request.json.keys())
 
             if list(request.json.keys()) == ['author']:
                 try:
-                    search_value = (list(request.json.values()) )  #;print(search_value)
-                
+                    search_value = list(request.json.values())  # ;print(search_value)
+
                     # Author bio
                     url = f'https://openlibrary.org/search/authors.json?q={search_value}'
-                    response = requests.get(url)            
+                    response = requests.get(url)
                     data = response.json()
-                    key = data['docs'][0]['key']                #;print(key)
-                    name = (data['docs'][0]['name'])            #;print(name)
+                    key = data['docs'][0]['key']  # ;print(key)
+                    name = data['docs'][0]['name']  # ;print(name)
 
                     url = f'https://openlibrary.org/authors/{key}.json'
-                    response = requests.get(url)            
+                    response = requests.get(url)
                     data = response.json()
 
-                    if isinstance(data['bio'], str):        # Struktur är olika beroende på författaren
-                        bio = data['bio']  
+                    if isinstance(data['bio'], str):  # Struktur är olika beroende på författaren
+                        bio = data['bio']
                     else:
-                        bio = data['bio']['value']               
+                        bio = data['bio']['value']
 
-                    result = {'name':name, 'bio':bio}
+                    result = {'name': name, 'bio': bio}
 
                     print(f'Data received: {body}')
                     return result
@@ -203,16 +219,9 @@ async def get_bio_API():
                 except KeyError:
                     return "Couldn't find any result with the search term provided."
             else:
-                return 'Wrong key. Expected: "author"'  
+                return 'Wrong key. Expected: "author"'
     else:
         return 'No key was given. Expected: "author"'
-
-
-
-
-
-
-
 
 
 
