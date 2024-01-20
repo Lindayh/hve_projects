@@ -214,7 +214,7 @@ def top_reviews():
 
 # 10. GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 @app.route('/author', methods=["GET"])
-def get_authors_API():
+def get_bio_API():
 
     if request.json:
         body = request.json

@@ -4,6 +4,8 @@ import asyncio
 import requests
 import time
 
+import asyncio
+
 
 app = Flask(__name__)
 
@@ -142,6 +144,74 @@ def dont_run():
                 return 'Invalid filter terms. Terms accepted: "title", "author", "year", "genre"'
 
         return books_with_avg
+
+
+@app.route('/author', methods=["GET"])
+async def get_works_API():
+
+    task = asyncio.create_task(get_bio_API())
+    await asyncio.sleep(1)
+
+    try:
+        author = request.json['author']         ;print(author)
+
+        response = requests.get(f'https://openlibrary.org/search.json?author={author}&sort=rating')                   
+        works = response.json()['docs']
+        
+        top_3_works = [ works[0]['title'], works[1]['title'], works[2]['title'] ]       ;print(top_3_works) 
+
+        return top_3_works  
+    except:
+        return 'No results were found.'
+    
+async def get_bio_API():
+    if request.json:
+        body = request.json
+
+        if list(request.json.values()) == [''] or list(request.json.keys()) == ['']:
+            return 'Empty value or key.'
+        else:
+            search_value = list(request.json.values())
+            search_key = list(request.json.keys())
+
+            if list(request.json.keys()) == ['author']:
+                try:
+                    search_value = (list(request.json.values()) )  #;print(search_value)
+                
+                    # Author bio
+                    url = f'https://openlibrary.org/search/authors.json?q={search_value}'
+                    response = requests.get(url)            
+                    data = response.json()
+                    key = data['docs'][0]['key']                #;print(key)
+                    name = (data['docs'][0]['name'])            #;print(name)
+
+                    url = f'https://openlibrary.org/authors/{key}.json'
+                    response = requests.get(url)            
+                    data = response.json()
+
+                    if isinstance(data['bio'], str):        # Struktur är olika beroende på författaren
+                        bio = data['bio']  
+                    else:
+                        bio = data['bio']['value']               
+
+                    result = {'name':name, 'bio':bio}
+
+                    print(f'Data received: {body}')
+                    return result
+                except IndexError:
+                    return 'Empty value'
+                except KeyError:
+                    return "Couldn't find any result with the search term provided."
+            else:
+                return 'Wrong key. Expected: "author"'  
+    else:
+        return 'No key was given. Expected: "author"'
+
+
+
+
+
+
 
 
 
