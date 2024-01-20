@@ -76,7 +76,7 @@ def add_review(user, book_ID, rating, description):
         except IntegrityError:
             try:
                 rating = int(rating)
-                if rating > 5 or rating < 0:
+                if rating > 5 or rating <= 0:
                     return "Invalid rating. Must be between 0 and 5."
             except ValueError:
                 return "Invalid rating. Must be a number between 0 and 5."

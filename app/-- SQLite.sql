@@ -12,21 +12,47 @@ summary TEXT
 CREATE TABLE review(
 reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
 user TEXT,
-rating INTEGER DEFAULT 0 CHECK (rating <= 5), 
+rating INTEGER DEFAULT 1 CHECK (rating BETWEEN 1 AND 5), 
 book_ID,
 description VARCHAR(200),
 FOREIGN KEY (book_ID) REFERENCES book(book_ID)
 )
 
-DROP TABLE book;
+INSERT INTO review ('user', 'rating', 'book_ID', 'description') 
+VALUES
+('Bookworm101', 4, 2, 'Dracula is a classic vampire tale that keeps you on the edge of your seat. The atmospheric descriptions and suspenseful plot make it a timeless read.'),
+('HorrorFanatic666', 2, 2, 'Dracula failed to live up to the hype for me. The intricate narrative structure and extensive diary entries felt cumbersome, detracting from the horror elements.'),
+('HappyFangs', 5, 2, 'The epitome of vampire literature. Stoker''s depiction of the infamous count is chilling, leaving you captivated.'),
+('DesertBookworm', 4, 5, 'A masterpiece of sci-fi with a richly constructed world and compelling characters. It keeps you hooked till the very end.'),
+('NebulaNerd', 1, 5, 'An overrated snoozefest. The plot is convoluted, the characters are bland, and the pacing is torturous. Avoid at all costs.'),
+('WhimsicalAlien', 3, 5, 'Dune has a fascinating world-building and intricate plot, but the pacing can be sluggish at times.'),
+('Eldritch_Enthusiast', 5, 1, 'This book will transport you to a realm of cosmic terrors. His prose is haunting and imagery is unsettling. Only for the brave!'),
+('Purple_Blob_Reader', 1, 1, 'A confusing mess. The prose is dense and stories are convoluted. A waste of time.'),
+('Cthulhu_Lover', 3, 1, 'The Necronomicon is a paradox. His Cthulhu mythos is captivating, but his execution is lacking. Intriguing but frustrating'),
+('CosmicCosmophile', 4, 4, 'A mind-bending journey into the depths of a captivating universe. While some plot elements may leave you scratching your head, the overall experience stimulating.'),
+('LovecraftianLore', 2, 4, 'This is a convoluted mess of confusing science and philosophical musings. While the prose is engaging at times, the story is ultimately unsatisfying and leaves more questions than answers.'),
+('EldritchEnigma', 3, 4, 'It is a mixed bag of brilliance and bewilderment. The exploration of humanity''s place in the cosmos is thought-provoking, but the plot can be difficult to follow and the characters are often underdeveloped.'),
+('VictorianVoyeur', 5, 3, 'Wilde''s masterpiece, a captivating tale of beauty, vanity, and the consequences of a Faustian bargain. The prose and insightful observations on human nature make this a must-read'),
+('DecadenceDweller', 3, 3, 'Fascinating work but not without its flaws. His characters are often underdeveloped and his prose can be overly theatrical.'),
+('HistoryPoet', 5, 18, 'A masterpiece! Chaucer''s tales provide an invaluable glimpse into medieval life, blending humor, satire, and profound social commentary.'),
+('MuseMagnet', 3, 18, 'Some stories captivate, while others drag. The language is a challenge, but the tales offer a mosaic of medieval society.');
+
+
+INSERT INTO review ('user', 'rating', 'book_ID', 'description')
+VALUES ('username', 6, 168, 'Review')
+
+-- DROP TABLE book;
 DROP table review
+DROP TABLE review_test
 
+SELECT * FROM review
+SELECT * FROM book
 
-SELECT * FROM book;
-SELECT * FROM review;
+ALTER TABLE review
+ADD CONSTRAINT check_rating_range CHECK (rating BETWEEN 1 AND 5);
 
 DELETE FROM review
-WHERE reviewID>=22
+WHERE reviewID>=44
 
 DELETE FROM book
 WHERE title like "%title%"
@@ -78,22 +104,8 @@ GROUP BY b.title
 ORDER BY b.book_ID
 
 
-
-
-
-
-
-
-
-
 UNION ALL
 SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
 FROM review r
 LEFT JOIN book b USING(book_ID)
 GROUP BY b.book_ID
-
-
-
-
-
-
