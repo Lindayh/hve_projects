@@ -10,7 +10,7 @@ app = Flask(__name__)
 def dont_run():
     @app.route('/books', methods=['GET'])
     def books_get():
-        booksData = db_f.get_books()
+        booksData = run_query(""" SELECT * FROM book """)   
         return booksData
 
     @app.route('/books', methods=["POST"])

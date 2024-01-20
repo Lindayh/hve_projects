@@ -3,7 +3,7 @@ from pytest import mark
 from unittest.mock import patch
 from unittest import mock
 import requests
-from app import get_books, run_query
+from app import run_query
 from flask import request
 from tests import endpoint
 
@@ -45,7 +45,7 @@ def test_GET_reviews_book_id(endpoint):
     book_id = 1
     response = requests.get(f'{endpoint}/reviews/{book_id}')
 
-    assert response.json()[0]['book_ID']  == str(book_id)
+    assert response.json()[0]['book_ID']  == book_id
 
 def test_GET_reviews_book_id_invalid(endpoint):
     book_id = 9999

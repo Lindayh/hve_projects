@@ -1,7 +1,7 @@
 import pytest
 from pytest import mark
 import requests
-from app import get_books, run_query
+from app import run_query
 
 # TODO
 # NOTE - Parametrize för alla endpoints som behöver externt data.
@@ -54,12 +54,12 @@ def test_GET_books_filter_wrong_keys(dictionary, endpoint):
 # POST /books - Lägger till en bok i databasen
 @mark.parametrize('dictionary', [{'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'}])
 def test_POST_books(dictionary, endpoint):
-    data_01 = get_books()               
+    data_01 = run_query(""" SELECT * FROM book """)               
 
     response = requests.post(endpoint + '/books', json=dictionary)
     assert response.status_code == 200
     
-    data_02 = get_books()               
+    data_02 = run_query(""" SELECT * FROM book """)                 
     assert  len(data_02) > len(data_01)
 
     query = f"""DELETE FROM book
@@ -70,12 +70,12 @@ def test_POST_books(dictionary, endpoint):
 @mark.xfail
 @mark.parametrize('dictionary', [{'title':'Pytest_title'}, {'wrong_key':'Pytest_fail', 'too_few_keys':'value' }, {'':''}, {'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary', 'extra_key':'extra_value'}, {'':'','':'','':'','':'','':''},{'title':'', 'author':'', 'year': '', 'genre': '', 'summary':''}])
 def test_POST_books_xfail(dictionary, endpoint):
-    data_01 = get_books()               
+    data_01 = run_query(""" SELECT * FROM book """)                 
 
     response = requests.post(endpoint + '/books', json=dictionary)
     assert response.status_code == 200
     
-    data_02 = get_books()               
+    data_02 = run_query(""" SELECT * FROM book """)                  
     assert len(data_02) > len(data_01)
 
 
