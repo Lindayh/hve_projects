@@ -65,7 +65,7 @@ def test_DELETE_books_id(endpoint):
     VALUES ('Random Book','Writer McScribbly','425 BCE','Classics','My nice summary')"""
     data = run_query(query) 
 
-    query = f"""SELECT max(book_ID) as id FROM book  """            # max(book_ID) så får man den nyaste ID
+    query = f"""SELECT max(book_ID) as id FROM book  """        
     data = run_query(query)         
     book_id = data[0]['id']
 

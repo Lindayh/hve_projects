@@ -143,7 +143,8 @@ def book_delete_by_id(book_id):
     if data == []:
         return f'No book with such ID.'
     else:
-        delete_books(book_id)
+        # delete_books(book_id)
+        run_query(f"DELETE FROM book WHERE book_ID LIKE {book_id}")
         return f"Book with ID {book_id} was removed from the database."
  
 # endregion

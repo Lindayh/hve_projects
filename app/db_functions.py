@@ -1,26 +1,6 @@
 import sqlite3
 from sqlite3 import IntegrityError
 
-# *todo - Fix decorator?
-def connect_db(func):
-    connection = sqlite3.connect('app/bookReviews.db')
-    cursor = connection.cursor()
-    func()
-    connection.close()
-
-# region books functions
-# def get_books():
-#     with sqlite3.connect('app/bookReviews.db') as connection:
-#         connection.row_factory = sqlite3.Row
-#         cursor = connection.cursor()
-
-#         query = f""" SELECT * FROM book """
-
-#         cursor.execute(query)
-#         connection.commit()
-
-#         book_data = [dict(row) for row in cursor.fetchall()]
-#     return book_data
 
 def add_books(title, author, year, genre, summary):
     with sqlite3.connect('app/bookReviews.db') as connection:
@@ -31,7 +11,6 @@ def add_books(title, author, year, genre, summary):
         VALUES
         (\"{title}\",\"{author}\",\"{year}\",\"{genre}\",\"{summary}\")
         """
-        #print(query)
 
         cursor.execute(query)
         connection.commit()
@@ -46,19 +25,7 @@ def update_books(id, new_title, new_author, new_year, new_genre, new_summary):
             WHERE book_ID LIKE {id}       """
 
         cursor.execute(query)
-        connection.commit()
-
-def delete_books(id):
- with sqlite3.connect('app/bookReviews.db') as connection:
-        connection.row_factory = sqlite3.Row
-        cursor = connection.cursor()
-
-        query = f"""DELETE FROM book
-            WHERE book_ID LIKE {id}       """
-
-        cursor.execute(query)
-        connection.commit()   
-# endregion
+        connection.commit() 
         
 def add_review(user, book_ID, rating, description):
     with sqlite3.connect('app/bookReviews.db') as connection:
@@ -81,37 +48,6 @@ def add_review(user, book_ID, rating, description):
             except ValueError:
                 return "Invalid rating. Must be a number between 0 and 5."
             return f'Invalid book_ID. No book with such ID.'
-        
-# def show_all_reviews():
-#     with sqlite3.connect('app/bookReviews.db') as connection:
-#         connection.row_factory = sqlite3.Row
-#         cursor = connection.cursor()
-
-#         query = f"""SELECT review.reviewID, review.user, book.title, review.book_ID, review.rating, review.description
-#         FROM review
-#         INNER JOIN book ON book.book_ID like review.book_ID"""
-
-#         cursor.execute(query)
-#         connection.commit()
-
-#         reviews = [dict(row) for row in cursor.fetchall()]
-#     return reviews
-
-# def show_review_by_id(id):
-#     with sqlite3.connect('app/bookReviews.db') as connection:
-#         connection.row_factory = sqlite3.Row
-#         cursor = connection.cursor()
-
-#         query = f"""SELECT review.reviewID, review.user, book.title, review.book_ID, review.rating, review.description
-#         FROM review
-#         INNER JOIN book ON book.book_ID like review.book_ID
-#         WHERE review.book_ID LIKE {id}"""
-
-#         cursor.execute(query)
-#         connection.commit()
-
-#         reviews = [dict(row) for row in cursor.fetchall()]
-#     return reviews
 
 def run_query(query):            
     with sqlite3.connect('app/bookReviews.db') as connection:
@@ -123,12 +59,3 @@ def run_query(query):
 
         data = [dict(row) for row in cursor.fetchall()]
     return data
-
-
-    
-
-
-
-if __name__=='__main__':
-    placeholder = 'WIP'
-
