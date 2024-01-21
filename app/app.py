@@ -23,7 +23,6 @@ def print_body(func):
 def root():
     return 'Welcome!'
 
-# region /books
 
 # 1. GET /books - Hämtar alla böcker i databasen + filter med URL                 
 # + returnerar också det genomsnittliga betyget för böckerna/boken
@@ -146,11 +145,7 @@ def book_delete_by_id(book_id):
         run_query(f"DELETE FROM book WHERE book_ID LIKE {book_id}")
         return f"Book with ID {book_id} was removed from the database."
  
-# endregion
 
-# region /reviews
-
- 
 # 6. POST /reviews - Lägger till en ny recension till en bok.
 @app.route('/reviews', methods=["POST"])
 def add_reviews():
@@ -196,9 +191,6 @@ def review_by_ID(book_id):
     if len(reviews) == 0:
         return f'No reviews for this book.'
     return reviews
-# endregion
-
-# region top + author
 
 
 # 9. GET /books/top -Hämtar de fem böckerna med högst genomsnittliga recensioner.
@@ -259,7 +251,6 @@ def get_works_API(author, q):
     except:
         q.put({'top_works': ''})
 
-
 def get_bio_API(author, q):
     print(f"Getting author's info")
 
@@ -284,7 +275,6 @@ def get_bio_API(author, q):
     except:
         q.put({'bio': ''})
 
-# endregion 
 
 if __name__ == "__main__":
     app.run(debug=True)
