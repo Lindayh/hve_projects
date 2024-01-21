@@ -1,6 +1,9 @@
 from flask import Flask, request
 from .db_functions import *
 import requests
+import threading
+import time
+from queue import Queue
 
 app = Flask(__name__)
 
@@ -214,49 +217,74 @@ def top_reviews():
 
 # 10. GET /author -Hämtar en kort sammanfattning om författaren och författarens mest kända verk. Använd externa API:er för detta.
 @app.route('/author', methods=["GET"])
-def get_bio_API():
+@app.route('/author', methods=["GET"])
+def multithreading():
+    start = time.perf_counter()
 
-    if request.json:
-        body = request.json
+    if request.json and list(request.json.keys())==['author'] and request.json['author']!='': 
+        author = request.json['author']         ;print(author)    
 
-        if list(request.json.values()) == [''] or list(request.json.keys()) == ['']:
-            return 'Empty value or key.'
+        q = Queue(maxsize=2)
+        
+        task_bio = threading.Thread(target=get_bio_API, args=(author, q,))
+        task_works = threading.Thread(target=get_works_API, args=(author, q,))
+        task_bio.start()
+        task_works.start()
+        task_bio.join()
+        task_works.join()
+
+        result = {}
+        while q.empty() == False:
+            result.update(q.get_nowait())    
+
+        end = time.perf_counter()
+        print(f'Time elapsed: {end-start}') 
+
+        if list(result.values()).count('')>0:
+            return f'Search term \'{author}\' returned no results.'
         else:
-            search_value = list(request.json.values())
-            search_key = list(request.json.keys())
-
-            if list(request.json.keys()) == ['author']:
-                try:
-                    search_value = (list(request.json.values()) )  #;print(search_value)
-                
-                    # Author bio
-                    url = f'https://openlibrary.org/search/authors.json?q={search_value}'
-                    response = requests.get(url)            
-                    data = response.json()
-                    key = data['docs'][0]['key']                #;print(key)
-                    name = (data['docs'][0]['name'])            #;print(name)
-
-                    url = f'https://openlibrary.org/authors/{key}.json'
-                    response = requests.get(url)            
-                    data = response.json()
-
-                    if isinstance(data['bio'], str):        # Struktur är olika beroende på författaren
-                        bio = data['bio']  
-                    else:
-                        bio = data['bio']['value']               
-
-                    result = {'name':name, 'bio':bio}
-
-                    print(f'Data received: {body}')
-                    return result
-                except IndexError:
-                    return 'Empty value'
-                except KeyError:
-                    return "Couldn't find any result with the search term provided."
-            else:
-                return 'Wrong key. Expected: "author"'  
+            return result
     else:
-        return 'No key was given. Expected: "author"'
+        return 'Invalid key or missing value. Exptected key: "author"'
+
+def get_works_API(author, q):
+    print('Getting works info.')
+
+    try:
+        response = requests.get(f'https://openlibrary.org/search.json?author={author}&sort=rating')                   
+        works = response.json()['docs']
+        
+        top_3_works = {'top_works' : [work['title'] for work in works[:3]]}     
+
+        print('Works search completed.')
+        q.put(top_3_works) 
+    except:
+        q.put({'top_works': ''})
+
+
+def get_bio_API(author, q):
+    print(f"Getting author's info")
+
+    try:
+        url = f'https://openlibrary.org/search/authors.json?q={author}'
+        response = requests.get(url)
+        data = response.json()
+        key = data['docs'][0]['key'] 
+        name = data['docs'][0]['name'] 
+
+        url = f'https://openlibrary.org/authors/{key}.json'
+        response = requests.get(url)
+        data = response.json()
+
+        if isinstance(data['bio'], str):  # Struktur är olika beroende på författaren
+            bio = data['bio']
+        else:
+            bio = data['bio']['value']
+
+        print('Author\'s info search completed.')
+        q.put({'name': name, 'bio': bio})
+    except:
+        q.put({'bio': ''})
 
 # endregion 
 

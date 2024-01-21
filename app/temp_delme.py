@@ -1,9 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from db_functions import run_query
 import asyncio
 import requests
 import time
 import threading
+from queue import Queue
 
 app = Flask(__name__)
 
@@ -218,123 +219,56 @@ def dont_run():
     
 # endregion
 
-# region sync
-# @app.route('/author', methods=["GET"])
-# def get_author_info_API():
-#     start = time.perf_counter()
-#     try:
-#         author = request.json['author']
-        
-
-#         bio_task = get_bio_API()
-#         works_task = get_works_API(author)
-
-#         result = {'author': bio_task['name'],'bio': bio_task['bio'], 'top_works': works_task}
-#         end = time.perf_counter()
-#         print(f'Time elapsed: {end-start}')                 # Time: 6.972412000000077
-#         return result
-#     except KeyError:
-#         return 'Missing key. Expected: "author".'
-#     except Exception as e:
-#         return f'Error: {str(e)}'
-
-
-# def get_works_API(author):
-#     print('Getting works info.')
-#     author = request.json['author']         # ;print(author)
-
-#     response = requests.get(f'https://openlibrary.org/search.json?author={author}&sort=rating')                   
-#     works = response.json()['docs']
-    
-#     top_3_works = [work['title'] for work in works[:3]]       # ;print(top_3_works) 
-
-#     print('Works serach completed.')
-#     return top_3_works  
-
-# def get_bio_API():
-#     print(f"Getting author's info")
-#     if request.json:
-
-#         if list(request.json.values()) == [''] or list(request.json.keys()) == ['']:
-#             return 'Empty value or key.'
-#         else:
-#             search_value = list(request.json.values())
-
-#             if list(request.json.keys()) == ['author']:
-#                 try:
-#                     # Author bio
-#                     url = f'https://openlibrary.org/search/authors.json?q={search_value}'
-#                     response = requests.get(url)
-#                     data = response.json()
-#                     key = data['docs'][0]['key'] 
-#                     name = data['docs'][0]['name'] 
-
-#                     url = f'https://openlibrary.org/authors/{key}.json'
-#                     response = requests.get(url)
-#                     data = response.json()
-
-#                     if isinstance(data['bio'], str):  # Struktur är olika beroende på författaren
-#                         bio = data['bio']
-#                     else:
-#                         bio = data['bio']['value']
-
-#                     result = {'name': name, 'bio': bio}
-
-#                     print('Author\'s info search completed.')
-#                     return result
-#                 except IndexError:
-#                     return 'Empty value'
-#                 except KeyError:
-#                     return "Found no results with the search term provided."
-#             else:
-#                 return 'Wrong key. Expected: "author"'
-#     else:
-#         return 'No key was given. Expected: "author"'
-    
-# endregion
-
 # region multithreading
 @app.route('/author', methods=["GET"])
 def multithreading():
     start = time.perf_counter()
 
-    try:
+    if request.json and list(request.json.keys())==['author'] and request.json['author']!='': 
         author = request.json['author']         ;print(author)    
-        
-        task_bio = threading.Thread(target=get_bio_API, args=(author))
-        task_works = threading.Thread(target=get_works_API, args=(author))
 
+        q = Queue(maxsize=2)
+        
+        task_bio = threading.Thread(target=get_bio_API, args=(author, q,))
+        task_works = threading.Thread(target=get_works_API, args=(author, q,))
         task_bio.start()
         task_works.start()
-
         task_bio.join()
         task_works.join()
 
-        result = {'author': 'wip','bio': 'wip', 'top_works': 'wip'}
-        end = time.perf_counter()
-        print(f'Time elapsed: {end-start}')                 # Time: 7.717583999999988
-        return result
-    except KeyError:
-        return 'Missing key. Expected: "author".'
-    except Exception as e:
-        return f'Error: {str(e)}'
+        result = {}
+        while q.empty() == False:
+            result.update(q.get_nowait())    
 
-def get_works_API(author):
+        end = time.perf_counter()
+        print(f'Time elapsed: {end-start}') 
+
+        if list(result.values()).count('')>0:
+            return f'Search term \'{author}\' gave no results.'
+        else:
+            return result
+    else:
+        return 'Invalid key or missing value. Exptected key: "author"'
+
+def get_works_API(author, q):
     print('Getting works info.')
 
-    response = requests.get(f'https://openlibrary.org/search.json?author={author}&sort=rating')                   
-    works = response.json()['docs']
-    
-    top_3_works = [work['title'] for work in works[:3]]       # ;print(top_3_works) 
+    try:
+        response = requests.get(f'https://openlibrary.org/search.json?author={author}&sort=rating')                   
+        works = response.json()['docs']
+        
+        top_3_works = {'top_works' : [work['title'] for work in works[:3]]}     
 
-    print('Works serach completed.')
-    return top_3_works  
+        print('Works search completed.')
+        q.put(top_3_works) 
+    except:
+        q.put({'top_works': ''})
 
-def get_bio_API(author):
+
+def get_bio_API(author, q):
     print(f"Getting author's info")
 
     try:
-        # Author bio
         url = f'https://openlibrary.org/search/authors.json?q={author}'
         response = requests.get(url)
         data = response.json()
@@ -350,14 +284,12 @@ def get_bio_API(author):
         else:
             bio = data['bio']['value']
 
-        result = {'name': name, 'bio': bio}
-
         print('Author\'s info search completed.')
-        return result
-    except IndexError:
-        return 'Empty value'
-    except KeyError:
-        return "Found no results with the search term provided."
+        q.put({'name': name, 'bio': bio})
+    except:
+        q.put({'bio': ''})
+
+
 
 
 
