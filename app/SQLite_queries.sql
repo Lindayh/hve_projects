@@ -103,9 +103,3 @@ WHERE b.book_ID LIKE 1
 GROUP BY b.title
 ORDER BY b.book_ID
 
-
-UNION ALL
-SELECT b.book_ID, b.title, b.author, b.year, b.genre, b.summary, round(avg(r.rating),2) as "avg_rating"
-FROM review r
-LEFT JOIN book b USING(book_ID)
-GROUP BY b.book_ID
