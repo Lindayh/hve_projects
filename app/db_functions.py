@@ -1,7 +1,6 @@
 import sqlite3
 from sqlite3 import IntegrityError
 
-
 def add_books(title, author, year, genre, summary):
     with sqlite3.connect('app/bookReviews.db') as connection:
         connection.row_factory = sqlite3.Row

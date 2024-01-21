@@ -26,7 +26,7 @@ def test_POST_reviews_succeed(endpoint):
 # alla möjliga fel värde/nycklar (POST kvar bara)
 @mark.parametrize('dictionary',[{"wrong_key":"POST_reviews","book_ID":1, "rating":4, "description":"Awsomm"},{'user':''},{'':'','':'','':'','':''}, {"user":"Test_user","book_ID":1, "rating":4, "description":"Awsomm", 'extra_key':'extra_value'}])
 def test_POST_reviews_wrong_keys(endpoint, dictionary):   
-    response = requests.post(f'{endpoint}/reviews', json=dictionary)        ;print(response.text)
+    response = requests.post(f'{endpoint}/reviews', json=dictionary)      
 
     assert 'missing keys' in response.text.lower()
 

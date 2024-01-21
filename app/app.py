@@ -65,7 +65,7 @@ def books():
 def books_add_to_db():
 
     if request.json:
-        data = request.json   #;print(list(data.keys()))
+        data = request.json   
         if list(data.keys()) == ['title', 'author', 'year', 'genre', 'summary']:
             if list(data.values()).count('')==0:
                 title, author, year, genre, summary = (dict(data)).values()
@@ -108,13 +108,12 @@ def book_id_update(book_id):
     if request.json:
 
         data = request.json      
-        data_keys= data.keys()          ;print(list(data_keys))
-        book_keys = ['title', 'author','year', 'genre', 'summary']           ;print(list(data_keys) == book_keys)
+        data_keys= data.keys()         
+        book_keys = ['title', 'author','year', 'genre', 'summary']        
 
         # Kolla om book_ID existerar i db:n
         query = f""" SELECT * FROM book WHERE book_ID LIKE {book_id}
         """
-        print(len(run_query(query)))
         if len(run_query(query)) == 0:
             return "No book with such id."
 
@@ -157,11 +156,10 @@ def book_delete_by_id(book_id):
 def add_reviews():
 
     if request.json:
-        data = request.json  #;print(list(data.keys()))
+        data = request.json  
 
         if list(data.keys()) == ["user", "book_ID", "rating", "description"]:
             user, book_ID, rating, description = (dict(data)).values()
-            print(data)
             if data['user'] == '':
                 return f'Username missing.'
             elif data['description'] == '':
@@ -195,7 +193,6 @@ def review_by_ID(book_id):
                         FROM review
                         INNER JOIN book ON book.book_ID like review.book_ID
                         WHERE review.book_ID LIKE {book_id}""")
-    print(len(reviews))
     if len(reviews) == 0:
         return f'No reviews for this book.'
     return reviews
