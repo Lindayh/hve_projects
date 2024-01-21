@@ -17,19 +17,18 @@ def test_GET_books_top(endpoint):
 def test_GET_author(endpoint, dictionary={'author':'Lovecraft'}):
     response = requests.get(f'{endpoint}/author',json=dictionary)
 
-    assert list(response.json().keys()) == ['bio', 'name']
+    assert list(response.json().keys()) == ['bio', 'name', 'top_works']
 
 
 @mark.parametrize('dictionary',[{'wrong_key':'wrong_value'}, {'':''}, {'author':''}])
 def test_GET_author_wrong(endpoint, dictionary):
+
     response = requests.get(f'{endpoint}/author',json=dictionary)
-    print(list(dictionary.values()))
-    value = list(dictionary.values())[0]
+
+    assert "invalid key" in response.text.lower()
 
 
-    url = f'https://openlibrary.org/search/authors.json?q={value}'
-    response_API = requests.get(url)
 
-    assert response_API.json()['numFound'] == 0
+
 
 
