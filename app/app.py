@@ -222,7 +222,7 @@ def multithreading():
     start = time.perf_counter()
 
     if request.json and list(request.json.keys())==['author'] and request.json['author']!='': 
-        author = request.json['author']         ;print(author)    
+        author = request.json['author']        
 
         q = Queue(maxsize=2)
         
