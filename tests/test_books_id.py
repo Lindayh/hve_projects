@@ -60,7 +60,6 @@ def test_PUT_books_id_wrong_keys(endpoint, dictionary, book_id:int=168):
     
 # DELETE /books/{book_id} - Tar bort en enskild bok
 def test_DELETE_books_id(endpoint):
-    #  Skapa en ny record
     query = """INSERT INTO book ('title','author','year','genre','summary')
     VALUES ('Random Book','Writer McScribbly','425 BCE','Classics','My nice summary')"""
     data = run_query(query) 
