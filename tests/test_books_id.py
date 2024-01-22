@@ -69,6 +69,7 @@ def test_DELETE_books_id(endpoint):
     book_id = data[0]['id']
 
     response = requests.delete(f'{endpoint}/books/{book_id}')
+    assert response.status_code == 200
 
     query = f"""SELECT * FROM book WHERE book_ID LIKE {book_id} """
     data = run_query(query) 
@@ -80,5 +81,6 @@ def test_DELETE_books_id_invalid_id(endpoint, invalid_id):
     invalid_id = 9999
 
     response = requests.delete(f'{endpoint}/books/{invalid_id}')
+    assert response.status_code == 200
 
     assert response.text == "No book with such ID."

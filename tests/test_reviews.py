@@ -24,7 +24,8 @@ def test_POST_reviews_succeed(endpoint):
 
 @mark.parametrize('dictionary',[{"wrong_key":"POST_reviews","book_ID":1, "rating":4, "description":"Awsomm"},{'user':''},{'':'','':'','':'','':''}, {"user":"Test_user","book_ID":1, "rating":4, "description":"Awsomm", 'extra_key':'extra_value'}])
 def test_POST_reviews_wrong_keys(endpoint, dictionary):   
-    response = requests.post(f'{endpoint}/reviews', json=dictionary)      
+    response = requests.post(f'{endpoint}/reviews', json=dictionary)   
+    assert response.status_code == 200   
 
     assert 'missing keys' in response.text.lower()
 
@@ -32,6 +33,7 @@ def test_POST_reviews_wrong_keys(endpoint, dictionary):
 # GET /reviews - Hämtar alla recensioner som finns i databasen
 def test_GET_reviews(endpoint):
     response = requests.get(f'{endpoint}/reviews')
+    assert response.status_code == 200
 
     query = "SELECT * FROM review"
 
@@ -43,6 +45,7 @@ def test_GET_reviews(endpoint):
 def test_GET_reviews_book_id(endpoint):
     book_id = 1
     response = requests.get(f'{endpoint}/reviews/{book_id}')
+    assert response.status_code == 200
 
     assert response.json()[0]['book_ID']  == book_id
     
@@ -50,6 +53,7 @@ def test_GET_reviews_book_id(endpoint):
 def test_GET_reviews_book_id_invalid(endpoint):
     book_id = 9999
     response = requests.get(f'{endpoint}/reviews/{book_id}')
+    assert response.status_code == 200
 
     assert response.text == 'No reviews for this book.'
 
