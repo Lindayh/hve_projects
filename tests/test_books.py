@@ -50,7 +50,7 @@ def test_GET_books_filter_wrong_keys(dictionary, endpoint):
     assert 'Invalid filter terms' in response.text
 
 
-# POST /books - Lägger till en bok i databasen   
+# POST /books - Lägger till en eller flera böcker i databasen   
 @mark.parametrize('dictionary', [[{'title':'Pytest_title01', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'},
                                   {'title':'Pytest_title02', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'},
                                   {'title':'Pytest_title03', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'}],
