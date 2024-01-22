@@ -50,8 +50,11 @@ def test_GET_books_filter_wrong_keys(dictionary, endpoint):
     assert 'Invalid filter terms' in response.text
 
 
-# POST /books - Lägger till en bok i databasen
-@mark.parametrize('dictionary', [{'title':'Pytest_title', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'}])
+# POST /books - Lägger till en bok i databasen   
+@mark.parametrize('dictionary', [[{'title':'Pytest_title01', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'},
+                                  {'title':'Pytest_title02', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'},
+                                  {'title':'Pytest_title03', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'}],
+                                  {'title':'Just_one_book', 'author':'Pytest_author', 'year': 'Pytest_year', 'genre': 'Pytest_genre', 'summary':'Pytest_summary'}])
 def test_POST_books(dictionary, endpoint):
     data_01 = run_query(""" SELECT * FROM book """)               
 
@@ -62,8 +65,7 @@ def test_POST_books(dictionary, endpoint):
     assert  len(data_02) > len(data_01)
 
     query = f"""DELETE FROM book
-    WHERE title like "Pytest_title"
-    """
+    WHERE title like \"Pytest_title\" """
     run_query(query)
 
 
