@@ -115,7 +115,6 @@ def book_id_update(book_id):
         data_keys= data.keys()         
         book_keys = ['title', 'author','year', 'genre', 'summary']        
 
-        # Kolla om book_ID existerar i db:n
         query = f""" SELECT * FROM book WHERE book_ID LIKE {book_id}
         """
         if len(run_query(query)) == 0:
@@ -146,7 +145,6 @@ def book_delete_by_id(book_id):
     if data == []:
         return f'No book with such ID.'
     else:
-        # delete_books(book_id)
         run_query(f"DELETE FROM book WHERE book_ID LIKE {book_id}")
         return f"Book with ID {book_id} was removed from the database."
  
