@@ -3,18 +3,17 @@ from pytest import mark
 import requests
 from app import run_query
 
-
 @pytest.fixture
 def endpoint():
     return 'http://127.0.0.1:5000'
 
 
 # GET /books - Visar en lista över böcker 
-def test_GET_books_list(endpoint):                   # Skickar en GET
+def test_GET_books_list(endpoint):                  
     response = requests.get(endpoint + f'/books?')
     assert response.status_code == 200
 
-    assert response.json()      # assert that you get a list?
+    assert response.json()   
 
 
 # GET /books?key=value test  

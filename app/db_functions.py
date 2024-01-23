@@ -28,7 +28,6 @@ def update_books(id, new_title, new_author, new_year, new_genre, new_summary):
         
 def add_review(user, book_ID, rating, description):
     with sqlite3.connect('app/bookReviews.db') as connection:
-        # connection.row_factory = sqlite3.Row
         connection.execute("PRAGMA foreign_keys = 1")   # Tvinga foreign key integrity
         cursor = connection.cursor()
         try:
