@@ -1,0 +1,7 @@
+- Semantics
+- Background
+- Navbar
+- Länk till linkedin + github
+- About me
+- Skills
+- portfölj
