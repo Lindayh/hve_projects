@@ -1,7 +1,10 @@
 - Semantics
-- Background
+- Background ✔️
 - Navbar
-- Länk till linkedin + github
-- About me
-- Skills
-- portfölj
+- Länk till linkedin + github (Footer) ✔️ 
+- About me + portrait pic
+- Skills (Kunskap)
+- Portfölj
+- Dl CV
+- Kontaktform
+- Referens sektion

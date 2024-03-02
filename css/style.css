@@ -1,11 +1,45 @@
 body, html
 {
     background: url("../images/nebula.png") no-repeat center center;
+    /* background: url("https://fly.storage.tigris.dev/pai-images/dc9e921238ed4a76be2774daa2661054.jpeg") center center; */
+    background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    margin: 0px;
+    margin:0px;
 }
 
+/* ---------- navigation bar ---------- */
+nav
+{
+    color: white;
+    font-family: 'Franklin Gothic Medium', sans-serif;
+    background-color: rgba(10, 10, 10, 0.5); 
+    width: 100%;
+    text-align: center;
+    margin:0px;
+    top: 0;
+    position: absolute;
+}
+
+nav a
+{
+    color: white;
+    text-decoration: none;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+}
+
+nav li, nav img
+{
+    padding-left: 20px;
+}
+
+nav li
+{
+    display: inline;
+}
+
+
+/* ---------- footer ---------- */
 footer
 {
     background-color: rgba(10, 10, 10, 0.5); 
@@ -15,11 +49,12 @@ footer
     bottom: 0;
 
     text-align: center;
-    font-style: oblique;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+    font-size: 12px;
+    font-family: 'Franklin Gothic Medium', sans-serif;
 
-    padding-top: 20px;
-    margin-left: 0;
+    padding-top: 15px;
+    margin: 0px;
 }
 
 footer p
