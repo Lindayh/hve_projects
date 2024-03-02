@@ -6,6 +6,7 @@ body, html
     background-attachment: fixed;
     background-size: cover;
     margin:0px;
+    height: 100%;
 }
 
 /* ---------- navigation bar ---------- */
@@ -15,6 +16,7 @@ nav
     font-family: 'Franklin Gothic Medium', sans-serif;
     background-color: rgba(10, 10, 10, 0.5); 
     width: 100%;
+    height:auto;
     text-align: center;
     margin:0px;
     top: 0;
@@ -36,6 +38,45 @@ nav li, nav img
 nav li
 {
     display: inline;
+}
+
+/* ---------- about me ---------- */
+
+#aboutme
+{   
+    position: relative;
+    margin: 0 auto;
+    top: 15%;
+    /* bottom: 30%; */
+    width: 70%;
+    height: 70%;
+    /* max-height: 70%; */
+    text-align: center; 
+}
+
+.aboutme_info
+{   
+    float:inline-start;
+    color: white;
+    width: 60%;
+    background-color: rgba(10, 10, 10, 0.8);
+    margin-left: 5%;
+}
+
+.aboutme_img
+{   
+    float:left;
+    width: 30%;
+    background-image: url("https://storage.googleapis.com/pai-images/dfdb2eb285be4aa6bb18d0d56be9eff1.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+.aboutme_img, .aboutme_info
+{
+    border-radius: 30px;
+    height: 100%;
 }
 
 
