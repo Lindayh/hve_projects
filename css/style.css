@@ -5,64 +5,80 @@ body, html
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    margin:0px;
+
+    margin: 0px;
+    padding: 0px;
     height: 100%;
+    width: 100%;
+
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
 }
 
-/* ---------- navigation bar ---------- */
+/* #region ---------- Navbar ---------- */
 nav
 {
     color: white;
     font-family: 'Franklin Gothic Medium', sans-serif;
     background-color: rgba(10, 10, 10, 0.5); 
     width: 100%;
-    height:auto;
-    text-align: center;
-    margin:0px;
-    top: 0;
+    height: 5%;
+
     position: absolute;
+    top:0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-nav a
+.radio_tabs
 {
-    color: white;
-    text-decoration: none;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+    position: absolute;     /* removes the dot of the radio button + doesn't make it take space */
+    opacity: 0;
 }
 
-nav li, nav img
+.tabs_label                 /* radio button labels */
 {
-    padding-left: 20px;
+    padding: 20px;
+    font-size: 1.5rem;
 }
+/* #endregion Navbar ---------- */
 
-nav li
-{
-    display: inline;
-}
 
-/* ---------- about me ---------- */
-
-#aboutme
+/* #region ---------- tabs content ---------- */
+.tab_content
 {   
-    position: relative;
-    margin: 0 auto;
-    top: 15%;
-    /* bottom: 30%; */
+    background-color: rgba(10,10,10,0.8);
+    color: rgb(220, 220, 220);
+
+    border-radius: 30px;
+
+    text-align: center;
+    font-size: 2rem;
+}
+
+.tab_content
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+
     width: 70%;
     height: 70%;
-    /* max-height: 70%; */
-    text-align: center; 
 }
 
-.aboutme_info
-{   
-    float:inline-start;
-    color: white;
-    width: 60%;
-    background-color: rgba(10, 10, 10, 0.8);
-    margin-left: 5%;
-}
+/*! Text in .tab_content goes out of bound when screensize is too small  */
 
+/* #endregion ---------- tabs content ---------- */
+
+
+
+/*#region ---------- about me ---------- */
 .aboutme_img
 {   
     float:left;
@@ -70,17 +86,38 @@ nav li
     background-image: url("https://storage.googleapis.com/pai-images/dfdb2eb285be4aa6bb18d0d56be9eff1.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
-    
-}
 
-.aboutme_img, .aboutme_info
+    display: none;    /** DISPLAY IMG */
+}
+/* #endregion about me*/
+
+/* #region ---------- tabs code ----------*/
+
+.nav_tabs
 {
-    border-radius: 30px;
-    height: 100%;
+    display: flex;          /* for the tabs */
+    flex-wrap: wrap;
 }
 
+input:focus + label 
+    {
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 30px;
+    } 
 
-/* ---------- footer ---------- */
+.tab_content
+{   
+    display: none;                 
+}
+
+input:checked + label + .tab_content 
+{
+    display: block;
+    /* order: 99; */
+}
+/* #endregion ---------- tabs code ----------*/
+
+/*#region ---------- footer ---------- */
 footer
 {
     background-color: rgba(10, 10, 10, 0.5); 
@@ -108,3 +145,5 @@ footer a
 {
     padding-right: 5px;
 }
+
+/*#endregion ---------- footer ---------- */
