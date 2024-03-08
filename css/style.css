@@ -70,6 +70,7 @@ nav
 
     width: 70%;
     height: 70%;
+
 }
 
 /*! Text in .tab_content goes out of bound when screensize is too small  */
@@ -81,13 +82,21 @@ nav
 /*#region ---------- about me ---------- */
 .aboutme_img
 {   
-    float:left;
+    height: 100%;
     width: 30%;
     background-image: url("https://storage.googleapis.com/pai-images/dfdb2eb285be4aa6bb18d0d56be9eff1.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
 
-    display: none;    /** DISPLAY IMG */
+    border-radius: 30px 0px 0px 30px;
+
+    float: left;
+}
+
+.aboutme_text
+{
+    display: inline-block;
+    width: 60%;
 }
 /* #endregion about me*/
 
