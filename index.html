@@ -2,48 +2,80 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="css/style.css">
+    <script src="script.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test w/ tabs</title>
 </head>
 <body>
 
-    <!-- #region Navbar -->
+<!--#region ---------- Navbar ---------->
+
         <nav>
             <!-- <p><img src="images/menu-white.png" alt="menu" width="30"></p> -->    <!-- Menu icon -->
-            <input type="radio" name="radio_tabs" id="radio_tabs_aboutme" class="radio_tabs">
-            <label for="radio_tabs_aboutme" class="tabs_label">About me</label>
 
+            <div class="radio_container">
+                <input type="radio" name="radio_tabs" id="radio_tabs_aboutme" class="radio_btn">
+                <label for="radio_tabs_aboutme" class="radio_label">About me</label>
+                
+                <input type="radio" name="radio_tabs" id="radio_tabs_contactme" class="radio_btn">
+                <label for="radio_tabs_contactme" class="radio_label">Contact me</label>
 
-                <div class="tab_content">
-                    <div class="aboutme_img"></div>
-                        <div class="aboutme_text">
-                            <header><h1>About me</h1></header>
-                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        </div>
-                </div>
-        
-            <input type="radio" name="radio_tabs" id="radio_tabs_contactme" class="radio_tabs" checked>
-            <label for="radio_tabs_contactme" class="tabs_label">Contact me</label>
-
-            <div class="tab_content">
-                <header><h1>Contact me</h1></header>
-                <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-            </div>
+                <input type="radio" name="radio_tabs" id="radio_tabs_references" class="radio_btn">
+                <label for="radio_tabs_references" class="radio_label">References</label>
+            </div class="radio_container">
         </nav>
-        <!-- #endregion Navbar -->
-        
 
-<!--#endregion ---------- Tabs content ---------- -->
+<!--#endregion ---------- Navbar ---------->
 
 
-    <!--#region Footer start ---->
+<!--#region ---------- Main/Hero ---------->
+
+        <div class="hero">
+            <p>AI dev student</p>
+        </div>
+
+<!--#endregion ---------- Main/Hero ---------->
+
+
+<!--#region ---------- Tabs content ---------->
+
+    <div class="tab_content">
+
+        <div class="tab_content_container" id="aboutme_container">
+            <div class="aboutme_img"></div>
+            <div class="aboutme_text">
+                <header><h1>About me</h1></header>
+                <p> - AI dev student
+                    - Cultural Heritage
+                </p>
+            </div>
+        </div>    
+
+        <div class="tab_content_container" id="contactme_container">
+            <header><h1>Contact me</h1></header>
+            <p>Contact form</p>
+        </div>
+
+        <div class="tab_content_container" id="references_container">
+            <header><h1>References</h1></header>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt beatae dolorem quia quis vel dolores ratione mollitia reiciendis unde nihil!</p>
+        </div>
+
+    </div>
+
+<!--#endregion ---------- Tabs content ---------->
+
+
+<!--#region ---------- Footer ---------->
+
     <footer>
         <a href="https://github.com/Lindayh"><img src="images/github-mark-white.png" alt="My_GitHub" height="18"></a>
         <a href="https://www.linkedin.com/in/foglilinda/"><img src="images/linkedin-white.png" alt="My_LinkedIn" height="18"></a>
         <p>foglilinda@gmail.com</p>
     </footer>
-    <!--#endregion Footer end ---->
-    
+
+<!--#endregion ---------- Footer ---------->
+
 </body>
 </html>

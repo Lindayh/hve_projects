@@ -1,7 +1,12 @@
+:root {
+    --main-color: rgba(10,10,10, 0.6);
+    --font-color: rgb(220,220,220);
+    --main-font: 'Franklin Gothic Medium', sans-serif;
+  }
+
 body, html
 {
     background: url("../images/nebula.png") no-repeat center center;
-    /* background: url("https://fly.storage.tigris.dev/pai-images/dc9e921238ed4a76be2774daa2661054.jpeg") center center; */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -11,6 +16,9 @@ body, html
     height: 100%;
     width: 100%;
 
+    color: var(--font-color);  
+    font-family: var(--main-font);  
+
     /* display: flex;
     align-items: center;
     justify-content: center; */
@@ -19,9 +27,8 @@ body, html
 /* #region ---------- Navbar ---------- */
 nav
 {
-    color: white;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    background-color: rgba(10, 10, 10, 0.5); 
+    /* font-family: --main-font; */
+    background-color: var(--main-color); 
     width: 100%;
     height: 5%;
 
@@ -33,33 +40,44 @@ nav
     justify-content: center;
 }
 
-.radio_tabs
+.radio_btn
 {
-    position: absolute;     /* removes the dot of the radio button + doesn't make it take space */
-    opacity: 0;
+    opacity: 0;             /* Makes the radio button transparent */
+    position: absolute;     /* Resets its position so it doesn't take extra space */ 
 }
 
-.tabs_label                 /* radio button labels */
+.radio_label                 /* radio button labels */
 {
     padding: 20px;
     font-size: 1.5rem;
 }
-/* #endregion Navbar ---------- */
+/* #endregion ---------- Navbar ---------- */
 
-
-/* #region ---------- tabs content ---------- */
-.tab_content
+/* #region ---------- Hero ---------- */
+.hero
 {   
-    background-color: rgba(10,10,10,0.8);
-    color: rgb(220, 220, 220);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
 
-    border-radius: 30px;
+    height: 50%;
+    /* background-color: var(--main-color); */
 
-    text-align: center;
-    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.tab_content
+
+/* #endregion ---------- Hero ---------- */
+
+
+
+/* #region ---------- Tabs content container ---------- */
+.tab_content_container
 {
     position: fixed;
     top: 0;
@@ -70,13 +88,25 @@ nav
 
     width: 70%;
     height: 70%;
+}
+
+.tab_content_container
+{
+    display: none;
+    background-color: var(--main-color);
+
+    /* color: var(--font-color); */
+
+    border-radius: 30px;
+
+    text-align: center;
+    font-size: 2rem;
 
 }
 
 /*! Text in .tab_content goes out of bound when screensize is too small  */
 
-/* #endregion ---------- tabs content ---------- */
-
+/* #endregion ---------- tabs content container ---------- */
 
 
 /*#region ---------- about me ---------- */
@@ -98,38 +128,12 @@ nav
     display: inline-block;
     width: 60%;
 }
-/* #endregion about me*/
-
-/* #region ---------- tabs code ----------*/
-
-.nav_tabs
-{
-    display: flex;          /* for the tabs */
-    flex-wrap: wrap;
-}
-
-input:focus + label 
-    {
-        background-color: rgba(0, 0, 0, 0.8);
-        border-radius: 30px;
-    } 
-
-.tab_content
-{   
-    display: none;                 
-}
-
-input:checked + label + .tab_content 
-{
-    display: block;
-    /* order: 99; */
-}
-/* #endregion ---------- tabs code ----------*/
+/* #endregion ---------- about me ----------*/
 
 /*#region ---------- footer ---------- */
 footer
 {
-    background-color: rgba(10, 10, 10, 0.5); 
+    background-color: var(--main-color)); 
     /* background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgba(10,10,10,0.7));    */
     width: 100%;
     position: absolute;
@@ -138,7 +142,7 @@ footer
     text-align: center;
     font-style: italic;
     font-size: 12px;
-    font-family: 'Franklin Gothic Medium', sans-serif;
+    /* font-family: 'Franklin Gothic Medium', sans-serif; */
 
     padding-top: 15px;
     margin: 0px;
@@ -146,7 +150,7 @@ footer
 
 footer p
 {
-    color: white;
+    color: var(--font-color);
     margin-top:10px;
 }
 
