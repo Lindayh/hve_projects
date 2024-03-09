@@ -2,9 +2,12 @@
 - Background ✔️
 - Navbar
 - Länk till linkedin + github (Footer) ✔️ 
-- About me + portrait pic
-- Skills (Kunskap)
-- Portfölj
 - Dl CV
-- Kontaktform
-- Referens sektion
+
+
+Navbar:
+- About me
+- Contact me / Contact form
+- References
+- Skills
+- Portfolio
