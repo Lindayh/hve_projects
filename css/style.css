@@ -2,6 +2,10 @@
     --main-color: rgba(10,10,10, 0.6);
     --font-color: rgb(220,220,220);
     --main-font: 'Franklin Gothic Medium', sans-serif;
+
+    --palette_01: #e29f23;
+    --palette_02: #2ca395;
+    --palette_03: #670d13;
   }
 
 body, html
@@ -116,12 +120,23 @@ nav
 
 }
 
+.tab_content_container h1
+{
+    font-size: 2rem;
+    margin:0;
+    padding: 15px 0px;
+}
+
 /*! Text in .tab_content goes out of bound when screensize is too small  */
 
 /* #endregion ---------- tabs content container ---------- */
 
+/*#region ---------- References ---------- */
 
-/*#region ---------- about me ---------- */
+/*#endregion ---------- References ---------- */
+
+
+/*#region ---------- About me ---------- */
 .aboutme_img
 {   
     height: 100%;
@@ -140,7 +155,82 @@ nav
     display: inline-block;
     width: 60%;
 }
-/* #endregion ---------- about me ----------*/
+/* #endregion ---------- About me ----------*/
+
+/*#region ---------- Contact me ---------- */
+
+#contactme_container
+{
+    width: 40%;
+    height: 75%;
+}
+
+.contactme_form
+{
+    /* background-color: var(--main-color); */
+    height: 100%;
+    width: 100%;
+
+    display: inline-block;
+}
+
+.contactme_form form
+{
+    height: 90%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+.contactme_form label
+{
+    font-size: 1.5rem;
+    margin: 10px 0px;
+}
+
+.contactme_form input, .contactme_form #form_message
+{   
+    width: 70%;
+
+    background-color: rgb(10,10,10);
+    color: var(--font-color);
+
+    line-height: 2rem;
+    border-radius: 15px;
+    border: none;
+
+    padding: 5px;
+    padding-left: 10px;
+
+    font-family: var(--main-font);
+}
+
+
+.contactme_form #form_message
+{   
+    height: 70%;
+    resize: none;   
+}
+
+.contactme_form #form_submit
+{
+    background-color: var(--palette_01);
+
+    width: 30%;
+    height: 10%;
+    margin: 30px;
+
+    font-weight: bold;
+}
+
+/*#endregion ---------- Contact me ---------- */
+
+/*#region ---------- Skills ---------- */
+/*#endregion ---------- Skills ---------- */
 
 /* #region ---------- Portfolio ----------*/
 
@@ -225,22 +315,22 @@ footer
 
     text-align: center;
     font-style: italic;
-    font-size: 12px;
+    font-size: 10px;
     /* font-family: 'Franklin Gothic Medium', sans-serif; */
 
-    padding-top: 15px;
+    
     margin: 0px;
+    padding-top: 10px;
 }
 
 footer p
 {
     color: var(--font-color);
-    margin-top:10px;
 }
 
 footer a
 {
-    padding-right: 5px;
+    padding-right: 10px;
 }
 
 /*#endregion ---------- footer ---------- */
