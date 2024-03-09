@@ -1,4 +1,4 @@
-- Semantics
+- Semantics ✔️
 - Background ✔️
 - Navbar
 - Länk till linkedin + github (Footer) ✔️ 
@@ -11,3 +11,9 @@ Navbar:
 - References
 - Skills
 - Portfolio
+
+Footer:
+- Github
+- Linkedin
+- Email
+- DL CV?
