@@ -7,7 +7,7 @@
 
 Navbar:
 - About me
-- Contact me / Contact form
+- Contact form - Automatic subject?
 - References
 - Skills
 - Portfolio
