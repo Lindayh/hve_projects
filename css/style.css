@@ -3,7 +3,7 @@
     --font-color: rgb(220,220,220);
     --main-font: 'Franklin Gothic Medium', sans-serif;
 
-    --palette_01: #e29f23;
+    --palette_01: #be861d;
     --palette_02: #2ca395;
     --palette_03: #670d13;
   }
@@ -188,7 +188,7 @@ nav
 
 .contactme_form label
 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin: 10px 0px;
 }
 
@@ -230,6 +230,58 @@ nav
 /*#endregion ---------- Contact me ---------- */
 
 /*#region ---------- Skills ---------- */
+
+#skills_container
+{
+    background-color: rgba(0,0,0,0);
+    width: 70%;
+}
+
+.skills_card_container
+{   
+    height: 90%;
+    width: 100%;
+    /* border: 3px solid var(--palette_01); */
+
+    display: grid;
+    grid-template-columns: 0.475fr 0.05fr 0.475fr;
+    grid-template-rows: 0.475fr 0.05fr 0.475fr;
+}
+
+#skills_container .skills_card
+{
+    background-color: var(--main-color);
+    border-radius: 30px;    
+}
+
+#skills_programming
+{
+    grid-column-start: 0;
+    grid-column-end: 2;
+
+    grid-row-start: 1;
+    grid-row-end: 5;
+}
+
+#skills_lang
+{
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#skills_extra
+{
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+
 /*#endregion ---------- Skills ---------- */
 
 /* #region ---------- Portfolio ----------*/
