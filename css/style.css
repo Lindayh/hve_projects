@@ -131,9 +131,80 @@ nav
 
 /* #endregion ---------- tabs content container ---------- */
 
-/*#region ---------- References ---------- */
+/* # ---------- References ---------- */
+#references_container
+{
+    background-color: rgba(0,0,0,0);
+}
 
-/*#endregion ---------- References ---------- */
+#references_container h1
+{
+    background-color: var(--main-color);
+    border-radius: 30px;
+
+    width: 20vw;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    margin-bottom: 2vh;
+}
+
+.reference_boxes
+{
+    height: 60vh;
+    width: 100%;
+
+    display: inline-flex;
+
+    /* background-color: var(--main-color); */
+}
+
+.reference_card
+{
+    background-color: rgba(10,10,10, 0.85);
+
+    width: 30%;
+    height: 100%;
+
+    border-radius: 30px;
+    margin: 1.5%;
+}
+ .reference_card_img
+{
+    background-image: url("../images/reference_placeholder.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 100%;
+    height: 45%;
+    border-radius: 30px;
+    margin: 10px;
+
+    /* border: 3px solid red; */
+
+}
+
+.reference_card_text
+{   
+    width: 100%;
+    padding-top: 15px;
+
+    border-radius: 30px;
+} 
+
+.reference_card_text p
+{
+    font-size: 1.5rem;
+    text-align: justify;
+    padding: 0 15px 15px 15px;
+}
+
+
+/* #endregion ---------- References ---------- */
 
 
 /*#region ---------- About me ---------- */
