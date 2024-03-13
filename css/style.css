@@ -98,7 +98,7 @@ nav
     font-size: 2rem;
 }
 
-nav img
+nav img, nav a
 {
     height: 2.5rem;    
     margin-right: auto;
