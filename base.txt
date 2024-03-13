@@ -7,7 +7,7 @@
 Navbar:
 - About me  > Section layout ✔️
 - Contact form > Section layout ✔️
-- References > Section layout - WIP - 
+- References > Section layout ✔️ 
 - Skills > Section layout ✔️
 - Portfolio > Section layout ✔️
 
@@ -15,7 +15,7 @@ Footer:
 - Github
 - Linkedin
 - Email
-- DL CV?
+- Contact me
 
 
 Notes:

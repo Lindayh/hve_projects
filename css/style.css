@@ -1,3 +1,4 @@
+/*#region ---------- Root ---------- */
 :root {
     --main-color: rgba(10,10,10, 0.6);
     --font-color: rgb(220,220,220);
@@ -8,6 +9,7 @@
     --palette_03: #670d13;
   }
 
+/*#region -------- Body,html ---------- */
 body, html
 {
     background: url("../images/bg_img.png") no-repeat center center;
@@ -35,13 +37,14 @@ h1
     font-size: 3rem;
 }
 
+
 /* #region ---------- Navbar ---------- */
 nav
 {
     /* font-family: --main-font; */
     background-color: var(--main-color); 
     width: 100%;
-    height: 5%;
+    height: 7%;
 
     position: absolute;
     top:0;
@@ -51,6 +54,19 @@ nav
     justify-content: center;
 }
 
+
+
+.radio_container
+{   
+    position: inherit;
+
+    width: 50%;
+
+    display: grid;
+    grid-template-columns: 0.25fr 0.25fr 0.45fr 0.25fr 0.25fr;
+}
+
+
 .radio_btn
 {
     opacity: 0;             /* Makes the radio button transparent */
@@ -59,9 +75,38 @@ nav
 
 .radio_label                 /* radio button labels */
 {
-    margin: 20px;
     font-size: 1.5rem;
+    text-align: center;
+
+    margin: auto 0;
+    /* border: 3px solid var(--palette_03); */
 }
+
+.radio_label:nth-of-type(3)
+{
+    /* text-decoration: underline; */
+    /* text-decoration-color: var(--palette_01);
+    text-decoration-thickness: 2px; */
+
+    /* border: 5px solid var(--palette_01); */
+    width: 70%;
+    margin: auto;
+
+    background-color: rgba(255, 185, 55, 0.66);
+    border-radius: 15px;
+
+    font-size: 2rem;
+}
+
+nav img
+{
+    height: 2.5rem;    
+    margin-right: auto;
+    margin-left: 15px;
+    border: 5px;
+}
+
+
 /* #endregion ---------- Navbar ---------- */
 
 /* #region ---------- Hero ---------- */
@@ -131,7 +176,7 @@ nav
 
 /* #endregion ---------- tabs content container ---------- */
 
-/* # ---------- References ---------- */
+/* #region ---------- References ---------- */
 #references_container
 {
     background-color: rgba(0,0,0,0);
@@ -206,18 +251,17 @@ nav
 
 /* #endregion ---------- References ---------- */
 
-
 /*#region ---------- About me ---------- */
 .aboutme_img
 {   
     height: 100%;
-    width: 30%;
-    background-image: url("https://storage.googleapis.com/pai-images/dfdb2eb285be4aa6bb18d0d56be9eff1.jpeg");
+    width: 35%;
+    /* background-image: url("https://storage.googleapis.com/pai-images/dfdb2eb285be4aa6bb18d0d56be9eff1.jpeg"); */
+    background-image: url("../images/aboutme_temp.png");
     background-repeat: no-repeat;
     background-size: cover;
 
     border-radius: 30px 0px 0px 30px;
-
     float: left;
 }
 
@@ -425,6 +469,7 @@ nav
 
 
 /* #endregion ---------- Portfolio ----------*/
+
 
 
 /*#region ---------- footer ---------- */
