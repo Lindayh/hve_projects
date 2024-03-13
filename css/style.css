@@ -301,10 +301,24 @@ nav img, nav a
     flex-direction: column;
 }
 
-.contactme_form label
+.contactme_form div   /* Label + alert */  /* WIP div*/
 {
+    width: 70%;
+
     font-size: 1.2rem;
-    margin: 10px 0px;
+
+    /* border: 3px solid red; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.contactme_form label               /* WIP labels*/ 
+{
+    margin: auto;
+
+    text-align: left;
+    width: 100%;
+
 }
 
 .contactme_form input, .contactme_form #form_message
@@ -331,7 +345,7 @@ nav img, nav a
     resize: none;   
 }
 
-.contactme_form #form_submit
+.contactme_form #form_submit                /* Send button */ 
 {
     background-color: var(--palette_01);
 
@@ -341,6 +355,16 @@ nav img, nav a
 
     font-weight: bold;
 }
+
+.form_alert         /* WIP alert*/ 
+{
+    width: 100%;
+    text-align: right;
+    height: 1.2rem;
+
+    color: red;
+    font-style: italic;
+} 
 
 /*#endregion ---------- Contact me ---------- */
 

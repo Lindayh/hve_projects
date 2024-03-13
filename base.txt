@@ -26,5 +26,7 @@ Notes:
 - Contact me form - Automatic Subject?
 
 ---------------------------------------------------------------
-After base layout is done:
-- Accent color on About me (navbar)
+After G part is done:
+- Navbar better formatting
+- Style "CV download" tooltip?
+- Email validation  pattern with regex > *@*.*

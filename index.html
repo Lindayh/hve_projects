@@ -14,7 +14,7 @@
         <nav>
             <!-- <p><img src="images/menu-white.png" alt="menu" width="30"></p> -->    <!-- Menu icon -->
 
-            <a href="images/cv_temp.pdf" download="CV_Linda_Fogli.pdf"><img src="images/dl_cv.png" alt="download_CV"/></a>
+            <a href="images/cv_temp.pdf" download="CV_Linda_Fogli.pdf" title="Download CV"><img src="images/dl_cv.png" alt="download_CV"/></a>
 
             <div class="radio_container">
 
@@ -84,19 +84,33 @@
             <header><h1>Contact me</h1></header>
 
             <div class="contactme_form">
-                <form action="">
-                    <label for="form_name">Name</label>
-                    <input type="text" name="form_name" id="form_name">
+                <form onsubmit="return false;">
+                    <input type="hidden" name="access_key" value="046217b5-8364-4034-aa03-91cc9e47bfbb">
+                    <input type="hidden" name="redirect" value="http://127.0.0.1:5500/index.html">
+                    <div>
+                        <label for="form_name">Name:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                    <input type="text" name="form_name" id="form_name" class="form_input">
+                    
 
-                    <label for="form_email">Email</label>
-                    <input type="email" name="form_email" id="form_email">
+                    <div>
+                        <label for="form_email">Email:</label>
+                        <p class="form_alert" id="email_alert"></p>
+                    </div>
+                    <input type="text" name="form_email" id="form_email" class="form_input">
 
-                    <label for="form_subject">Subject</label>
-                    <input type="text" name="form_subject" id="form_subject">
+                    <div>
+                        <label for="form_subject">Subject:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                        <input type="text" name="form_subject" id="form_subject" class="form_input">
 
-                    <label for="form_message">Message</label>
-
-                    <textarea name="form_message" id="form_message"></textarea>
+                    <div>
+                        <label for="form_message">Message:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                        <textarea name="form_message" id="form_message" class="form_input"></textarea>
 
                     <input type="submit" value="Send" id="form_submit"/>
                 </form>
