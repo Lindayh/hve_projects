@@ -7,12 +7,14 @@
     --palette_01: #be861d;
     --palette_02: #2ca395;
     --palette_03: #670d13;
+
+    --quick-border: 2px solid red;
   }
 
 /*#region -------- Body,html ---------- */
 body, html
 {
-    background: url("../images/bg_img.png") no-repeat center center;
+    background: url("../resources/bg_img.png") no-repeat center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -79,7 +81,6 @@ nav
     text-align: center;
 
     margin: auto 0;
-    /* border: 3px solid var(--palette_03); */
 }
 
 .radio_label:nth-of-type(3)
@@ -88,7 +89,6 @@ nav
     /* text-decoration-color: var(--palette_01);
     text-decoration-thickness: 2px; */
 
-    /* border: 5px solid var(--palette_01); */
     width: 70%;
     margin: auto;
 
@@ -120,7 +120,6 @@ nav img, nav a
     margin: auto;
 
     height: 50%;
-    /* background-color: var(--main-color); */
 
     display: flex;
     align-items: center;
@@ -155,8 +154,6 @@ nav img, nav a
 {
     display: none;
     background-color: var(--main-color);
-
-    /* color: var(--font-color); */
 
     border-radius: 30px;
 
@@ -219,7 +216,7 @@ nav img, nav a
 }
  .reference_card_img
 {
-    background-image: url("../images/reference_placeholder.png");
+    background-image: url("../resources/reference_placeholder.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -228,9 +225,6 @@ nav img, nav a
     height: 45%;
     border-radius: 30px;
     margin: 10px;
-
-    /* border: 3px solid red; */
-
 }
 
 .reference_card_text
@@ -256,8 +250,8 @@ nav img, nav a
 {   
     height: 100%;
     width: 35%;
-    /* background-image: url("https://storage.googleapis.com/pai-images/dfdb2eb285be4aa6bb18d0d56be9eff1.jpeg"); */
-    background-image: url("../images/aboutme_temp.png");
+    /* background-image: url("https://storage.googleapis.com/pai-resources/dfdb2eb285be4aa6bb18d0d56be9eff1.jpeg"); */
+    background-image: url("../resources/aboutme_temp.png");
     background-repeat: no-repeat;
     background-size: cover;
 
@@ -301,18 +295,17 @@ nav img, nav a
     flex-direction: column;
 }
 
-.contactme_form div   /* Label + alert */  /* WIP div*/
+.contactme_form div   /* Label + alert */
 {
     width: 70%;
 
     font-size: 1.2rem;
 
-    /* border: 3px solid red; */
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
-.contactme_form label               /* WIP labels*/ 
+.contactme_form label               /* Form labels*/ 
 {
     margin: auto;
 
@@ -356,7 +349,7 @@ nav img, nav a
     font-weight: bold;
 }
 
-.form_alert         /* WIP alert*/ 
+.form_alert         /* Form alert*/ 
 {
     width: 100%;
     text-align: right;
@@ -374,13 +367,13 @@ nav img, nav a
 {
     background-color: rgba(0,0,0,0);
     width: 70%;
+    height: 70%;
 }
 
 .skills_card_container
 {   
     height: 90%;
     width: 100%;
-    /* border: 3px solid var(--palette_01); */
 
     display: grid;
     grid-template-columns: 0.475fr 0.05fr 0.475fr;
@@ -388,19 +381,61 @@ nav img, nav a
 }
 
 #skills_container .skills_card
-{
+{   
+    height: 100%;
     background-color: var(--main-color);
     border-radius: 30px;    
 }
 
-#skills_programming
+#skills_container img, #skills_container i
 {
+    padding: 10px;
+}
+
+#skills_programming_card
+{   
     grid-column-start: 0;
     grid-column-end: 2;
 
     grid-row-start: 1;
     grid-row-end: 5;
+
+    height: inherit;
 }
+
+#proglang_list
+{
+    /* text-align: center; */
+
+    display: flex;
+    flex-direction: column;
+}
+
+.skills_card_container img
+{
+  height: 50px;
+  margin: 5px;
+}
+
+figcaption
+{
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+figure
+{
+    display: inline-block;
+    margin: 0;
+}
+
+#python_skills
+{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
 
 #skills_lang
 {
@@ -409,6 +444,19 @@ nav img, nav a
 
     grid-row-start: 1;
     grid-row-end: 2;
+}
+
+#skills_lang div
+{   
+    height: 50%;
+    width: 70%;
+
+    margin: auto;
+}
+
+#skills_lang img
+{
+    height: 50px;
 }
 
 #skills_extra
@@ -469,7 +517,7 @@ nav img, nav a
 }
  .github_card_img
 {
-    background-image: url("../images/GitHub.png");
+    background-image: url("../resources/GitHub.png");
     background-size: contain;
     width: 100%;
     height: 45%;
