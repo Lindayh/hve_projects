@@ -1,10 +1,11 @@
 /*#region ---------- Root ---------- */
 :root {
-    --main-color: rgba(10,10,10, 0.8);
+    --main-color: rgba(10,10,10, 0.95);
     --font-color: rgb(220,220,220);
     --main-font: 'Franklin Gothic Medium', sans-serif;
 
     --palette_01: #be861d;
+    --palette_01_lighter: #ebb24a;
     --palette_02: #2ca395;
     --palette_03: #670d13;
 
@@ -46,7 +47,8 @@ nav
     /* font-family: --main-font; */
     background-color: var(--main-color); 
     width: 100%;
-    height: 7%;
+    height: 5%;
+    padding: 0.25% 0;
 
     position: absolute;
     top:0;
@@ -62,10 +64,11 @@ nav
 {   
     position: inherit;
 
-    width: 50%;
+    width: 100%;
 
-    display: grid;
-    grid-template-columns: 0.25fr 0.25fr 0.45fr 0.25fr 0.25fr;
+    display: inline-block;
+    text-align: right;
+
 }
 
 
@@ -81,21 +84,15 @@ nav
     text-align: center;
 
     margin: auto 0;
+    margin-right: 20px;
+
+    font-family: inter;
+    font-weight: 100px;
 }
 
-.radio_label:nth-of-type(3)
+.radio_label:last-child
 {
-    /* text-decoration: underline; */
-    /* text-decoration-color: var(--palette_01);
-    text-decoration-thickness: 2px; */
-
-    width: 70%;
-    margin: auto;
-
-    background-color: rgba(255, 185, 55, 0.66);
-    border-radius: 15px;
-
-    font-size: 2rem;
+    color: var(--palette_01_lighter)
 }
 
 nav img, nav a
@@ -137,6 +134,7 @@ nav img, nav a
 
 
 /* #region ---------- Tabs content container ---------- */
+
 .tab_content_container
 {
     position: fixed;
@@ -144,18 +142,16 @@ nav img, nav a
     left: 0;
     right: 0;
     bottom: 0;
-    margin: auto;
+    margin: 5% auto;
 
-    width: 70%;
-    height: 70%;
+    width: 75%;
+    height: 75%;
 }
 
 .tab_content_container
 {
     display: none;
     background-color: var(--main-color);
-
-    border-radius: 30px;
 
     text-align: center;
     font-size: 2rem;
@@ -174,17 +170,15 @@ nav img, nav a
 /* #endregion ---------- tabs content container ---------- */
 
 /* #region ---------- References ---------- */
+
 #references_container
 {
-    background-color: rgba(0,0,0,0);
+    /* background-color: rgba(0,0,0,0); */
 }
 
 #references_container h1
 {
-    background-color: var(--main-color);
-    border-radius: 30px;
-
-    width: 20vw;
+    width: 100%;
 
     top: 0;
     left: 0;
@@ -196,10 +190,8 @@ nav img, nav a
 
 .reference_box
 {
-    height: 85%;
+    height: 90%;
     width: 100%;
-
-    margin: 3% 0px;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -207,9 +199,6 @@ nav img, nav a
 
     align-content: center;
     justify-content: center;
-
-    background-color: var(--main-color);
-    border-radius: 20px;
 }
 
 .reference_card
@@ -219,20 +208,20 @@ nav img, nav a
     height: 90%;
 
     margin: auto;
-    border-radius: 30px;
     
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
 }
+
  /* .reference_card_img
 {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center; 
     width: 70%;
-    border-radius: 30px;
+    border-radius: 15px;
     margin: 10px; *
 } */
 
@@ -269,13 +258,13 @@ nav img, nav a
 
     text-align: right;
     padding-right: 2%;
-
 }
 
 
 /* #endregion ---------- References ---------- */
 
 /*#region ---------- About me ---------- */
+
 .aboutme_img
 {   
     height: 100%;
@@ -285,7 +274,6 @@ nav img, nav a
     background-repeat: no-repeat;
     background-size: cover;
 
-    border-radius: 30px 0px 0px 30px;
     float: left;
 }
 
@@ -294,6 +282,7 @@ nav img, nav a
     display: inline-block;
     width: 60%;
 }
+
 /* #endregion ---------- About me ----------*/
 
 /*#region ---------- Contact me ---------- */
@@ -341,7 +330,6 @@ nav img, nav a
 
     text-align: left;
     width: 100%;
-
 }
 
 .contactme_form input, .contactme_form #form_message
@@ -352,7 +340,6 @@ nav img, nav a
     color: var(--font-color);
 
     line-height: 2rem;
-    border-radius: 15px;
     border: none;
 
     padding: 5px;
@@ -360,7 +347,6 @@ nav img, nav a
 
     font-family: var(--main-font);
 }
-
 
 .contactme_form #form_message
 {   
@@ -413,8 +399,7 @@ nav img, nav a
 #skills_container .skills_card
 {   
     height: 100%;
-    background-color: var(--main-color);
-    border-radius: 30px;    
+    background-color: var(--main-color);  
 }
 
 #skills_container img, #skills_container i
@@ -511,7 +496,6 @@ figure
 #portfolio_container h1
 {
     background-color: var(--main-color);
-    border-radius: 30px;
 
     width: 20vw;
 
@@ -540,26 +524,22 @@ figure
     width: 30%;
     height: 100%;
 
-    border-radius: 30px;
-
     margin: 1.5%;
-
 }
+
  .github_card_img
 {
     background-image: url("../resources/GitHub.png");
     background-size: contain;
     width: 100%;
     height: 45%;
-    border-radius: 30px;
+ 
 }
 
 .github_card_text
 {   
     width: 100%;
     padding-top: 15px;
-
-    border-radius: 30px;
 } 
 
 .github_card_text p
@@ -569,38 +549,42 @@ figure
     padding: 0 15px 15px 15px;
 }
 
-
 /* #endregion ---------- Portfolio ----------*/
 
 
 
 /*#region ---------- footer ---------- */
+
 footer
 {
     background-color: var(--main-color); 
-    /* background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgba(10,10,10,0.7));    */
     width: 100%;
     position: absolute;
     bottom: 0;
 
-    text-align: center;
-    font-style: italic;
-    font-size: 10px;
-    /* font-family: 'Franklin Gothic Medium', sans-serif; */
+    height: 6%;
+    padding-top: 0.5%;
 
-    
-    margin: 0px;
-    padding-top: 10px;
+    text-align: center;
 }
 
 footer p
 {
     color: var(--font-color);
+
+    font-style: italic;
+    font-size: 1rem;
 }
 
 footer a
 {
     padding-right: 10px;
+    margin: 0;
+}
+
+footer img
+{   
+    height: 18px;
 }
 
 /*#endregion ---------- footer ---------- */

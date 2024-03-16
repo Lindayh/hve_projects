@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linda Fogli</title>
 
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
     <!-- <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" /> -->
           
 </head>
@@ -25,9 +25,6 @@
                 <input type="radio" name="radio_tabs" id="radio_tabs_references" class="radio_btn">
                 <label for="radio_tabs_references" class="radio_label">References</label>
 
-                <input type="radio" name="radio_tabs" id="radio_tabs_contactme" class="radio_btn">
-                <label for="radio_tabs_contactme" class="radio_label">Contact me</label>
-
                 <input type="radio" name="radio_tabs" id="radio_tabs_aboutme" class="radio_btn">
                 <label for="radio_tabs_aboutme" class="radio_label">About me</label>
 
@@ -36,6 +33,9 @@
 
                 <input type="radio" name="radio_tabs" id="radio_tabs_portfolio" class="radio_btn">
                 <label for="radio_tabs_portfolio" class="radio_label">Portfolio</label>
+
+                <input type="radio" name="radio_tabs" id="radio_tabs_contactme" class="radio_btn">
+                <label for="radio_tabs_contactme" class="radio_label">Contact me</label>
 
             </div class="radio_container">
         </nav>
@@ -64,7 +64,7 @@
                     <!-- <div class="reference_card_img"></div> -->
                     <div class="reference_card_text">
                         <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
-                        <p>Mario Rossi, Professional Dude</p>
+                        <p>Person</p>
                     </div> 
                 </div>
                 
@@ -72,7 +72,7 @@
                     <!-- <div class="reference_card_img"></div> -->
                     <div class="reference_card_text">
                         <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
-                        <p>Mario Rossi, Professional Dude</p>
+                        <p>Person</p>
                     </div> 
                 </div>
             
@@ -80,7 +80,7 @@
                     <!-- <div class="reference_card_img"></div> -->
                     <div class="reference_card_text">
                         <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
-                        <p>Mario Rossi, Professional Dude</p>
+                        <p>Person</p>
                     </div> 
                 </div>
 
@@ -88,7 +88,7 @@
                     <!-- <div class="reference_card_img"></div> -->
                     <div class="reference_card_text">
                         <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
-                        <p>Mario Rossi, Professional Dude</p>
+                        <p>Person</p>
                     </div> 
                 </div>
 
@@ -96,7 +96,7 @@
                     <!-- <div class="reference_card_img"></div> -->
                     <div class="reference_card_text">
                         <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
-                        <p>Mario Rossi, Professional Dude</p>
+                        <p>Person</p>
                     </div> 
                 </div>
 
@@ -104,7 +104,7 @@
                     <!-- <div class="reference_card_img"></div> -->
                     <div class="reference_card_text">
                         <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
-                        <p>Mario Rossi, Professional Dude</p>
+                        <p>Person</p>
                     </div> 
                 </div>
 
@@ -114,43 +114,6 @@
 
             
 
-        </article>
-
-        <article class="tab_content_container" id="contactme_container">
-            <header><h1>Contact me</h1></header>
-
-            <div class="contactme_form">
-                <form onsubmit="return false;">
-                    <input type="hidden" name="access_key" value="046217b5-8364-4034-aa03-91cc9e47bfbb">
-                    <input type="hidden" name="redirect" value="http://127.0.0.1:5500/index.html">
-                    <div>
-                        <label for="form_name">Name:</label>
-                        <p class="form_alert"></p>
-                    </div>
-                    <input type="text" name="form_name" id="form_name" class="form_input">
-                    
-
-                    <div>
-                        <label for="form_email">Email:</label>
-                        <p class="form_alert" id="email_alert"></p>
-                    </div>
-                    <input type="text" name="form_email" id="form_email" class="form_input">
-
-                    <div>
-                        <label for="form_subject">Subject:</label>
-                        <p class="form_alert"></p>
-                    </div>
-                        <input type="text" name="form_subject" id="form_subject" class="form_input">
-
-                    <div>
-                        <label for="form_message">Message:</label>
-                        <p class="form_alert"></p>
-                    </div>
-                        <textarea name="form_message" id="form_message" class="form_input"></textarea>
-
-                    <input type="submit" value="Send" id="form_submit"/>
-                </form>
-            </div> 
         </article>
 
         <article class="tab_content_container" id="aboutme_container">
@@ -298,7 +261,43 @@
 
             </div>
         </article>
+ 
+        <article class="tab_content_container" id="contactme_container">
+            <header><h1>Contact me</h1></header>
 
+            <div class="contactme_form">
+                <form onsubmit="return false;">
+                    <input type="hidden" name="access_key" value="046217b5-8364-4034-aa03-91cc9e47bfbb">
+                    <input type="hidden" name="redirect" value="http://127.0.0.1:5500/index.html">
+                    <div>
+                        <label for="form_name">Name:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                    <input type="text" name="form_name" id="form_name" class="form_input">
+                    
+
+                    <div>
+                        <label for="form_email">Email:</label>
+                        <p class="form_alert" id="email_alert"></p>
+                    </div>
+                    <input type="text" name="form_email" id="form_email" class="form_input">
+
+                    <div>
+                        <label for="form_subject">Subject:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                        <input type="text" name="form_subject" id="form_subject" class="form_input">
+
+                    <div>
+                        <label for="form_message">Message:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                        <textarea name="form_message" id="form_message" class="form_input"></textarea>
+
+                    <input type="submit" value="Send" id="form_submit"/>
+                </form>
+            </div> 
+        </article>
     </div>
 
 <!--#endregion ---------- Tabs content ---------->
@@ -307,8 +306,8 @@
 <!--#region ---------- Footer ---------->
 
     <footer>
-        <a href="https://github.com/Lindayh" target="_blank"><img src="resources/github-mark-white.png" alt="My_GitHub" height="18"></a>
-        <a href="https://www.linkedin.com/in/foglilinda/" target="_blank"><img src="resources/linkedin-white.png" alt="My_LinkedIn" height="18"></a>
+            <a href="https://github.com/Lindayh" target="_blank"><img src="resources/github-mark-white.png" alt="My_GitHub"></a>
+            <a href="https://www.linkedin.com/in/foglilinda/" target="_blank"><img src="resources/linkedin-white.png" alt="My_LinkedIn"></a>
         <p>foglilinda@gmail.com</p>
     </footer>
 
