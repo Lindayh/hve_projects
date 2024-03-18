@@ -547,7 +547,7 @@ figure
 /* #region ---------- Portfolio ----------*/
 
 #portfolio_container
-{
+{   
     background-color: rgba(0,0,0,0);
 
     margin: auto;
@@ -563,15 +563,16 @@ figure
     bottom: 0;
 
     margin: 0 1.5% 1.5% 1.5%;
+
 }
 
 .github_box
 {
-    height: 85%;
+    height: 90%;
 
     display: inline-flex;
 
-    /* background-color: var(--main-color); */
+    overflow: hidden;
 }
 
 .github_card
@@ -586,8 +587,8 @@ figure
 
  .github_card_img
 {
-    background-image: url("../resources/GitHub.png");
-    background-size: contain;
+    background: url("../resources/GitHub.png") no-repeat center center;
+    background-size: cover;
     width: 100%;
     height: 45%;
 }
@@ -713,10 +714,55 @@ footer img
     text-align: left;
 }
 
+/* Portfolio */
+
+#portfolio_container
+{
+    height: 80%;
+    width: 80%;
+    
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.github_box
+{
+    flex-flow: column;
+}
+
+.github_card
+{
+    height: 30%;
+    width: 100%;
+
+    overflow-y: scroll;
+}
+
+.github_card_img
+{
+    float: left;
+
+    width: 40%;
+    height: 100%;
+
+    position: sticky;
+    top:0;
+}
+
+.github_card_text
+{
+    width: 60%;
+    float: right;
+}
 
 
+.github_card_text p
+{
+    font-size: 1.4rem;
 
+    overflow-y: scroll;
 
+}
 
     
 }
