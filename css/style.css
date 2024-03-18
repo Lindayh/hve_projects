@@ -446,15 +446,18 @@ nav img, nav a
     margin: auto;
 
     margin: 3% 1.5% 1.5% 1.5%;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 #skills_container .skills_card
 {   
     height: 100%;
-    background-color: var(--main-color);  
+    background-color: var(--main-color);
 }
 
-#skills_container img, #skills_container i
+#skills_container img
 {
     padding: 10px;
 }
@@ -497,14 +500,6 @@ figure
     margin: 0;
 }
 
-#python_skills
-{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-
-
 #skills_lang
 {
     grid-column-start: 3;
@@ -516,10 +511,12 @@ figure
 
 #skills_lang div, #skills_extra div
 {   
-    height: 50%;
+    height: auto;
     width: 70%;
 
     margin: auto;
+
+    padding: 10px;
 }
 
 #skills_lang img
@@ -609,7 +606,6 @@ figure
     scrollbar-width: none;
 
     padding-top: 20px;
-    
 } 
 
 .github_card_text p
@@ -779,12 +775,55 @@ footer img
     font-size: 1.4rem;
 
     overflow-y: scroll;
-
 }
 
-    
+/* Skills */
+
+#skills_container
+{
+    height: 80%;
+    width: 80%;
+
+    overflow: hidden;
 }
 
+.skills_card_container
+{
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#skills_container .skills_card
+{   
+    height: auto; 
+}
+
+#skills_lang div, #skills_extra div
+{   
+    height: auto;
+    width: 100%;
+
+    margin: auto;
+}
+
+#proglang_list
+{
+    padding: 10px;
+}
+
+#skills_container .skills_card
+{
+    margin: 2% 0;
+}
+
+
+
+
+
+}
 
 
 @media (min-width: 600px) and (max-width: 1024px)   /* Tablet */ 
