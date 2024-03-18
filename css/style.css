@@ -323,8 +323,12 @@ nav img, nav a
 
 #contactme_container
 {
-    width: 40%;
+    width: 70%;
     height: 75%;
+
+    margin: auto;
+
+    background-color: rgba(10,10,10, 0.7);
 }
 
 .contactme_form
@@ -335,6 +339,12 @@ nav img, nav a
 
     display: inline-block;
 }
+
+#contactme_container h1
+{
+    background-color: var(--main-color);
+}
+
 
 .contactme_form form
 {
@@ -687,6 +697,18 @@ footer img
         margin: 5% 0;
     }
 
+
+/* Contact me */
+
+#contactme_container
+{
+    width: 80%;
+    height: 80%;
+
+    margin: auto;
+}
+
+
 /* About me */
 
 #aboutme_container
@@ -819,6 +841,14 @@ footer img
     margin: 2% 0;
 }
 
+
+/* References */
+
+#references_container
+{
+    height: 80%;
+    width: 80%;
+}
 
 
 
