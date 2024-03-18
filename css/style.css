@@ -551,11 +551,14 @@ figure
     background-color: rgba(0,0,0,0);
 
     margin: auto;
+
+    overflow: hidden;
 }
 
 #portfolio_container h1
 {
     background-color: rgb(5,5,5);
+    width: 100%;
 
     top: 0;
     left: 0;
@@ -563,7 +566,6 @@ figure
     bottom: 0;
 
     margin: 0 1.5% 1.5% 1.5%;
-
 }
 
 .github_box
@@ -572,7 +574,9 @@ figure
 
     display: inline-flex;
 
-    overflow: hidden;
+    overflow: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
 }
 
 .github_card
@@ -582,7 +586,6 @@ figure
     height: 100%;
 
     margin: 1.5%;
-
 }
 
  .github_card_img
@@ -591,12 +594,22 @@ figure
     background-size: cover;
     width: 100%;
     height: 45%;
+
+    position: sticky;
+    top:0;
 }
 
 .github_card_text
 {   
     width: 100%;
-    padding-top: 15px;
+    height: 50%;
+
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+    padding-top: 20px;
+    
 } 
 
 .github_card_text p
@@ -720,7 +733,7 @@ footer img
 {
     height: 80%;
     width: 80%;
-    
+
     overflow: hidden;
     overflow-y: scroll;
 }
@@ -728,6 +741,8 @@ footer img
 .github_box
 {
     flex-flow: column;
+
+    overflow-x: hidden;
 }
 
 .github_card
@@ -752,7 +767,10 @@ footer img
 .github_card_text
 {
     width: 60%;
+    height: 100%;
     float: right;
+
+    padding-top: 10px;
 }
 
 
