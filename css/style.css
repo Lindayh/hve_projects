@@ -56,9 +56,11 @@ nav
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font-size: 1.5rem;
+    font-family: inter;
+    font-weight: 100;
 }
-
-
 
 .radio_container
 {   
@@ -71,7 +73,6 @@ nav
 
 }
 
-
 .radio_btn
 {
     opacity: 0;             /* Makes the radio button transparent */
@@ -80,19 +81,21 @@ nav
 
 .radio_label                 /* radio button labels */
 {
-    font-size: 1.5rem;
     text-align: center;
 
     margin: auto 0;
     margin-right: 20px;
 
-    font-family: inter;
-    font-weight: 100px;
 }
 
 .radio_label:last-child
 {
     color: var(--palette_01_lighter)
+}
+
+#dl_cv_mobile, #home_btn_mobile
+{
+    display: none;
 }
 
 nav img, nav a
@@ -245,7 +248,7 @@ nav img, nav a
     margin: 0;
 } 
 
-.reference_card_text p:nth-child(2)
+.reference_card_text p:nth-child(2)         /* Person name */
 {
     font-size: 1.5rem;
 }
@@ -670,36 +673,101 @@ footer img
 
 @media (max-width:600px)        /* Mobile */ 
 {   
-    .hero
-    {
-        display: none;
-    }
 
-    nav
-    {
-        height: 95%;
-        background-color: rgba(10,10,10, 0.5);
-    }
+/* Navbar, hero */
+.hero
+{
+    display: none;
+}
 
-    .radio_container
-    {   
-        height: 100%;
-        position: absolute;
-        display: flex;
-        flex-direction: column-reverse;
+nav
+{
+    width: 100%;
+    height: 90%;
+    background-color: rgba(10,10,10, 0.5);
 
-        align-content: center;
-        justify-content: center;
-    }
+    position: relative;
+    flex-direction: column;
+}
 
-    .radio_label
-    {
-        margin: 5% 0;
-    }
+#dl_cv
+{
+    display: none;
+    position: absolute;
+    margin: 0;
+}
+
+
+#dl_cv_mobile, #home_btn_mobile
+{
+    width: 100%;
+    height: 5%;
+    color: var(--palette_01_lighter);
+    display: block;
+    text-align: center;
+
+    text-decoration: none;
+
+    margin: 0;
+}
+
+#home_btn_mobile
+{   
+    color: var(--font-color);  
+    position: absolute;
+    top: 0;
+
+    height: 15%;
+
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    letter-spacing: 10px;
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1rem;
+
+}
+
+#home_btn_mobile p:last-child
+{
+    font-size: 1.5rem;
+}
+
+
+.radio_container
+{   
+    width: 100%;
+    height: 70%;
+
+    display: flex;
+    flex-direction: column-reverse;
+
+    align-content: center;
+    justify-content: center;
+}
+
+.radio_label
+{
+    margin: 5% 0;
+}
+
+
+/* Footer */
+footer
+{
+    height: 8%;
+
+    padding-top: 2%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-content: center;
+}
+
 
 
 /* Contact me */
-
 #contactme_container
 {
     width: 80%;
@@ -710,7 +778,6 @@ footer img
 
 
 /* About me */
-
 #aboutme_container
 {
     height: 80%;
@@ -746,7 +813,6 @@ footer img
 }
 
 /* Portfolio */
-
 #portfolio_container
 {
     height: 80%;
@@ -799,8 +865,8 @@ footer img
     overflow-y: scroll;
 }
 
-/* Skills */
 
+/* Skills */
 #skills_container
 {
     height: 80%;
@@ -843,12 +909,19 @@ footer img
 
 
 /* References */
-
 #references_container
 {
     height: 80%;
     width: 80%;
+    max-height: 80%;
+
+    position: absolute;
+    overflow: hidden;
+
+    margin: auto;
+
 }
+
 
 
 
