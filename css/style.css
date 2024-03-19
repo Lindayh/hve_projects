@@ -758,18 +758,31 @@ nav
 
 /* Footer */
 footer
-{
+{   
     height: 8%;
 
     padding-top: 2%;
 
-    display: flex;
+    /* display: flex;
     flex-direction: column;
 
     justify-content: center;
-    align-content: center;
+    align-content: center; */
+
+    overflow: hidden;
+    margin: 0;
+
 }
 
+footer img
+{
+    height: 45px;
+}
+
+footer p
+{
+    display: none;
+}
 
 
 /* Contact me */
