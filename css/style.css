@@ -291,7 +291,7 @@ nav img, nav a
 .aboutme_text
 {   
     height: 80%;
-    display: inline-block;
+    /* display: inline-block; */
     width: 60%;
 
    float: right;
@@ -410,6 +410,8 @@ nav img, nav a
     margin: 30px;
 
     font-weight: bold;
+
+    letter-spacing: 3px;
 }
 
 .form_alert         /* Form alert*/ 
@@ -669,7 +671,7 @@ footer img
 
 
 
-/*#region ---------- Responsiveness ---------- */
+/*#region ---------- Mobile Responsiveness ---------- */
 
 @media (max-width:600px)        /* Mobile */ 
 {   
@@ -939,15 +941,7 @@ footer p
     margin: auto;
 
 }
-
-
 }
 
+/*#endregion ---------- Mobile Responsiveness ---------- */
 
-@media (min-width: 600px) and (max-width: 1024px)   /* Tablet */ 
-{
-
-}
-
-
-/*#endregion ---------- Responsiveness ---------- */

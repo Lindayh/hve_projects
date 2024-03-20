@@ -98,18 +98,20 @@ send_btn.addEventListener("click", function()
 
 
 
-// ---- Hide mobile menu ----
+// ---- Hide mobile, tablet menu ----
 
 const tabs_content = document.getElementsByClassName("tab_content_container")
 
 for (let i = 0; i < radio_btns.length; i++){
     radio_btns[i].addEventListener("change", function()
         {   
-            if (window.matchMedia('(max-width: 600px)').matches)
+            if (window.matchMedia('(max-width: 1024px)').matches)
             {
                 document.getElementsByClassName("radio_container")[0].style.display = "none"
                 document.getElementById("dl_cv_mobile").style.display = "none"
             }
+
+
         }
     )
 }
