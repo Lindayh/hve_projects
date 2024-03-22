@@ -15,7 +15,7 @@
 /*#region -------- Body,html ---------- */
 body, html
 {
-    background: url("../resources/bg_img.png") no-repeat center center;
+    background: url("../resources/img/bg_img.png") no-repeat center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -618,7 +618,7 @@ figure
 
  .github_card_img
 {
-    background: url("../resources/GitHub.png") no-repeat center center;
+    background: url("../resources/img/GitHub.png") no-repeat center center;
     background-size: cover;
     width: 100%;
     height: 45%;
