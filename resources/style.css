@@ -701,6 +701,34 @@ footer img
     height: 18px;
 }
 
+.weather_API
+{   
+    position: inherit;
+    float: left;
+    padding-left: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.weather_API img
+{   
+    height: 40px;
+    float: left;
+
+    justify-self: center;
+    align-self: center;
+}
+
+.weather_API div
+{
+    line-height: 0.5rem;
+    padding-left: 10px;
+    letter-spacing: 2px;
+}
+
 /*#endregion ---------- footer ---------- */
 
 
@@ -1085,7 +1113,7 @@ nav
     flex-direction: column-reverse;
 
     align-content: center;
-    justify-content:end; 
+    justify-content:flex-end; 
 
     overflow-y: scroll;
 
