@@ -5,7 +5,8 @@
     --main-font: 'Franklin Gothic Medium', sans-serif;
 
     --palette_01: #be861d;
-    --palette_01_lighter: #ebb24a;
+    /* --palette_01_lighter: #ebb24a; */
+    --palette_01_lighter: #e6bf79;
     --palette_02: #2ca395;
     --palette_03: #670d13;
 
@@ -20,9 +21,7 @@ body, html
     background-attachment: fixed;
     background-size: cover;
 
-    /* background-image: url("../resources/img/rev_vign.png"), url("../resources/img/overlay.png"), url("https://mavenwireless.com/wp-content/uploads/2019/04/abstract-connected-dots-lines-concept-ai-technology-motion-digital-data-flow-ai-generated-scaled.jpg"); */
-
-    background-image: url("../resources/img/rev_vign.png"), url("https://mavenwireless.com/wp-content/uploads/2019/04/abstract-connected-dots-lines-concept-ai-technology-motion-digital-data-flow-ai-generated-scaled.jpg");
+    background-image: url("../resources/img/rev_vign.png"), url("../resources/img/bg.png");
 
 
     margin: 0;
@@ -878,7 +877,7 @@ footer p
 
 .contactme_form div   /* Label + alert */
 {
-    margin-left: 10%;
+    margin-left: 15%;
 }
 
 .contactme_form #form_message
@@ -1170,6 +1169,8 @@ footer p
     width: 80%;
 
     margin: auto;
+    overflow-y: hidden; 
+
 }
 
 #contactme_container label
@@ -1186,6 +1187,24 @@ footer p
 #form_submit
 {
     font-size: 2rem;
+}
+
+.contactme_form form
+{
+    overflow-y: scroll;
+
+    display: inline-block;
+}
+
+.contactme_form div   /* Label + alert */
+{
+    margin-left: 15%;
+}
+
+.contactme_form #form_message
+{
+    min-height: 100px;
+    max-height: 30%;
 }
 
 /* About me Tablet*/
