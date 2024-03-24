@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="resources/style.css">
+    <script src="resources/script.js" defer></script>
+    <script src="resources/API.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linda Fogli</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
-    <!-- <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" /> -->
           
 </head>
 <body>
@@ -18,9 +18,12 @@
         <nav>
             <!-- <p><img src="resources/menu-white.png" alt="menu" width="30"></p> -->    <!-- Menu icon -->
 
-            <a href="resources/" download="CV_Linda_Fogli.pdf" title="Download CV"><img src="resources/dl_cv.png" alt="download_CV"/></a>
+            <a href="http://192.168.1.195:5500/index.html" id="home_btn"><img src="resources/svg/home.svg" alt="home"/></a>
+
 
             <div class="radio_container">
+
+                <a href="resources/CV_temp.pdf" download="CV_Linda_Fogli.pdf" title="Download CV" id="dl_cv_mobile">Download CV</a>
 
                 <input type="radio" name="radio_tabs" id="radio_tabs_references" class="radio_btn">
                 <label for="radio_tabs_references" class="radio_label">References</label>
@@ -37,7 +40,10 @@
                 <input type="radio" name="radio_tabs" id="radio_tabs_contactme" class="radio_btn">
                 <label for="radio_tabs_contactme" class="radio_label">Contact me</label>
 
-            </div class="radio_container">
+            </div>
+            
+            <a href="http://192.168.1.195:5500/index.html" id="home_btn_mobile"><p>LINDA FOGLI</p><p>AI developer</p></a>
+
         </nav>
 
 <!--#endregion ---------- Navbar ---------->
@@ -46,7 +52,8 @@
 <!--#region ---------- Main/Hero ---------->
 
         <div class="hero">
-            <p>AI dev student</p>
+            <p>LINDA FOGLI</p>
+            <p>AI developer</p>
         </div>
 
 <!--#endregion ---------- Main/Hero ---------->
@@ -212,8 +219,8 @@
                             </figure>
 
                             <figure>
-                                <img src="https://www.svgrepo.com/show/2087/plus.svg" alt="">
-                                <figcaption>...</figcaption>
+                                <img src="resources\svg\humanities.svg" alt="">
+                                <figcaption>Humanities</figcaption>
                             </figure>
 
                         </div>
@@ -248,14 +255,13 @@
                     </div>
                 </div>
 
-
             </div>
         </article>
  
         <article class="tab_content_container" id="aboutme_container">
             <div class="aboutme_img"></div>
+            <header><h1>About me</h1></header>
             <div class="aboutme_text">
-                <header><h1>About me</h1></header>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde illo autem debitis reprehenderit repellat suscipit voluptatibus eius quisquam, explicabo aliquam provident perferendis numquam nemo et veniam consequatur minima aliquid placeat.
                 </p> 
                 <p>
@@ -270,7 +276,7 @@
             <div class="contactme_form">
                 <form onsubmit="return false;">
                     <input type="hidden" name="access_key" value="046217b5-8364-4034-aa03-91cc9e47bfbb">
-                    <input type="hidden" name="redirect" value="http://127.0.0.1:5500/index.html">
+                    <input type="hidden" name="redirect" value="http://192.168.1.195:5500/index.html">
                     <div>
                         <label for="form_name">Name:</label>
                         <p class="form_alert"></p>
@@ -308,8 +314,20 @@
 <!--#region ---------- Footer ---------->
 
     <footer>
-            <a href="https://github.com/Lindayh" target="_blank"><img src="resources/github-mark-white.png" alt="My_GitHub"></a>
-            <a href="https://www.linkedin.com/in/foglilinda/" target="_blank"><img src="resources/linkedin-white.png" alt="My_LinkedIn"></a>
+        <div class="weather_API">
+            <img src="" alt=""/>
+            <div>
+                <p>Stockholm</p>
+                <p></p>
+            </div>
+ 
+        </div>
+
+
+        <div class="footer_links">
+            <a href="https://github.com/Lindayh" target="_blank"><img src="resources/svg/github-mark-white.svg" alt="My_GitHub"></a>
+            <a href="https://www.linkedin.com/in/foglilinda/" target="_blank"><img src="resources/svg//LinkedIn_icon.svg" alt="My_LinkedIn"></a>
+        </div>
         <p>foglilinda@gmail.com</p>
     </footer>
 
