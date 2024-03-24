@@ -835,20 +835,11 @@ nav
 
 
 /* Footer Mobile */
-footer
-{   
-    height: 8%;
-
-    padding-top: 2%;
-
-    overflow: hidden;
-    margin: 0;
-
-}
 
 footer img
 {
-    height: 45px;
+    height: 40px;
+    padding-top: 5px;
 }
 
 footer p
@@ -1126,6 +1117,7 @@ nav
     width: 100%;
     min-height: 10%;
     max-height: 55%;
+    bottom: -10%;
 
     flex-grow: 1;
 
@@ -1142,25 +1134,17 @@ nav
 
 
 /* Footer */
-footer
-{   
-    height: 8%;
-    padding: 1% 0;
-
-    overflow: hidden;
-    margin: 0;
-}
 
 footer img
 {
-    height: 45px;
+    padding-top: 5px;
+    height: 40px;
 }
 
 footer p
 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     line-height: 1.5rem;
-    margin-top: 20px;
 }
 
 .tab_content_container h1
