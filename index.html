@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="resources/style.css">
+    <script src="resources/script.js" defer></script>
+    <script src="resources/API.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linda Fogli</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+          
+</head>
+<body>
+
+    <nav>
+
+        <a href="./index.html" id="home_btn"><img src="resources/svg/home.svg" alt="home"/></a>
+        <div class="radio_container">
+
+            <a href="resources/CV_temp.pdf" download="CV_Linda_Fogli.pdf" title="Download CV" id="dl_cv_mobile">Download CV</a>
+
+            <input type="radio" name="radio_tabs" id="radio_tabs_references" class="radio_btn">
+            <label for="radio_tabs_references" class="radio_label">References</label>
+
+            <input type="radio" name="radio_tabs" id="radio_tabs_skills" class="radio_btn">
+            <label for="radio_tabs_skills" class="radio_label">Skills</label>
+
+            <input type="radio" name="radio_tabs" id="radio_tabs_portfolio" class="radio_btn">
+            <label for="radio_tabs_portfolio" class="radio_label">Portfolio</label>
+
+            <input type="radio" name="radio_tabs" id="radio_tabs_aboutme" class="radio_btn">
+            <label for="radio_tabs_aboutme" class="radio_label">About</label>
+
+            <input type="radio" name="radio_tabs" id="radio_tabs_contactme" class="radio_btn">
+            <label for="radio_tabs_contactme" class="radio_label">Contact me</label>
+
+        </div>
+        
+        <a href="./index.html" id="home_btn_mobile"><p>LINDA FOGLI</p><p>AI developer</p></a>
+
+    </nav>
+
+    <div class="hero">
+        <p>LINDA FOGLI</p>
+        <p>AI developer</p>
+    </div>
+
+
+    <div class="tab_content">
+
+        <article class="tab_content_container" id="references_container">
+            <header><h1>References</h1></header>
+            <div class="reference_box">
+
+                <div class="reference_card">
+                    <div class="reference_card_text">
+                        <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
+                        <p>Person</p>
+                    </div> 
+                </div>
+                
+                <div class="reference_card">
+                    <div class="reference_card_text">
+                        <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
+                        <p>Person</p>
+                    </div> 
+                </div>
+            
+                <div class="reference_card">
+                    <div class="reference_card_text">
+                        <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
+                        <p>Person</p>
+                    </div> 
+                </div>
+
+                <div class="reference_card">
+                    <div class="reference_card_text">
+                        <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
+                        <p>Person</p>
+                    </div> 
+                </div>
+
+                <div class="reference_card">
+                    <div class="reference_card_text">
+                        <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
+                        <p>Person</p>
+                    </div> 
+                </div>
+
+                <div class="reference_card">
+                    <div class="reference_card_text">
+                        <p class="citation">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, aperiam."</p>
+                        <p>Person</p>
+                    </div> 
+                </div>
+            </div>
+        </article>
+
+        <article class="tab_content_container" id="skills_container">
+            <header><h1>Skills</h1></header>
+                <div class="skills_card_container">
+                    <div class="skills_card" id="skills_programming_card">
+                        <h1>Programming Languages</h1>
+                        <div class="skills_card_content" id="proglang_list">
+                            
+                            <div class="prog_card_sub">
+                                <figure>
+                                    <img src="resources/svg/python-original.svg" alt="Python"/>
+                                    <figcaption>Python</figcaption>
+                                </figure>
+
+                                <figure>
+                                    <img src="resources/svg/numpy-original.svg" alt="NumPy"/>
+                                    <figcaption>NumPy</figcaption>
+                                </figure>
+                                
+                                <figure>
+                                    <img src="resources/svg/pandas-original.svg" alt="Pandas"/>
+                                    <figcaption>Pandas</figcaption>
+                                </figure>
+                                
+                                <figure>
+                                    <img src="resources\svg\flask-original.svg" alt="Flask"/>
+                                    <figcaption>Flask</figcaption>
+                                </figure>
+
+                            </div>
+                        
+                            <div class="prog_card_sub">
+                                <figure>
+                                    <img src="resources\svg\html5-original.svg" alt="html5"/>
+                                    <figcaption>HTML5</figcaption>
+                                </figure>
+                                
+                                <figure>
+                                    <img src="resources\svg\css3-original.svg" alt="css3"/>
+                                    <figcaption>CSS3</figcaption>
+                                </figure>
+                                
+                                <figure>
+                                    <img src="resources/svg/javascript-original.svg" alt="JavaScript"/>
+                                    <figcaption>JavaScript</figcaption>
+                                </figure>
+                            </div>
+                            
+                            <div class="prog_card_sub">
+                                <figure>
+                                    <img src="resources/svg/git-original.svg" alt="Git" title="Git"/>
+                                    <figcaption>Git</figcaption>
+                                </figure>
+                                
+                                <figure>
+                                    <img src="resources/svg/sqlite-original.svg" alt="SQLite" title="SQLite"> 
+                                    <figcaption>SQLite</figcaption>
+                                </figure>
+                            </div>  
+
+                      
+                        </div>
+                    </div>
+                    <div class="skills_card" id="skills_lang">
+                        <h1>Languages</h1>
+                        <div class="skills_card_content">
+                            <figure>
+                                <img src="resources/svg/ita.svg" alt="italian">
+                                <figcaption>Italian</figcaption>
+                            </figure>
+
+                            <figure>
+                                <img src="resources/svg/eng.svg" alt="english">
+                                <figcaption>English</figcaption>
+                            </figure>
+
+                            <figure>
+                                <img src="resources/svg/swe.svg" alt="swedish">
+                                <figcaption>Swedish</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="skills_card" id="skills_extra">
+                        <h1>Interests</h1>
+
+                        <div class="skills_card_content">
+                            <figure>
+                                <img src="resources/svg/zbrush.svg" alt="3D sculpting">
+                                <figcaption>3D sculpt</figcaption>
+                            </figure>
+
+                            <figure>
+                                <img src="resources/svg/Calligrakrita-base.svg" alt="Digital drawing">
+                                <figcaption>Digital drawing</figcaption>
+                            </figure>
+
+                            <figure>
+                                <img src="resources\svg\humanities.svg" alt="">
+                                <figcaption>Humanities</figcaption>
+                            </figure>
+
+                        </div>
+
+                    </div>
+                </div class="skills_card_container">
+        </article>
+        
+        <article class="tab_content_container" id="portfolio_container">
+            <header><h1>Portfolio</h1></header>
+
+            <div class="github_box">
+
+                <div class="github_card">
+                    <div class="github_card_img"></div>
+                    <div class="github_card_text"><a href="https://github.com/Lindayh/AIDEV23S_UW_Inlamn01">My Website</a>
+                        <p>My tab-based personal web portfolio.</p>
+                    </div> 
+                </div>
+
+                <div class="github_card">
+                    <div class="github_card_img"></div>
+                    <div class="github_card_text"><a href="https://github.com/Lindayh/OpenCV" target="_blank">OpenCV</a>
+                        <p>A project to learn more about computer vision. <br/>
+                            Work in progress. </p>
+                    </div>
+                </div>
+
+                <div class="github_card">
+                    <div class="github_card_img"></div>
+                    <div class="github_card_text"><a href="https://github.com/Lindayh" target="_blank">Other projects</a>
+                        <p>My GitHub page with all my other projects.</p>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+ 
+        <article class="tab_content_container" id="aboutme_container">
+            <div class="aboutme_img"></div>
+            <header><h1>About me</h1></header>
+            <div class="aboutme_text">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde illo autem debitis reprehenderit repellat suscipit voluptatibus eius quisquam, explicabo aliquam provident perferendis numquam nemo et veniam consequatur minima aliquid placeat.
+                </p> 
+                <p>
+                Illo atque laborum tenetur odio inventore, ratione corporis quae iste nulla deserunt, voluptate id, incidunt qui hic eligendi optio libero?
+                </p>
+            </div>
+        </article>
+
+        <article class="tab_content_container" id="contactme_container">
+            <header><h1>Contact me</h1></header>
+
+            <div class="contactme_form">
+                <form onsubmit="return false;">
+                    <input type="hidden" name="access_key" value="046217b5-8364-4034-aa03-91cc9e47bfbb">
+                    <input type="hidden" name="redirect" value="localhost:5500">
+                    <div>
+                        <label for="form_name">Name:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                    <input type="text" name="form_name" id="form_name" class="form_input">
+                    
+
+                    <div>
+                        <label for="form_email">Email:</label>
+                        <p class="form_alert" id="email_alert"></p>
+                    </div>
+                    <input type="text" name="form_email" id="form_email" class="form_input">
+
+                    <div>
+                        <label for="form_subject">Subject:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                        <input type="text" name="form_subject" id="form_subject" class="form_input">
+
+                    <div>
+                        <label for="form_message">Message:</label>
+                        <p class="form_alert"></p>
+                    </div>
+                        <textarea name="form_message" id="form_message" class="form_input"></textarea>
+
+                    <input type="submit" value="Send" id="form_submit"/>
+                </form>
+            </div> 
+        </article>
+    </div>
+
+    <footer>
+        <div class="weather_API">
+            <img src="" alt=""/>
+            <div>
+                <p>Stockholm</p>
+                <p></p>
+            </div>
+ 
+        </div>
+
+        <div class="footer_links">
+            <a href="https://github.com/Lindayh" target="_blank"><img src="resources/svg/github-mark-white.svg" alt="My_GitHub"></a>
+            <a href="https://www.linkedin.com/in/foglilinda/" target="_blank"><img src="resources/svg//LinkedIn_icon.svg" alt="My_LinkedIn"></a>
+        </div>
+        <p>foglilinda@gmail.com</p>
+    </footer>
+
+</body>
+</html>

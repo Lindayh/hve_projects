@@ -1,0 +1,1299 @@
+:root {
+    --main-color: rgba(10,10,10, 0.95);
+    --font-color: rgb(220,220,220);
+    --main-font: 'Franklin Gothic', sans-serif;
+
+    --palette_01: #be861d;
+    --palette_01_lighter: #e6bf79;
+    --palette_02: #2ca395;
+    --palette_03: #670d13;
+
+    --quick-border: 2px solid red;
+  }
+
+body, html
+{
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    background-image: url("../resources/img/rev_vign.png"), url("../resources/img/bg.png");
+
+
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+
+    color: var(--font-color);  
+    font-family: var(--main-font);  
+
+    font-size: 0.8rem;
+}
+
+h1
+{
+    font-size: 3rem;
+}
+
+nav
+{
+    background-color: var(--main-color); 
+    width: 100%;
+    height: 5%;
+    padding: 0.25% 0;
+
+    position: absolute;
+    top:0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.5rem;
+    font-family: inter;
+    font-weight: 100;
+}
+
+.radio_container
+{   
+    position: inherit;
+
+    width: auto;
+
+    display: inline;
+    text-align: right;
+
+    right:0;
+}
+
+.radio_btn
+{
+    opacity: 0;          
+    position: absolute;   
+}
+
+.radio_label           
+{
+    text-align: center;
+
+    margin: auto 0;
+    margin-right: 20px;
+
+}
+
+.radio_label:last-child
+{
+    color: var(--palette_01_lighter)
+}
+
+#home_btn_mobile
+{
+    display: none;
+}
+
+#dl_cv_mobile
+{   
+    height: 100%;
+    color: rgb(220,220,220);
+    color: var(--palette_01_lighter);
+    text-decoration: none;
+
+    margin-right: 20px;
+
+    font-size: 1.5rem;
+    font-family: inter;
+    font-weight: 100;
+
+}
+
+nav img, nav a
+{
+    height: 2.5rem;    
+    margin-right: auto;
+    margin-left: 15px;
+    border: 5px;
+}
+
+.hero
+{   
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+
+    height: 80%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.hero p
+{
+    font-size: 4rem;
+    line-height: 0%;
+
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+    letter-spacing: 10px;
+    text-shadow: 3px 3px 10px black;
+    font-style: italic;
+
+    text-align: left;
+}
+
+.hero p:last-child
+{
+    font-size: 3rem;
+
+}
+
+
+.tab_content_container
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 5% auto;
+
+    width: 70%;
+    height: 70%;
+}
+
+.tab_content_container
+{
+    display: none;
+    background-color: var(--main-color);
+
+    text-align: center;
+    font-size: 2rem;
+
+}
+
+.tab_content_container h1
+{
+    font-size: 2rem;
+    margin:0;
+    padding: 15px 0px;
+}
+
+#references_container
+{
+    margin: auto;
+    width: 67.9%;
+}
+
+#references_container h1
+{
+    width: 100%;
+
+    background-color: rgb(5,5,5);
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.reference_box
+{
+    height: 90%;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.45fr 0.45fr auto;
+
+    align-content: center;
+    justify-content: center;
+}
+
+.reference_card
+{
+    width: 90%;
+    height: 90%;
+
+    margin: auto;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.citation 
+{
+    font-style: italic;
+    font-weight: lighter;
+    font-size: 1.4rem;
+
+}
+
+.reference_card_text
+{   
+    width: 100%;
+    border-radius: 30px;
+    text-align: center;
+
+    margin: 0;
+} 
+
+.reference_card_text p:nth-child(2)  
+{
+    font-size: 1.5rem;
+}
+
+.disclaimer
+{
+    font-size: 1.2rem;
+    font-style: italic;
+    color: rgba(220,220,220,0.5);
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    text-align: right;
+    padding-right: 2%;
+}
+
+#aboutme_container
+{   
+    width: 67.9%;
+    margin: auto;
+
+}
+
+.aboutme_img
+{   
+    height: 100%;
+    width: 40%;
+    background: url("img/portrait.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-position-x: center;
+
+    float: left;
+}
+
+.aboutme_text
+{   
+    height: 80%;
+    width: 60%;
+
+   float: right;
+
+   overflow-y: scroll;
+   scrollbar-width:none;
+
+}
+
+#aboutme_container h1
+{   
+    width: 60%;
+    background-color: rgb(5,5,5);
+    float:right;
+}
+
+.aboutme_text p 
+{   
+    margin: 5% 10%;
+    line-height: 3rem;
+
+    text-align: justify;
+
+    font-weight: 100;
+    font-size: 1.8rem;
+}
+
+
+#contactme_container
+{
+    width: 40%;
+    height: 75%;
+
+    margin: auto;
+
+    background-color: rgba(10,10,10, 0.7);
+}
+
+.contactme_form
+{
+    height: 100%;
+    width: 100%;
+
+    display: inline-block;
+}
+
+#contactme_container h1
+{
+    background-color: var(--main-color);
+}
+
+
+.contactme_form form
+{
+    height: 90%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+.contactme_form div  
+{
+    width: 70%;
+
+    font-size: 1.2rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.contactme_form label        
+{
+    margin: auto;
+
+    text-align: left;
+    width: 100%;
+}
+
+.contactme_form input, .contactme_form #form_message
+{   
+    width: 70%;
+
+    background-color: rgb(10,10,10);
+    color: var(--font-color);
+
+    line-height: 2rem;
+    border: none;
+
+    padding: 5px;
+    padding-left: 10px;
+
+    font-family: var(--main-font);
+}
+
+.contactme_form #form_message
+{   
+    height: 70%;
+    resize: none;   
+}
+
+.contactme_form #form_submit     
+{
+    background-color: var(--palette_01);
+
+    width: 30%;
+    height: 10%;
+    margin: 30px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+.form_alert    
+{
+    width: 100%;
+    text-align: right;
+    height: 1.2rem;
+
+    color: red;
+    font-style: italic;
+} 
+
+
+#skills_container
+{
+    background-color: rgba(0,0,0,0);
+
+    margin: auto;
+}
+
+#skills_container header
+{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0 1.5% 1.5% 1.5%;
+}
+
+#skills_container h1
+{
+    background-color: rgb(5,5,5);
+}
+
+.skills_card_container
+{   
+    height: 85%;
+
+    display: grid;
+    grid-template-columns: 0.475fr 0.05fr 0.475fr;
+    grid-template-rows: 0.475fr 0.05fr 0.475fr;
+
+    margin: auto;
+
+    margin: 3% 1.5% 1.5% 1.5%;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#skills_container .skills_card
+{   
+    height: 100%;
+    background-color: var(--main-color);
+}
+
+#skills_container img
+{
+    padding: 10px;
+}
+
+#skills_programming_card
+{   
+    grid-column-start: 0;
+    grid-column-end: 2;
+
+    grid-row-start: 1;
+    grid-row-end: 5;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#proglang_list
+{   
+    display: flex;
+    flex-direction: column;
+
+    margin: auto;
+}
+
+.skills_card_container img
+{
+  height: 50px;
+  margin: 5px;
+}
+
+figcaption
+{
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+figure
+{
+    display: inline-block;
+    margin: 0;
+}
+
+#skills_lang
+{
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#skills_lang div, #skills_extra div
+{   
+    height: auto;
+    width: 70%;
+
+    margin: auto;
+
+    padding: 10px;
+}
+
+#skills_lang img
+{
+    height: 50px;
+}
+
+#skills_extra
+{
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+#skills_lang, #skills_extra
+{
+    display: flex;
+    flex-direction: column;
+}
+
+#portfolio_container
+{   
+    background-color: rgba(0,0,0,0);
+
+    margin: auto;
+
+    overflow: hidden;
+}
+
+#portfolio_container h1
+{
+    background-color: rgb(5,5,5);
+    width: auto;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0 1.5% 1.5% 1.5%;
+}
+
+.github_box
+{
+    height: 90%;
+    width: 100%;
+
+    display: inline-flex;
+
+    overflow: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+.github_card
+{
+    background-color: rgba(10,10,10, 0.85);
+
+    height: 100%;
+    width: 33%;
+
+    margin: 1.5%;
+}
+
+ .github_card_img
+{
+    background: url("../resources/img/GitHub.png") no-repeat center center;
+    background-size: cover;
+    width: 100%;
+    height: 45%;
+
+    position: sticky;
+    top:0;
+}
+
+.github_card_text
+{   
+    width: 100%;
+    height: 50%;
+
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+    padding-top: 20px;
+} 
+
+.github_card_text p
+{
+    font-size: 1.5rem;
+    text-align: justify;
+    padding: 0 40px 20px 40px;
+}
+
+.github_card_text a
+{
+    text-decoration: none;
+    color: var(--font-color)
+}
+
+footer
+{
+    background-color: var(--main-color); 
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    height: 4%;
+
+    height: auto;
+    padding-top: 0.7%;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex: 1 1 auto;
+}
+
+footer p
+{
+    color: var(--font-color);
+
+    font-style: italic;
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+footer a
+{
+    padding-right: 10px;
+    margin: 0;
+}
+
+footer img
+{   
+    height: 20px;
+    margin: 0;
+}
+
+.weather_API
+{   
+    position: absolute;
+    left:0;
+    padding: 0 0 0.5% 0.5%;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.weather_API img
+{   
+    height: 40px;
+    float: left;
+
+    justify-self: center;
+    align-self: center;
+
+}
+
+.weather_API div
+{
+    line-height: 0.5rem;
+    padding-left: 10px;
+    letter-spacing: 2px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+
+@media (max-width:600px)
+{   
+
+.hero
+{
+    display: none;
+}
+
+#home_btn
+{
+    display: none;
+}
+
+nav
+{
+    width: 100%;
+    height: 95vh;
+    background-color: rgba(10,10,10, 0.5);
+
+    position: relative;
+    flex-direction: column;
+}
+
+#dl_cv
+{
+    display: none;
+    position: absolute;
+    margin: 0;
+}
+
+#dl_cv_mobile, #home_btn_mobile
+{
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin: 0;
+}
+
+
+#home_btn_mobile
+{   
+    color: var(--font-color);  
+    position: absolute;
+    top: 0;
+
+    height: 15%;
+
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    letter-spacing: 10px;
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1rem;
+
+    text-decoration: none;
+
+    justify-content: center;
+    align-content: center;
+}
+
+#home_btn_mobile p:last-child
+{
+    font-size: 1.5rem;
+}
+
+
+.radio_container
+{   
+    width: 100%;
+    min-height: 20%;
+    max-height: 55%;
+
+    flex-grow: 1;
+
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column-reverse;
+}
+
+.radio_label, #dl_cv_mobile
+{
+    height: auto;
+
+   flex: 1 1 auto;
+
+}
+
+footer img
+{
+    height: 40px;
+    padding-top: 5px;
+}
+
+footer p
+{
+    display: none;
+}
+
+.weather_API
+{
+    display: none;
+}
+
+#contactme_container
+{
+    width: 80%;
+    height: 68%;
+    max-height: 68%;
+
+    overflow-y: hidden; 
+
+}
+
+#contactme_container h1
+{
+    height: 10%;
+    display: block;
+}
+
+.contactme_form form
+{   
+    height: 90%;
+
+    overflow-y: scroll;
+
+    display: inline-block;
+}
+
+.contactme_form div
+{
+    margin-left: 15%;
+}
+
+.contactme_form #form_message
+{
+    min-height: 100px;
+    max-height: 30%;
+}
+
+.contactme_form #form_submit
+{
+    height: 7%;
+
+    line-height: 1.5rem;
+}
+
+#aboutme_container
+{
+    height: 70%;
+    width: 80%;
+
+    overflow-y: scroll;
+}
+
+.aboutme_img
+{
+    width: 100%;
+    height: 80%;
+
+    background-size: contain;
+    background-position-y: bottom;
+}
+
+.aboutme_text
+{
+    width: 100%;
+    height: auto;
+}
+
+#aboutme_container h1
+{   
+    width: 100%;
+    background-color: rgb(5,5,5);
+}
+
+.aboutme_text p
+{
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+
+    text-align: left;
+}
+
+
+#portfolio_container
+{
+    height: 70%;
+    width: 80%;
+
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.github_box
+{
+    flex-flow: column;
+
+    overflow-x: hidden;
+}
+
+.github_card
+{
+    height: 30%;
+    width: 100%;
+
+    overflow-y: scroll;
+}
+
+.github_card_img
+{
+    float: left;
+
+    width: 40%;
+    height: 100%;
+
+    position: sticky;
+    top:0;
+}
+
+.github_card_text
+{
+    width: 60%;
+    height: 100%;
+    float: right;
+
+    padding-top: 10px;
+}
+
+
+.github_card_text p
+{
+    font-size: 1.4rem;
+
+    overflow-y: scroll;
+}
+
+
+#skills_container
+{
+    height: 70%;
+    width: 80%;
+
+    overflow: hidden;
+}
+
+.skills_card_container
+{
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#skills_container .skills_card
+{   
+    height: auto; 
+}
+
+#skills_lang div, #skills_extra div
+{   
+    height: auto;
+    width: 100%;
+
+    margin: auto;
+}
+
+#proglang_list
+{
+    padding: 10px;
+}
+
+#skills_container .skills_card
+{
+    margin: 2% 0;
+}
+
+#references_container
+{
+    height: 70%;
+    width: 80%;
+    max-height: 80%;
+
+    position: absolute;
+    overflow: hidden;
+
+    margin: auto;
+
+}
+}
+
+@media (min-width: 600px) and (max-width: 1024px) 
+{  
+
+.hero
+{
+    display: none;
+}
+
+#home_btn
+{
+    display: none;
+}
+
+nav
+{
+    width: 100%;
+    height: 95vh;
+    background-color: rgba(10,10,10, 0.5);
+
+    position: relative;
+    flex-direction: column;
+    font-size: 2.5rem;
+
+}
+
+#dl_cv_mobile
+{
+    font-size: 2.5rem;
+}
+
+#dl_cv_mobile, #home_btn_mobile
+{
+    width: 100%;
+
+    display: block;
+    text-align: center;
+    margin: 0;
+}
+
+#home_btn_mobile
+{   
+    color: var(--font-color);  
+    position: absolute;
+    top: 0;
+
+    height: 15%;
+
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    letter-spacing: 10px;
+    font-style: italic;
+    font-size: 4rem;
+    line-height: 2rem;
+
+    text-decoration: none;
+}
+
+#home_btn_mobile p:last-child
+{
+    font-size: 3rem;
+}
+
+.radio_container
+{   
+    width: 100%;
+    min-height: 10%;
+    max-height: 55%;
+    bottom: -10%;
+
+    flex-grow: 1;
+
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column-reverse;
+}
+
+.radio_label, #dl_cv_mobile
+{
+   flex: 1 1 auto;
+   height: auto;
+}
+
+
+footer img
+{
+    padding-top: 5px;
+    height: 40px;
+}
+
+footer p
+{
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+}
+
+.tab_content_container h1
+{
+    font-size: 3rem;
+}
+
+.weather_API
+{
+    display: none;
+}
+
+#contactme_container
+{
+    height: 65%;
+    width: 80%;
+
+    margin: auto;
+    overflow-y: hidden; 
+
+}
+
+#contactme_container label
+{
+    font-size: 2rem;
+    margin: 20px 0px;
+}
+
+#contactme_container input
+{
+    line-height: 3rem;
+}
+
+#form_submit
+{
+    font-size: 2rem;
+}
+
+.contactme_form form
+{
+    overflow-y: scroll;
+
+    display: inline-block;
+}
+
+.contactme_form div
+{
+    margin-left: 15%;
+}
+
+.contactme_form #form_message
+{
+    min-height: 100px;
+    max-height: 30%;
+}
+
+#aboutme_container
+{
+    height: 65%;
+    width: 80%;
+
+    overflow-y: scroll;
+}
+
+.aboutme_img
+{
+    width: 100%;
+    height: 80%;
+
+    background-size: contain;
+
+    background-position-y: bottom;
+}
+
+.aboutme_text
+{
+    width: 100%;
+    height: auto;
+}
+
+#aboutme_container h1
+{   
+    width: 100%;
+    background-color: rgb(5,5,5);
+}
+
+.aboutme_text p
+{   
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+
+    text-align: left;
+}
+
+#portfolio_container
+{
+    height: 65%;
+    width: 80%;
+
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.github_box
+{
+    flex-flow: column;
+
+    overflow-x: hidden;
+}
+
+.github_card
+{
+    height: 30%;
+    width: 100%;
+
+    overflow-y: scroll;
+}
+
+.github_card_img
+{
+    float: left;
+
+    width: 40%;
+    height: 100%;
+
+    position: sticky;
+    top:0;
+}
+
+.github_card_text
+{
+    width: 60%;
+    height: 100%;
+    float: right;
+
+    font-size: 2rem;
+    padding-top: 10px;
+}
+
+
+.github_card_text p
+{
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+
+    overflow-y: scroll;
+}
+
+#skills_container
+{
+    height: 65%;
+    width: 80%;
+
+    overflow: hidden;
+}
+
+.skills_card_container h1
+{
+    font-size: 2.5rem;
+}
+
+figcaption
+{
+    font-size: 1.8rem;
+    padding: 5px;
+}
+
+.skills_card_container
+{
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#skills_container .skills_card
+{   
+    height: auto; 
+}
+
+#skills_lang div, #skills_extra div
+{   
+    height: auto;
+    width: 100%;
+
+    margin: auto;
+}
+
+#proglang_list
+{
+    padding: 10px;
+}
+
+#skills_container .skills_card
+{
+    margin: 2% 0;
+}
+
+
+#references_container
+{
+    height: 65%;
+    width: 80%;
+    max-height: 80%;
+
+    position: absolute;
+    overflow: hidden;
+
+    margin: auto;
+
+}
+
+}
+
