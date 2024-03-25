@@ -27,13 +27,16 @@ def search_register():
     key = list(request.form.keys())[0]
     search_term = request.form.get(key)
 
-    # TODO searching with ' breaks the query and the website
-    query = f"SELECT * FROM person WHERE name LIKE '%{search_term}%'"
-    data = run_query(query)
+    if "'" in search_term: search_term=search_term.replace("'", "''")
+    
+    try:
+        query = f"SELECT * FROM person WHERE name LIKE '%{search_term}%'"
+        data = run_query(query)
+    except Exception as e:
+        print(e)
+        data = []
 
     if data != []:
-        print(data)
-
         return render_template("all_person.html", searched_data=data, searched=True)
     else:
         return render_template("all_person.html", searched_data=data, searched=True)
