@@ -2,7 +2,14 @@
 
 {% block content %}
 
-<h1>Person register</h1>
+<header>
+    <h1>Person register</h1>
+</header>
+
+<form action="" method="post">
+<input type="search" name="search_register" id="search_register"/>
+<input type="submit" value="&#128269;"/>
+</form>
 
 
 <table>
@@ -12,18 +19,39 @@
         <td>Contact</td>
         <td>Country</td>
     </thead>
+
     <tbody>
-        {% for index in data %}
-        <tr>
-            <td><a href="register/{{ index.personID }}">{{ index.name }}</a></td>
-            <td>{{ index.age }}</td>
-            <td>{{ index.phone_nr }}</td>
-            <td>{{ index.country }}</td>
-        </tr>
-        {% endfor %}
+
+        {% if searched == False %}
+            {% for index in data %}
+                <tr>
+                    <td><a href="register/{{ index.personID }}">{{ index.name }}</a></td>
+                    <td>{{ index.age }}</td>
+                    <td>{{ index.phone_nr }}</td>
+                    <td>{{ index.country }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        
+        {% if searched == True %}
+            {% for index in searched_data %}
+                <tr>
+                    <td><a href="register/{{ index.personID }}">{{ index.name }}</a></td>
+                    <td>{{ index.age }}</td>
+                    <td>{{ index.phone_nr }}</td>
+                    <td>{{ index.country }}</td>
+                </tr>
+            {% endfor %}             
+        {% endif %}
     </tbody>
 </table>
-    
+
+{% if searched_data == [] %}
+        <p>Search gave no results.</p>        
+{% endif %}
+
+
+        
 
 
 {% endblock %}
