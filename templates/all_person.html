@@ -13,14 +13,14 @@
         <td>Country</td>
     </thead>
     <tbody>
-        {# Jinja for loop
-        {% for item in iterable %}
-        <td><a href="/??">{{ name variable }}</a></td>
-        {% endfor %} #}
-        <td><a href="">Person</a></td>
-        <td>35</td>
-        <td>012 123 12 45</td>
-        <td>Mars</td>
+        {% for index in data %}
+        <tr>
+            <td><a href="register/{{ index.personID }}">{{ index.name }}</a></td>
+            <td>{{ index.age }}</td>
+            <td>{{ index.phone_nr }}</td>
+            <td>{{ index.country }}</td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
     
