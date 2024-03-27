@@ -5,14 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static//template.css">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     
     <div class="navbar">
         <ul>
-            <li><a href="/">Home</a> ●</li>
-            <li><a href="/register">Register</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="{{url_for('all_person_page')}}">Register</a></li>
+            
+            {% if logged %}
+            <li><a href="{{url_for('login_page')}}" class="login_btn">My Page</a></li>
+            {% else %}
+            <li><a href="{{url_for('login_page')}}" class="login_btn">My Page</a></li>
+            {% endif %}
+
+            
+            
         </ul>
     </div>
 
