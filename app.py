@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
 
-from SQLAlchemy_test import db, Person, seed_data
+from SQLAlchemy_test import db, Person, User, seed_data
 
 
 load_dotenv()
@@ -92,19 +92,22 @@ def login_page():
 @app.route("/login", methods=["POST"])
 def login_validation():
 
-    try:
+    log_status = loggedin_check()
 
+    try:
         form_pw, form_user = request.form["login_pw"], request.form["login_user"]    
 
-        query = f"SELECT * FROM user WHERE username LIKE '{form_user}'"
-        data = run_query(query)
+        data = User.query.filter(
+            User.username.like(form_user)).first()
 
         if data:
-            data_pw, data_user = data[0]['password'], data[0]['username']
+            data_user = data.username
+            data_pw = data.password
 
             if form_pw == data_pw:
                 session['logged'] = True
-                return render_template('home.html', logged = session['logged'])
+                log_status = loggedin_check()    
+                return render_template('home.html', logged = log_status)
             else: 
                 return render_template("login.html", error="Wrong username or password!")
         else:
@@ -113,8 +116,9 @@ def login_validation():
     except Exception as e:
         print(e)
 
-    return render_template('home.html', logged = session['logged'])
+    return render_template('home.html', logged = log_status)
 
+# FIXME
 @app.route("/mypage", methods= ["GET", "POST"])
 def my_page():
     log_status = loggedin_check()

@@ -15,6 +15,10 @@ class Person(db.Model):
     country = Column(String)
     img = Column(String)
 
+class User(db.Model):
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String, unique=True)
+    password = Column(String)
 
 def seed_data():
     faker = Faker()
@@ -25,7 +29,17 @@ def seed_data():
         new_country = faker.country()
 
         new_person = Person(name=new_name, age=new_age, phone_nr=new_phone_nr, country=new_country)
+
         db.session.add(new_person)
+        db.session.commit()
+    
+    while User.query.count() < 50:
+        new_username = faker.user_name()
+        new_pw = faker.password()
+
+        new_user = User(username=new_username, password=new_pw)
+
+        db.session.add(new_user)
         db.session.commit()
     
 
