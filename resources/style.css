@@ -276,7 +276,7 @@ nav img, nav a
     height: 100%;
     width: 40%;
     background: url("img/portrait.png");
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position-y: bottom;
     background-position-x: center;
