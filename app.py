@@ -1,12 +1,24 @@
 from flask import Flask, render_template, request, session
 from db_func import run_query
 import os
+from dotenv import load_dotenv
+from flask_migrate import Migrate, upgrade
+
+from SQLAlchemy_test import db, Person, seed_data
 
 
-
+load_dotenv()
 app = Flask(__name__)
 
 app.secret_key = "psst"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+db.init_app(app)
+
+migrate = Migrate(app, db)
+
 
 # TODO log status into decorator?
 def loggedin_check():
@@ -26,18 +38,16 @@ def home():
 def all_person_page():
     log_status = loggedin_check()
 
-
     query = "SELECT * FROM person"
     data = run_query(query)
     return render_template("all_person.html", 
                            data=data, searched=False, 
                            logged=log_status)
 
+
 @app.route("/register", methods=['GET', 'POST'])
 def search_register():
-
     log_status = loggedin_check()
-
 
     key = list(request.form.keys())[0]
     search_term = request.form.get(key)
@@ -70,8 +80,6 @@ def pers_info(id):
 
 
 
-
-
 @app.route("/login")
 def login_page():
     log_status = loggedin_check()
@@ -80,9 +88,6 @@ def login_page():
 
 @app.route("/login", methods=["POST"])
 def login_validation():
-
-    if "Logout" in request.form:
-        session['logged'] = False
 
     try:
 
@@ -106,6 +111,18 @@ def login_validation():
         print(e)
 
     return render_template('home.html', logged = session['logged'])
+
+@app.route("/mypage", methods= ["GET", "POST"])
+def my_page():
+    log_status = loggedin_check()
+
+    if log_status == False:
+            return "Not authorized wip"
+
+    if "Logout" in request.form:
+        session['logged'] = False
+
+    return render_template('login.html', logged = session['logged'])
     
 
     
@@ -117,6 +134,10 @@ def login_validation():
 
 
 if __name__ == "__main__":
+    with app.app_context():
+        upgrade()
+        seed_data()
+
     app.run(debug=True)
 
 
