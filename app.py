@@ -3,6 +3,7 @@ from db_func import run_query
 import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
+from flask_sqlalchemy import SQLAlchemy
 
 from SQLAlchemy_test import db, Person, seed_data
 
@@ -38,13 +39,14 @@ def home():
 def all_person_page():
     log_status = loggedin_check()
 
-    query = "SELECT * FROM person"
-    data = run_query(query)
+    data =  Person.query
+    
     return render_template("all_person.html", 
                            data=data, searched=False, 
                            logged=log_status)
 
 
+# ---------- Search ----------
 @app.route("/register", methods=['GET', 'POST'])
 def search_register():
     log_status = loggedin_check()
@@ -126,13 +128,6 @@ def my_page():
     
 
     
-
-
-        
-
-
-
-
 if __name__ == "__main__":
     with app.app_context():
         upgrade()

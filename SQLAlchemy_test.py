@@ -22,8 +22,9 @@ def seed_data():
         new_name = faker.name()
         new_age = randint(20,70)
         new_phone_nr = str(randint(1000000000, 9999999999))
+        new_country = faker.country()
 
-        new_person = Person(name=new_name, age=new_age, phone_nr=new_phone_nr)
+        new_person = Person(name=new_name, age=new_age, phone_nr=new_phone_nr, country=new_country)
         db.session.add(new_person)
         db.session.commit()
     
