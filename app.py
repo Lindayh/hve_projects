@@ -116,9 +116,10 @@ def login_validation():
     except Exception as e:
         print(e)
 
+    print(log_status)
     return render_template('home.html', logged = log_status)
 
-# FIXME
+
 @app.route("/mypage", methods= ["GET", "POST"])
 def my_page():
     log_status = loggedin_check()
@@ -128,6 +129,8 @@ def my_page():
 
     if "Logout" in request.form:
         session['logged'] = False
+        log_status = loggedin_check()    
+        return render_template('home.html', logged = log_status)
 
     return render_template('login.html', logged = session['logged'])
     
