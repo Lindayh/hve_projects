@@ -26,7 +26,7 @@
         {% if searched == False %}
             {% for index in data %}
                 <tr>
-                    <td><a href="register/{{ index.personID }}">{{ index.name }}</a></td>
+                    <td><a href="register/{{index.person_id}}">{{ index.name }}</a></td>
                     <td>{{ index.age }}</td>
                     <td>{{ index.phone_nr }}</td>
                     <td>{{ index.country }}</td>
@@ -37,7 +37,7 @@
         {% if searched == True %}
             {% for index in searched_data %}
                 <tr>
-                    <td><a href="register/{{ index.personID }}">{{ index.name }}</a></td>
+                    <td><a href="register/{{ index.person_id }}">{{ index.name }}</a></td>
                     <td>{{ index.age }}</td>
                     <td>{{ index.phone_nr }}</td>
                     <td>{{ index.country }}</td>

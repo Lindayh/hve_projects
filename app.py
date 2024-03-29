@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session
-from db_func import run_query
 import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
@@ -46,7 +45,6 @@ def all_person_page():
                            logged=log_status)
 
 
-# ---------- Search ----------
 @app.route("/register", methods=['GET', 'POST'])
 def search_register():
     log_status = loggedin_check()
@@ -57,8 +55,9 @@ def search_register():
     if "'" in search_term: search_term=search_term.replace("'", "''")
     
     try:
-        query = f"SELECT * FROM person WHERE name LIKE '%{search_term}%'"
-        data = run_query(query)
+        data = Person.query.filter(
+            Person.name.like("%" + search_term + "%")).all()
+
     except Exception as e:
         print(e)
         data = []
@@ -73,13 +72,15 @@ def search_register():
 
 @app.route("/register/<int:id>", methods=['GET'])
 def pers_info(id):
-    query = f"SELECT * FROM person WHERE personID like {id}"
-    data = run_query(query)
+
+    data = Person.query.filter(
+            Person.person_id.like(id)).first()
+    
+    print(Person.person_id)
 
     log_status = loggedin_check()
 
-    return render_template("pers_info.html", data=data[0], logged= log_status)
-
+    return render_template("pers_info.html", data=data, logged= log_status)
 
 
 @app.route("/login")
