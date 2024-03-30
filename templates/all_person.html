@@ -8,8 +8,8 @@
 
 <form action="" method="post" class="search_form">
 <label for="search_field"></label>
-<input type="search" name="search_field" id="search_field"/>
-<input type="submit" value="&#128269;"/>
+<input type="search" name="search_field" id="search_field" placeholder="Search..."/>
+<input type="submit" value="&#128269;" id="search_btn"/>
 </form>
 
 
@@ -46,6 +46,12 @@
         {% endif %}
     </tbody>
 </table>
+
+<form action="" method="post" id="pages_nav">
+    <input type="submit" class="arrow_btn" value="&#9665;">
+    <p>{{page}}</p>
+    <input type="submit" class="arrow_btn" value="&#9655;">
+</form>
 
 {% if searched_data == [] %}
         <p>No results found.</p>        

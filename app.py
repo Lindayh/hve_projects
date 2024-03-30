@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 db.init_app(app)
-
 migrate = Migrate(app, db)
 
 
@@ -39,9 +38,13 @@ def all_person_page():
     log_status = loggedin_check()
 
     data =  Person.query
-    
+    page = request.args.get('page', 1, type=int)
+    print(page)
+
+    paged_data = data.paginate(page=page, per_page=30, error_out=True)
+
     return render_template("all_person.html", 
-                           data=data, searched=False, 
+                            data=paged_data, searched=False, page=page, 
                            logged=log_status)
 
 
@@ -75,8 +78,6 @@ def pers_info(id):
 
     data = Person.query.filter(
             Person.person_id.like(id)).first()
-    
-    print(Person.person_id)
 
     log_status = loggedin_check()
 
@@ -119,7 +120,7 @@ def login_validation():
     print(log_status)
     return render_template('home.html', logged = log_status)
 
-
+# TODO Authorization
 @app.route("/mypage", methods= ["GET", "POST"])
 def my_page():
     log_status = loggedin_check()

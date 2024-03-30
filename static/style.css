@@ -31,7 +31,7 @@ body, html
 .main
 {   
     width: 80%;
-    height: 90%;
+    height: auto;
     background-color: rgba(72, 153, 127, 0.281);
 
     margin: 0 auto;
@@ -79,9 +79,20 @@ body, html
     display: flex;
 }
 
-body > div.main > form > input[type=submit]:nth-child(3)
+#search_btn
 {
     width: 10%;
+}
+
+#pages_nav
+{   
+    display: flex;
+    flex-direction: column;
+}
+
+.arrow_btn
+{
+    width: 50px;
 }
 
 .login_error
@@ -105,8 +116,6 @@ form > input[type="submit"]:nth-child(6)
 
 .footer
 {   
-    position: absolute;
-    bottom:0;
     width: 100%;
 
     background-color: black;
@@ -115,5 +124,5 @@ form > input[type="submit"]:nth-child(6)
     align-content: center;
     justify-content: center;
 
-    height: 5%;
+    height: auto;
 }

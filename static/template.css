@@ -5,8 +5,8 @@
 	padding:100px 0px;
 	position:relative;
 
-	height: 75%;
     width: 100%;
+    min-height: 70%;
 }
 
 .navbar
@@ -46,9 +46,7 @@ li > a
     border-radius: .25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     color: #0d6efd;
-    border-color: #0d6efd;
-
-    
+    border-color: #0d6efd; 
 }
 
 li > a:hover {
@@ -100,10 +98,6 @@ li > a:hover {
   text-decoration: none;
 }
 
-
-
-
-
 input#login_user, input#login_pw   /* pw, user log in fields */
 {
     
@@ -125,4 +119,42 @@ input#login_user:focus, input#login_pw:focus
     box-shadow: none;
     border-color: rgb(100, 153, 255);
 }
+
+
+
+/* https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l */
+
+thead > tr > td
+{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    padding: 12px 15px;
+}
+
+tbody > tr > td
+{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1.2em;
+    font-family: 'Quicksand', sans-serif;
+    min-width: 100px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+    padding: 12px 15px;
+}
+
+tbody > tr > td:nth-child(4)
+{
+    text-wrap: wrap;
+}
+
+
+/* https://codepen.io/singhimalaya/pen/dqjLgO */
+
+input#search_field, #search_btn    
+{
+
+}
+
 
