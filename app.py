@@ -48,7 +48,6 @@ def all_person_page():
 
 
 # TODO What happens if search has more than 30 results ?
-# TODO Search in age and country
 @app.route("/register", methods=['POST'])       # Search
 def search_register():
     log_status = loggedin_check()
@@ -63,7 +62,11 @@ def search_register():
         if "'" in search_term: search_term=search_term.replace("'", "''")
 
         data = Person.query.filter(
-            Person.name.like("%" + search_term + "%")).all()
+            Person.name.like("%" + search_term + "%") |
+            Person.age.like("%" + search_term + "%") |
+            Person.country.like("%" + search_term + "%")
+            ).all() 
+
 
         if data != []:
             return render_template("all_person.html", searched_data=data, searched=True, 
@@ -74,7 +77,7 @@ def search_register():
     
     return redirect("/register")
     
-
+# TODO Add extra fields just for this section
 @app.route("/register/<int:id>", methods=['GET'])
 def pers_info(id):
 
