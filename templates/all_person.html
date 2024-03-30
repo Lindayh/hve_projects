@@ -48,10 +48,18 @@
 </table>
 
 <form action="" method="post" id="pages_nav">
+    {% if data.has_prev %}
     <input type="submit" class="arrow_btn" value="&#9665;">
+    {% endif %}
+
     <p>{{page}}</p>
+
+    {% if data.has_next %}
     <input type="submit" class="arrow_btn" value="&#9655;">
-</form>
+    {% endif %}
+</form>    
+
+
 
 {% if searched_data == [] %}
         <p>No results found.</p>        
