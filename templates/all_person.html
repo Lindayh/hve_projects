@@ -47,18 +47,19 @@
     </tbody>
 </table>
 
-<form action="" method="post" id="pages_nav">
-    {% if data.has_prev %}
-    <input type="submit" class="arrow_btn" value="&#9665;">
-    {% endif %}
+{% if data %}
+    
+{% if data.has_prev %}
+<a href="{{url_for('all_person_page', page=page-1)}}">< Previous</a>
+{% endif %}
 
-    <p>{{page}}</p>
+<p>{{page}}</p>
 
-    {% if data.has_next %}
-    <input type="submit" class="arrow_btn" value="&#9655;">
-    {% endif %}
-</form>    
+{% if data.has_next %}
+<a href="{{url_for('all_person_page', page=page+1)}}">Next ></a>
+{% endif %}
 
+{% endif %}
 
 
 {% if searched_data == [] %}

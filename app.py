@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect
 import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
-
-from SQLAlchemy_test import db, Person, User, seed_data
+from cls_alchemy import db, Person, User, seed_data
 
 
 load_dotenv()
@@ -33,44 +32,47 @@ def home():
     log_status = loggedin_check()
     return render_template('home.html', logged= log_status)
 
-@app.route("/register", methods=['GET'])
+
+@app.route("/register", methods=['GET'] )       # Pagination
 def all_person_page():
     log_status = loggedin_check()
 
     data =  Person.query
     page = request.args.get('page', 1, type=int)
-    print(page)
-
     paged_data = data.paginate(page=page, per_page=30, error_out=True)
 
-    return render_template("all_person.html", 
-                            data=paged_data, searched=False, page=page, 
-                           logged=log_status)
+    print(f'Args: {request.args}')
+    print(f'Form: {request.form}')
+
+    return render_template("all_person.html", data=paged_data, searched=False, logged=log_status, page=page)
 
 
-@app.route("/register", methods=['GET', 'POST'])
+# TODO What happens if search has more than 30 results ?
+# TODO Search in age and country
+@app.route("/register", methods=['POST'])       # Search
 def search_register():
     log_status = loggedin_check()
 
-    key = list(request.form.keys())[0]
-    search_term = request.form.get(key)
+    print(request.form)
 
-    if "'" in search_term: search_term=search_term.replace("'", "''")
-    
-    try:
+    if 'search_field' in request.form:
+
+        key = list(request.form.keys())[0]
+        search_term = request.form.get(key)
+
+        if "'" in search_term: search_term=search_term.replace("'", "''")
+
         data = Person.query.filter(
             Person.name.like("%" + search_term + "%")).all()
 
-    except Exception as e:
-        print(e)
-        data = []
-
-    if data != []:
-        return render_template("all_person.html", searched_data=data, searched=True, 
-                           logged= log_status)
-    else:
-        return render_template("all_person.html", searched_data=data, searched=True, 
-                           logged= log_status)
+        if data != []:
+            return render_template("all_person.html", searched_data=data, searched=True, 
+                               logged= log_status)
+        else:
+            return render_template("all_person.html", searched_data=[], searched=True, 
+                               logged=log_status)
+    
+    return redirect("/register")
     
 
 @app.route("/register/<int:id>", methods=['GET'])
