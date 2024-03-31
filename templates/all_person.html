@@ -8,7 +8,12 @@
 
 <form action="" method="post" class="search_form">
 <label for="search_field"></label>
-<input type="search" name="search_field" id="search_field" placeholder="Search..."/>
+
+<input type="search" name="search_field" id="search_field" placeholder="Search..."
+{% if s %}
+value="{{s}}"
+{% endif %}
+/>
 <input type="submit" value="&#128269;" id="search_btn"/>
 </form>
 
@@ -23,7 +28,7 @@
 
     <tbody>
 
-        {% if searched == False %}
+
             {% for index in data %}
                 <tr>
                     <td><a href="register/{{index.person_id}}">{{ index.name }}</a></td>
@@ -32,37 +37,27 @@
                     <td>{{ index.country }}</td>
                 </tr>
             {% endfor %}
-        {% endif %}
-        
-        {% if searched == True %}
-            {% for index in searched_data %}
-                <tr>
-                    <td><a href="register/{{ index.person_id }}">{{ index.name }}</a></td>
-                    <td>{{ index.age }}</td>
-                    <td>{{ index.phone_nr }}</td>
-                    <td>{{ index.country }}</td>
-                </tr>
-            {% endfor %}             
-        {% endif %}
+
     </tbody>
 </table>
 
-{% if data %}
+<form action="" method="post">
+
+    {% if data %}  
+    {% if data.has_prev %}
+    <a href="{{url_for('all_person_page', s=s, page=page-1)}}">< Previous</a>
+    {% endif %}
     
-{% if data.has_prev %}
-<a href="{{url_for('all_person_page', page=page-1)}}">< Previous</a>
-{% endif %}
+    <p>{{page}}</p>
+    
+    {% if data.has_next %}
+    <a href="{{url_for('all_person_page', s=s, page=page+1)}}">Next ></a>
+    {% endif %}
+    {% endif %}
+    
+</form>
 
-<p>{{page}}</p>
-
-{% if data.has_next %}
-<a href="{{url_for('all_person_page', page=page+1)}}">Next ></a>
-{% endif %}
-
-{% endif %}
-
-
-{% if searched_data == [] %}
+{% if search_data == [] %}
         <p>No results found.</p>        
 {% endif %}
 

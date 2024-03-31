@@ -22,7 +22,7 @@ class User(db.Model):
 
 def seed_data():
     faker = Faker()
-    while Person.query.count() < 100:
+    while Person.query.count() < 500:
         new_name = faker.name()
         new_age = randint(20,70)
         new_phone_nr = str(randint(1000000000, 9999999999))

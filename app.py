@@ -5,7 +5,6 @@ from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
 from cls_alchemy import db, Person, User, seed_data
 
-
 load_dotenv()
 app = Flask(__name__)
 
@@ -33,51 +32,39 @@ def home():
     return render_template('home.html', logged= log_status)
 
 
-@app.route("/register", methods=['GET'] )       # Pagination
+@app.route("/register", methods=['POST', 'GET'])    
 def all_person_page():
     log_status = loggedin_check()
-
+    
     data =  Person.query
     page = request.args.get('page', 1, type=int)
-    paged_data = data.paginate(page=page, per_page=30, error_out=True)
 
-    print(f'Args: {request.args}')
-    print(f'Form: {request.form}')
+    if 'search_field' in request.form or 's' in request.args:
 
-    return render_template("all_person.html", data=paged_data, searched=False, logged=log_status, page=page)
+        if request.form:
+            search_term = request.form.get('search_field')
+            if "'" in search_term: search_term=search_term.replace("'", "''")
+        else:
+            search_term = request.args.get('s')
 
-
-# TODO What happens if search has more than 30 results ?
-@app.route("/register", methods=['POST'])       # Search
-def search_register():
-    log_status = loggedin_check()
-
-    print(request.form)
-
-    if 'search_field' in request.form:
-
-        key = list(request.form.keys())[0]
-        search_term = request.form.get(key)
-
-        if "'" in search_term: search_term=search_term.replace("'", "''")
-
-        data = Person.query.filter(
+        search_data = data.filter(
             Person.name.like("%" + search_term + "%") |
             Person.age.like("%" + search_term + "%") |
             Person.country.like("%" + search_term + "%")
-            ).all() 
+            )
+    
+        print(f'Search term: {search_term} | Results found: {search_data.count()}')
+        paged_search_data = search_data.paginate(page=page, per_page=30, error_out=True)
+
+        return render_template("all_person.html", data=paged_search_data, logged=log_status, page=page, s=search_term)
+    
+    paged_data = data.paginate(page=page, per_page=30, error_out=True)
+
+    return render_template("all_person.html", data=paged_data, searched=False, logged=log_status, page=page)
+    
 
 
-        if data != []:
-            return render_template("all_person.html", searched_data=data, searched=True, 
-                               logged= log_status)
-        else:
-            return render_template("all_person.html", searched_data=[], searched=True, 
-                               logged=log_status)
-    
-    return redirect("/register")
-    
-# TODO Add extra fields just for this section
+# TODO Add extra fields to db just for this section
 @app.route("/register/<int:id>", methods=['GET'])
 def pers_info(id):
 

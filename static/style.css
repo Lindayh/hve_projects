@@ -51,7 +51,7 @@ body, html
 .main table td
 {
     text-align: center;
-    width: 25%;
+    width: 300px;
 }
 
 .main form
