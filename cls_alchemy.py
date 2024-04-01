@@ -12,7 +12,11 @@ class Person(db.Model):
     name = Column(String)
     age = Column(Integer)
     phone_nr = Column(String)
+    email = Column(String)
     country = Column(String)
+    city = Column(String)
+    address = Column(String)
+
     img = Column(String)
 
 class User(db.Model):
@@ -22,14 +26,17 @@ class User(db.Model):
 
 def seed_data():
     faker = Faker()
-    while Person.query.count() < 500:
+    while Person.query.count() < 300:
         new_name = faker.name()
         new_age = randint(20,70)
         new_phone_nr = str(randint(1000000000, 9999999999))
         new_country = faker.country()
+        new_email = faker.email()
+        new_city = faker.city()
+        new_address = faker.address()
 
-        new_person = Person(name=new_name, age=new_age, phone_nr=new_phone_nr, country=new_country)
-
+        new_person = Person(name=new_name, age=new_age, phone_nr=new_phone_nr, email=new_email,
+                            country=new_country, city=new_city, address=new_address)
         db.session.add(new_person)
         db.session.commit()
     

@@ -57,6 +57,55 @@ li > a:hover {
 }
 
 
+input#search_field, input#search_btn     /* Search bar https://codepen.io/singhimalaya/pen/dqjLgO*/
+{
+  color: #fff;
+  font-family: Nunito;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: transparent;
+
+  height: 50px;
+}
+
+input#search_field
+{
+  width: 100%;
+  font-size: 60px;
+  line-height: 1;
+  top:0;
+}
+
+input#search_field:focus
+{
+    border-color: rgba(0, 0, 0, 0);
+    border: 0px;
+}
+
+
+
+input#search_field::placeholder
+{
+    color: #c5c5c5;
+}
+
+body > div.main > form.search_form
+{
+  height: 50px;
+  width: 30%;
+  padding: 35px;
+  margin: -83px auto 0 auto;
+  background-color: #7ba79e;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px #114940b6, 0 0 0 20px #57968bce;
+  transform: scale(0.6);
+
+  display: flex;
+  flex-direction: row;
+}
+
+
 
 .footer
 {
