@@ -20,6 +20,7 @@ value="{{s}}"
 
 <table>
     <thead>
+        <td>Image</td>
         <td>Name</td>
         <td>Age</td>
         <td>Tel.nr.</td>
@@ -31,7 +32,8 @@ value="{{s}}"
 
             {% for index in data %}
                 <tr>
-                    <td><a href="register/{{index.person_id}}">{{ index.name }}</a></td>
+                    <td><a href="register/{{index.person_id}}">{{index.img}}</a></td>
+                    <td>{{ index.name }}</td>
                     <td>{{ index.age }}</td>
                     <td>{{ index.phone_nr }}</td>
                     <td>{{ index.country }}</td>
@@ -41,21 +43,19 @@ value="{{s}}"
     </tbody>
 </table>
 
-<form action="" method="post">
 
-    {% if data %}  
-    {% if data.has_prev %}
-    <a href="{{url_for('all_person_page', s=s, page=page-1)}}">< Previous</a>
-    {% endif %}
-    
-    <p>{{page}}</p>
-    
-    {% if data.has_next %}
-    <a href="{{url_for('all_person_page', s=s, page=page+1)}}">Next ></a>
-    {% endif %}
-    {% endif %}
-    
-</form>
+
+{% if data %}  
+{% if data.has_prev %}
+<a href="{{url_for('all_person_page', s=s, page=page-1)}}">< Previous</a>
+{% endif %}
+
+<p>{{page}}</p>
+
+{% if data.has_next %}
+<a href="{{url_for('all_person_page', s=s, page=page+1)}}">Next ></a>
+{% endif %}
+{% endif %}
 
 {% if search_data == [] %}
         <p>No results found.</p>        

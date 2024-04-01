@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, url_for
 import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
@@ -52,19 +52,23 @@ def all_person_page():
             Person.age.like("%" + search_term + "%") |
             Person.country.like("%" + search_term + "%")
             )
-    
-        print(f'Search term: {search_term} | Results found: {search_data.count()}')
-        paged_search_data = search_data.paginate(page=page, per_page=30, error_out=True)
 
-        return render_template("all_person.html", data=paged_search_data, logged=log_status, page=page, s=search_term)
-    
+        print(f'Search term: {search_term} | Results found: {search_data.count()} | Args \'page\': {request.args.get('page')}')
+
+        if search_data.count()>30:
+            paged_search_data = search_data.paginate(page=page, per_page=30, error_out=True)
+
+            return render_template("all_person.html", data=paged_search_data, logged=log_status, page=page, s=search_term)
+        else:
+            if page>1:
+                return redirect(url_for("all_person_page", s=search_term, page=1))
+            return render_template("all_person.html", data=search_data, logged=log_status, page=page, s=search_term)
+            
     paged_data = data.paginate(page=page, per_page=30, error_out=True)
 
     return render_template("all_person.html", data=paged_data, searched=False, logged=log_status, page=page)
     
 
-
-# TODO Add extra fields to db just for this section
 @app.route("/register/<int:id>", methods=['GET'])
 def pers_info(id):
 
