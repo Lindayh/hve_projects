@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+from flask_security import RoleMixin, UserMixin, SQLAlchemySessionUserDatastore, hash_password
 import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
-from cls_alchemy import db, Person, User, seed_data
+from flask_security import Security, login_required, roles_accepted, roles_required
+
+from cls_alchemy import db, Person, User, seed_data, user_datastore
 
 load_dotenv()
 app = Flask(__name__)
@@ -12,11 +15,16 @@ app.secret_key = "psst"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
+app.config['SECURITY_LOGOUT_URL']= '/logout'
+app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'  # Default is root
+
 
 db.init_app(app)
 migrate = Migrate(app, db)
+security = Security(app, user_datastore)
 
-
+# NOTE Login needed to access the whole site
 # TODO log status into decorator?
 def loggedin_check():
     if session:
@@ -26,11 +34,11 @@ def loggedin_check():
         log_status = False
         return log_status
 
+
 @app.route("/")
 def home():
     log_status = loggedin_check()
     return render_template('home.html', logged= log_status)
-
 
 @app.route("/register", methods=['POST', 'GET'])    
 def all_person_page():
@@ -53,7 +61,7 @@ def all_person_page():
             Person.country.like("%" + search_term + "%")
             )
 
-        print(f'Search term: {search_term} | Results found: {search_data.count()} | Args \'page\': {request.args.get('page')}')
+        print(f"Search term: {search_term} | Results found: {search_data.count()} | Args \'page\': {request.args.get('page')}")
 
         if search_data.count()>30:
             paged_search_data = search_data.paginate(page=page, per_page=30, error_out=True)
@@ -78,7 +86,6 @@ def pers_info(id):
     log_status = loggedin_check()
 
     return render_template("pers_info.html", data=data, logged= log_status)
-
 
 @app.route("/login")
 def login_page():
@@ -116,6 +123,8 @@ def login_validation():
     print(log_status)
     return render_template('home.html', logged = log_status)
 
+
+# NOTE /user/<user_id>
 # TODO Authorization
 @app.route("/mypage", methods= ["GET", "POST"])
 def my_page():
@@ -130,7 +139,6 @@ def my_page():
         return render_template('home.html', logged = log_status)
 
     return render_template('login.html', logged = session['logged'])
-    
 
     
 if __name__ == "__main__":
@@ -139,7 +147,3 @@ if __name__ == "__main__":
         seed_data()
 
     app.run(debug=True)
-
-
-
-

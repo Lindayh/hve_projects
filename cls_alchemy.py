@@ -2,10 +2,15 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String
 from faker import Faker
 from random import randint
-
 import os
+import numpy as np
+from flask_security import RoleMixin, UserMixin, SQLAlchemyUserDatastore, hash_password
 
 db = SQLAlchemy()
+
+class Role(db.Model, RoleMixin):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(80), unique=True)
 
 class Person(db.Model):
     person_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -16,18 +21,34 @@ class Person(db.Model):
     country = Column(String)
     city = Column(String)
     address = Column(String)
+    # active = Column(db.Boolean())  # If user is logged in ?
 
     img = Column(String)
 
-class User(db.Model):
-    user_id = Column(Integer, primary_key=True, autoincrement=True)
+# TODO hashed password?
+class User(db.Model, UserMixin):
+    id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, unique=True)
     password = Column(String)
+    roles = Column(String)
+    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
+
+user_datastore = SQLAlchemyUserDatastore(db, User, Role) 
 
 def seed_data():
     faker = Faker()
     while Person.query.count() < 300:
-        new_name = faker.name()
+        gender = np.random.choice(["M", "F"], p=[0.5, 0.5])
+        rand_nr = np.random.randint(0,150)
+        if gender == "M":
+            new_name = faker.name_male()
+            new_img= f'static/images/face_man/man_{rand_nr}.jpg'
+
+        if gender == "F":
+            new_name = faker.name_female()
+            new_img= f'static/images/face_woman/woman_{rand_nr}.jpg'
+
+
         new_age = randint(20,70)
         new_phone_nr = str(randint(1000000000, 9999999999))
         new_country = faker.country()
@@ -36,18 +57,16 @@ def seed_data():
         new_address = faker.address()
 
         new_person = Person(name=new_name, age=new_age, phone_nr=new_phone_nr, email=new_email,
-                            country=new_country, city=new_city, address=new_address)
+                            country=new_country, city=new_city, address=new_address, img=new_img)
         db.session.add(new_person)
         db.session.commit()
     
     while User.query.count() < 50:
         new_username = faker.user_name()
-        new_pw = faker.password()
+        new_pw = hash_password('password')
+        new_role = np.random.choice(["Admin", "User"], p=[0.5, 0.5])
 
-        new_user = User(username=new_username, password=new_pw)
+        new_user = User(username=new_username, password=new_pw, roles=new_role)
 
         db.session.add(new_user)
         db.session.commit()
-    
-
-    
