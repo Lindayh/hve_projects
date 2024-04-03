@@ -1,0 +1,9 @@
+{% macro nav_link(login) %}
+
+{% if request.endpoint.endswith(login) %}
+    <a href="{{ url_for(login) }}" class="active"> --text-- </a>    
+{% else %}
+    <a href="{{ url_for(login) }}"> --text else-- </a>    
+{% endif %}
+    
+{% endmacro %}

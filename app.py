@@ -4,27 +4,55 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, login_required
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import InputRequired, Length, ValidationError
+from flask_wtf.csrf import CSRFProtect
 
 from cls_alchemy import db, Person, User, seed_data, user_datastore
 
+
+#region init
 load_dotenv()
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
+
+CSRFProtect(app)
 
 app.secret_key = "psst"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
-app.config['SECURITY_LOGOUT_URL']= '/logout'                        # TODO
-app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'                    # TODO
-app.config['SECURITY_LOGIN_USER_TEMPLATE'] = 'login.html'          
-
+# app.config['SECURITY_LOGOUT_URL']= '/logout'                        # TODO
+# app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'                    # TODO
+# app.config['SECURITY_LOGIN_USER_TEMPLATE'] = 'login.html'          
+# app.config['SECURITY_LOGIN_URL'] = '/login'
 
 db.init_app(app)
 migrate = Migrate(app, db)
 security = Security(app, user_datastore)
 
-# NOTE Login needed to access the whole site
+#endregion
+
+
+#region wtform
+class LoginForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(min=1)], render_kw={"placeholder":"Enter username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=1)], render_kw={"placeholder":"Enter password"})
+    submit = SubmitField('Login')
+
+    # def validate_username(self, username):  #18:05
+    #     pass
+
+
+#endregion
+
+
+
+
+#region app routes
+
+
 # TODO log status into decorator?
 def loggedin_check():
     if session:
@@ -43,7 +71,6 @@ def home():
 
 
 @app.route("/register", methods=['POST', 'GET'])  
-@login_required  
 def all_person_page():
     # log_status = loggedin_check()
     
@@ -66,7 +93,7 @@ def all_person_page():
 
         print(f"Search term: {search_term} | Results found: {search_data.count()} | Args \'page\': {request.args.get('page')}  \n  'search_field' in request.form: {'search_field' in request.form}   ")
 
-        if search_data.count()>30:              #FIXME if 'search_field' in request.form: page=1
+        if search_data.count()>30:           
             paged_search_data = search_data.paginate(page=page, per_page=30, error_out=True)
 
             return render_template("all_person.html", data=paged_search_data, page=page, s=search_term)  # ,logged=log_status
@@ -80,7 +107,6 @@ def all_person_page():
     
 
 @app.route("/register/<int:id>", methods=['GET'])
-@login_required
 def pers_info(id):
 
     data = Person.query.filter(
@@ -91,18 +117,20 @@ def pers_info(id):
     return render_template("pers_info.html", data=data) #, logged= log_status)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    print("meow")
+    return render_template('login.html')
 
+# #ANCHOR - /login
+# @app.route("/login", methods=['GET', 'POST'])
+# def login_page():
+#     login_form = LoginForm()
+#     print(login_form)
+#     print("hello")
+#     # print(f'Request.form: {request.form} | request.args: {request.args}')
+#     return render_template("login.html", form=login_form)
 
-@app.route("/login", methods=['GET'])
-def login_page():
-    print(f'Request.form: {request.form} | request.args: {request.args}')
-    return render_template("login.html")
-
-@app.route('/login', methods=['POST'])
-def login_post():
-    print("Hello")
-    print(f'Request.form: {request.form} | request.args: {request.args}')
-    return render_template("login.html")
 
 
 
@@ -153,7 +181,13 @@ def my_page():
 
     return render_template('login.html', logged = session['logged'])
 
-    
+#endregion
+
+
+
+
+
+
 if __name__ == "__main__":
     with app.app_context():
         upgrade()
