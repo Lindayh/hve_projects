@@ -17,12 +17,13 @@
             <li><a href="/">Home</a></li>
             <li><a href="{{url_for('all_person_page')}}">Register</a></li>
             
-            {% if logged %}
+            {# 
+            <{% if logged %} 
             <li><a href="{{url_for('my_page')}}" class="template_btn">My Page</a></li>
             {% else %}
             <li><a href="{{url_for('login_page')}}" class="template_btn">Login</a></li>
-            {% endif %}
-            
+            {% endif %} 
+             #}
         </ul>
     </div>
 

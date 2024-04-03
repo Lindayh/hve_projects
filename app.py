@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-from flask_security import RoleMixin, UserMixin, SQLAlchemySessionUserDatastore, hash_password
 import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
@@ -16,11 +15,9 @@ app.secret_key = "psst"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
-app.config['SECURITY_LOGOUT_URL']= '/logout'
-app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'  # Default is root
-# app.config['SECURITY_LOGIN_URL'] = '/login'
-app.config['SECURITY_LOGIN_USER_TEMPLATE'] = 'login.html'
-
+app.config['SECURITY_LOGOUT_URL']= '/logout'                        # TODO
+app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'                    # TODO
+app.config['SECURITY_LOGIN_USER_TEMPLATE'] = 'login.html'          
 
 
 db.init_app(app)
@@ -43,7 +40,6 @@ def loggedin_check():
 def home():
     # log_status = loggedin_check()
     return render_template('home.html') #, logged= log_status)
-
 
 
 @app.route("/register", methods=['POST', 'GET'])  
@@ -94,43 +90,51 @@ def pers_info(id):
 
     return render_template("pers_info.html", data=data) #, logged= log_status)
 
+
+
+
 @app.route("/login", methods=['GET'])
 def login_page():
-    print(request.args)
-    # log_status = loggedin_check()
-    return render_template("login.html")#, logged= log_status)
+    print(f'Request.form: {request.form} | request.args: {request.args}')
+    return render_template("login.html")
+
+@app.route('/login', methods=['POST'])
+def login_post():
+    print("Hello")
+    print(f'Request.form: {request.form} | request.args: {request.args}')
+    return render_template("login.html")
 
 
 
-@app.route("/login", methods=["POST"])
-def login_validation():
+# @app.route("/login", methods=["POST"])
+# def login_validation():
 
-    log_status = loggedin_check()
+#     # log_status = loggedin_check()
 
-    try:
-        form_pw, form_user = request.form["login_pw"], request.form["login_user"]    
+#     try:
+#         form_pw, form_user = request.form["login_pw"], request.form["login_user"]    
 
-        data = User.query.filter(
-            User.username.like(form_user)).first()
+#         data = User.query.filter(
+#             User.username.like(form_user)).first()
 
-        if data:
-            data_user = data.username
-            data_pw = data.password
+#         if data:
+#             data_user = data.username
+#             data_pw = data.password
 
-            if form_pw == data_pw:
-                session['logged'] = True
-                log_status = loggedin_check()    
-                return render_template('home.html', logged = log_status)
-            else: 
-                return render_template("login.html", error="Wrong username or password!")
-        else:
-            return render_template("login.html", error="Wrong username or password!")
+#             if form_pw == data_pw:
+#                 # session['logged'] = True
+#                 # log_status = loggedin_check()    
+#                 return render_template('home.html') #, logged = log_status)
+#             else: 
+#                 return render_template("login.html", error="Wrong username or password!")
+#         else:
+#             return render_template("login.html", error="Wrong username or password!")
         
-    except Exception as e:
-        print(e)
+#     except Exception as e:
+#         print(e)
 
-    print(log_status)
-    return render_template('home.html', logged = log_status)
+#     print(log_status)
+#     return render_template('home.html')#, logged = log_status)
 
 
 # NOTE /user/<user_id>
