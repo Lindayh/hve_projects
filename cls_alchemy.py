@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKeyConstraint
 from faker import Faker
 from random import randint
 import os
@@ -8,9 +8,27 @@ from flask_security import RoleMixin, UserMixin, SQLAlchemyUserDatastore, hash_p
 
 db = SQLAlchemy()
 
+roles_users = db.Table('roles_users', 
+                       Column('user_id', Integer(), db.ForeignKey('user.id')),
+                       Column('role_id', Integer(), db.ForeignKey('role.id')),
+                       ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_roles_users_user_id'),
+                       ForeignKeyConstraint(['role_id'], ['role.id'], name='fk_roles_users_role_id')                 
+                       )
+
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
+
+
+class User(db.Model, UserMixin):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String, unique=True)
+    password = Column(String)
+    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('user', lazy='dynamic'))
+    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
+    active = Column(db.Boolean())
+
+user_datastore = SQLAlchemyUserDatastore(db, User, Role) 
 
 class Person(db.Model):
     person_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -21,23 +39,19 @@ class Person(db.Model):
     country = Column(String)
     city = Column(String)
     address = Column(String)
-    # active = Column(db.Boolean())  # If user is logged in ?
 
     img = Column(String)
 
-# TODO hashed password?
-class User(db.Model, UserMixin):
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String, unique=True)
-    password = Column(String)
-    roles = Column(String)
-    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
-
-user_datastore = SQLAlchemyUserDatastore(db, User, Role) 
-
 def seed_data():
     faker = Faker()
-    while Person.query.count() < 300:
+
+    if not Role.query.first():
+        user_datastore.create_role(name="Admin")
+        user_datastore.create_role(name="User")
+        db.session.commit()
+
+    while Person.query.count() < 300:   
+
         gender = np.random.choice(["M", "F"], p=[0.5, 0.5])
         rand_nr = np.random.randint(0,150)
         if gender == "M":
@@ -61,12 +75,12 @@ def seed_data():
         db.session.add(new_person)
         db.session.commit()
     
-    while User.query.count() < 50:
+    while User.query.count() < 20:
         new_username = faker.user_name()
         new_pw = hash_password('password')
-        new_role = np.random.choice(["Admin", "User"], p=[0.5, 0.5])
+        new_roles = str(np.random.choice(["Admin", "User"], p=[0.5, 0.5]))
 
-        new_user = User(username=new_username, password=new_pw, roles=new_role)
+        user_datastore.create_user(username=new_username, password= new_pw, roles=[new_roles])
 
-        db.session.add(new_user)
         db.session.commit()
+
