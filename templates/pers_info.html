@@ -4,14 +4,16 @@
 
 <h1>{{data.name}}</h1>
 
-<img src=""  alt="portrait"> {#  src=".../ {{ data.img }}"  #}
-<div class="info_text">
-    <p>Age: {{data.age}} </p>
-    <p>Phone: {{ data.phone_nr }}</p>
-    <p>Email: {{data.email}}</p>
-    <p>Country: {{ data.country }}</p>
-    <p>City: {{data.city}}</p>
-    <p>Address: {{data.address}}</p>
+<div class="persinfo_box">
+    <img src="../{{ data.img }}" alt="portrait" class="persinfo_pic"/> 
+    <div class="info_text">
+        <p>Age: {{data.age}} </p>
+        <p>Phone: {{ data.phone_nr }}</p>
+        <p>Country: {{ data.country }}</p>
+        <p>Email: {{data.email}}</p>
+        <p>City: {{data.city}}</p>
+        <p>Address: {{data.address}}</p>
+    </div>
 </div>
   
 {% endblock %}

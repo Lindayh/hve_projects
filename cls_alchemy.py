@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, ForeignKeyConstraint
+from sqlalchemy import Column, Integer, String
 from faker import Faker
 from random import randint
 import os
@@ -10,9 +10,7 @@ db = SQLAlchemy()
 
 roles_users = db.Table('roles_users', 
                        Column('user_id', Integer(), db.ForeignKey('user.id')),
-                       Column('role_id', Integer(), db.ForeignKey('role.id')),
-                       ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_roles_users_user_id'),
-                       ForeignKeyConstraint(['role_id'], ['role.id'], name='fk_roles_users_role_id')                 
+                       Column('role_id', Integer(), db.ForeignKey('role.id')),               
                        )
 
 class Role(db.Model, RoleMixin):

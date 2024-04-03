@@ -41,7 +41,39 @@ body, html
 .main h1
 {
     text-align: center;
+    display: block;
 }
+
+.persinfo_box
+{
+    display: flex;
+    flex-direction: row;
+    
+    /* border: 3px solid red; */
+    align-content: center;
+    justify-content: center;
+
+}
+
+.persinfo_box .info_text
+{
+    text-align: left;
+    margin-left: 5%;
+}
+
+.persinfo_pic
+{
+    height: 180px;
+    justify-self: center;
+    align-self: center;
+}
+
+.allpers_img
+{
+ height: 80px;
+}
+
+
 
 .main table
 {
@@ -52,6 +84,13 @@ body, html
 {
     text-align: center;
     width: 300px;
+}
+
+tbody > tr > td:first-child, thead > tr > td:first-child,
+tbody > tr > td:nth-child(3), thead > tr > td:nth-child(3),
+tbody > tr > td:nth-child(4), thead > tr > td:nth-child(4)
+{
+    width: auto;
 }
 
 .main form

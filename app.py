@@ -4,12 +4,12 @@ import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
-from flask_security import Security, login_required, roles_accepted, roles_required
+from flask_security import Security, login_required
 
 from cls_alchemy import db, Person, User, seed_data, user_datastore
 
 load_dotenv()
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 app.secret_key = "psst"
 
@@ -18,6 +18,9 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 app.config['SECURITY_LOGOUT_URL']= '/logout'
 app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'  # Default is root
+# app.config['SECURITY_LOGIN_URL'] = '/login'
+app.config['SECURITY_LOGIN_USER_TEMPLATE'] = 'login.html'
+
 
 
 db.init_app(app)
@@ -36,20 +39,24 @@ def loggedin_check():
 
 
 @app.route("/")
+@login_required
 def home():
-    log_status = loggedin_check()
-    return render_template('home.html', logged= log_status)
+    # log_status = loggedin_check()
+    return render_template('home.html') #, logged= log_status)
 
-@app.route("/register", methods=['POST', 'GET'])    
+
+
+@app.route("/register", methods=['POST', 'GET'])  
+@login_required  
 def all_person_page():
-    log_status = loggedin_check()
+    # log_status = loggedin_check()
     
     data =  Person.query
     page = request.args.get('page', 1, type=int)
 
     if 'search_field' in request.form or 's' in request.args:
 
-        if request.form:
+        if 'search_field' in request.form:
             search_term = request.form.get('search_field')
             if "'" in search_term: search_term=search_term.replace("'", "''")
         else:
@@ -61,36 +68,38 @@ def all_person_page():
             Person.country.like("%" + search_term + "%")
             )
 
-        print(f"Search term: {search_term} | Results found: {search_data.count()} | Args \'page\': {request.args.get('page')}")
+        print(f"Search term: {search_term} | Results found: {search_data.count()} | Args \'page\': {request.args.get('page')}  \n  'search_field' in request.form: {'search_field' in request.form}   ")
 
-        if search_data.count()>30:
+        if search_data.count()>30:              #FIXME if 'search_field' in request.form: page=1
             paged_search_data = search_data.paginate(page=page, per_page=30, error_out=True)
 
-            return render_template("all_person.html", data=paged_search_data, logged=log_status, page=page, s=search_term)
-        else:
-            if page>1:
-                return redirect(url_for("all_person_page", s=search_term, page=1))
-            return render_template("all_person.html", data=search_data, logged=log_status, page=page, s=search_term)
+            return render_template("all_person.html", data=paged_search_data, page=page, s=search_term)  # ,logged=log_status
+        elif page>1:
+            return redirect(url_for("all_person_page", s=search_term, page=1))
+        return render_template("all_person.html", data=search_data, page=page, s=search_term)  # ,logged=log_status
             
     paged_data = data.paginate(page=page, per_page=30, error_out=True)
 
-    return render_template("all_person.html", data=paged_data, searched=False, logged=log_status, page=page)
+    return render_template("all_person.html", data=paged_data, searched=False, page=page) # ,logged=log_status
     
 
 @app.route("/register/<int:id>", methods=['GET'])
+@login_required
 def pers_info(id):
 
     data = Person.query.filter(
             Person.person_id.like(id)).first()
 
-    log_status = loggedin_check()
+    # log_status = loggedin_check()
 
-    return render_template("pers_info.html", data=data, logged= log_status)
+    return render_template("pers_info.html", data=data) #, logged= log_status)
 
-@app.route("/login")
+@app.route("/login", methods=['GET'])
 def login_page():
-    log_status = loggedin_check()
-    return render_template("login.html", logged= log_status)
+    print(request.args)
+    # log_status = loggedin_check()
+    return render_template("login.html")#, logged= log_status)
+
 
 
 @app.route("/login", methods=["POST"])
