@@ -18,11 +18,12 @@ app.secret_key = "psst"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
-# app.config['SECURITY_POST_LOGIN_VIEW'] = 'home.html'
-# app.config['SECURITY_LOGOUT_URL']= '/logout'                        # TODO
-# app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'                    # TODO
-# app.config['SECURITY_LOGIN_USER_TEMPLATE'] = 'login.html'          
-# app.config['SECURITY_LOGIN_URL'] = '/login'
+
+app.config['SECURITY_LOGOUT_URL']= '/log_out'
+app.config['SECURITY_LOGOUT_TEMPLATE']= 'templates/logout.html'
+app.config['SECURITY_POST_LOGOUT_TEMPLATE']= 'templates/logout.html'
+
+
 app.config['SECURITY_USERNAME_ENABLE'] = True
 app.config['IDENTITY_ATTRIBUTES'] = 'username'
 
@@ -33,21 +34,11 @@ security = Security(app, user_datastore)
 #endregion
 
 #region app routes
-# TODO log status into decorator?
-def loggedin_check():
-    if session:
-        log_status = session['logged']
-        return log_status
-    else:
-        log_status = False
-        return log_status
-
-
 @app.route("/")
 @login_required
 def home():
     # log_status = loggedin_check()
-    return render_template('home.html') #, logged= log_status)
+    return render_template('home.html')
 
 
 @app.route("/register", methods=['POST', 'GET']) 
@@ -94,78 +85,21 @@ def pers_info(id):
     data = Person.query.filter(
             Person.person_id.like(id)).first()
 
-    # log_status = loggedin_check()
-
-    return render_template("pers_info.html", data=data) #, logged= log_status)
-
-
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     print("meow")
-#     return render_template('security/login_user.html')
-
-
-# #ANCHOR - /login
-# @app.route("/login", methods=['GET', 'POST'])
-# def login_page():
-#     login_form = LoginForm()
-#     print(login_form)
-#     print("hello")
-#     # print(f'Request.form: {request.form} | request.args: {request.args}')
-#     return render_template("login.html", form=login_form)
-
-
-# @app.route("/login", methods=["POST"])
-# def login_validation():
-
-#     # log_status = loggedin_check()
-
-#     try:
-#         form_pw, form_user = request.form["login_pw"], request.form["login_user"]    
-
-#         data = User.query.filter(
-#             User.username.like(form_user)).first()
-
-#         if data:
-#             data_user = data.username
-#             data_pw = data.password
-
-#             if form_pw == data_pw:
-#                 # session['logged'] = True
-#                 # log_status = loggedin_check()    
-#                 return render_template('home.html') #, logged = log_status)
-#             else: 
-#                 return render_template("login.html", error="Wrong username or password!")
-#         else:
-#             return render_template("login.html", error="Wrong username or password!")
-        
-#     except Exception as e:
-#         print(e)
-
-#     print(log_status)
-#     return render_template('home.html')#, logged = log_status)
+    return render_template("pers_info.html", data=data)
 
 
 # NOTE /user/<user_id>
-# TODO Authorization
+# TODO Admin page
 @app.route("/mypage", methods= ["GET", "POST"])
 def my_page():
-    log_status = loggedin_check()
+    return render_template('mypage.html')
 
-    if log_status == False:
-            return "Not authorized wip"
+@app.route("/log_out", methods=['GET', 'POST'])
+def log_out():
+    return "Bye!"
 
-    if "Logout" in request.form:
-        session['logged'] = False
-        log_status = loggedin_check()    
-        return render_template('home.html', logged = log_status)
-
-    return render_template('login.html', logged = session['logged'])
 
 #endregion
-
-
-
 
 
 

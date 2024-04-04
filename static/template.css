@@ -147,7 +147,7 @@ body > div.main > form.search_form
   text-decoration: none;
 }
 
-input#login_user, input#login_pw   /* pw, user log in fields */
+.black_input_field   /* pw, user log in fields */
 {
     
     padding: 6px 12px;
@@ -162,7 +162,7 @@ input#login_user, input#login_pw   /* pw, user log in fields */
 
 }
 
-input#login_user:focus, input#login_pw:focus
+.black_input_field:focus
 {
     outline: none;
     box-shadow: none;

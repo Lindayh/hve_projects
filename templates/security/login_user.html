@@ -22,17 +22,19 @@ Login
         
         <label for="username">Username:</label>
         <!-- <input type="text" name="username" id="username"> -->
-        {{ login_user_form.username }}
+        {{ login_user_form.username }}     
         
-
         <label for="password">Password:</label>
-        <!-- <input type="password" name="password" id="password"> -->
         {{ login_user_form.password }}
-        <p class="login_error">
-            {% if error %}
-            {{error}}
-            {% endif %}
+
+
+        <p class="login_error">  
+        {% if login_user_form.errors %}Invalid username or password.{% endif %}
         </p>
+
+
+
+
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         
         <!-- <input type="submit" value="Login" class="template_btn"> -->
