@@ -1,16 +1,11 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, login_required
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Length, ValidationError
 from flask_wtf.csrf import CSRFProtect
-
+import os
 from cls_alchemy import db, Person, User, seed_data, user_datastore
-
 
 #region init
 load_dotenv()
@@ -23,10 +18,13 @@ app.secret_key = "psst"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
+# app.config['SECURITY_POST_LOGIN_VIEW'] = 'home.html'
 # app.config['SECURITY_LOGOUT_URL']= '/logout'                        # TODO
 # app.config['SECURITY_POST_LOGOUT_VIEW'] = '/bye'                    # TODO
 # app.config['SECURITY_LOGIN_USER_TEMPLATE'] = 'login.html'          
 # app.config['SECURITY_LOGIN_URL'] = '/login'
+app.config['SECURITY_USERNAME_ENABLE'] = True
+app.config['IDENTITY_ATTRIBUTES'] = 'username'
 
 db.init_app(app)
 migrate = Migrate(app, db)
@@ -34,25 +32,7 @@ security = Security(app, user_datastore)
 
 #endregion
 
-
-#region wtform
-class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min=1)], render_kw={"placeholder":"Enter username"})
-    password = PasswordField(validators=[InputRequired(), Length(min=1)], render_kw={"placeholder":"Enter password"})
-    submit = SubmitField('Login')
-
-    # def validate_username(self, username):  #18:05
-    #     pass
-
-
-#endregion
-
-
-
-
 #region app routes
-
-
 # TODO log status into decorator?
 def loggedin_check():
     if session:
@@ -70,7 +50,8 @@ def home():
     return render_template('home.html') #, logged= log_status)
 
 
-@app.route("/register", methods=['POST', 'GET'])  
+@app.route("/register", methods=['POST', 'GET']) 
+@login_required 
 def all_person_page():
     # log_status = loggedin_check()
     
@@ -107,6 +88,7 @@ def all_person_page():
     
 
 @app.route("/register/<int:id>", methods=['GET'])
+@login_required 
 def pers_info(id):
 
     data = Person.query.filter(
@@ -117,10 +99,11 @@ def pers_info(id):
     return render_template("pers_info.html", data=data) #, logged= log_status)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    print("meow")
-    return render_template('login.html')
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     print("meow")
+#     return render_template('security/login_user.html')
+
 
 # #ANCHOR - /login
 # @app.route("/login", methods=['GET', 'POST'])
@@ -130,8 +113,6 @@ def login():
 #     print("hello")
 #     # print(f'Request.form: {request.form} | request.args: {request.args}')
 #     return render_template("login.html", form=login_form)
-
-
 
 
 # @app.route("/login", methods=["POST"])
