@@ -20,8 +20,14 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
 app.config['SECURITY_LOGOUT_URL']= '/log_out'
-app.config['SECURITY_LOGOUT_TEMPLATE']= 'templates/logout.html'
-app.config['SECURITY_POST_LOGOUT_TEMPLATE']= 'templates/logout.html'
+app.config['SECURITY_POST_LOGOUT_VIEW']= '/post_logout'
+
+
+# app.config['SECURITY_POST_LOGOUT_VIEW']= '/log_out'
+# app.config['SECURITY_POST_LOGOUT_VIEW']= '/'
+
+# app.config['SECURITY_LOGOUT_TEMPLATE']= 'templates/logout.html'
+# app.config['SECURITY_POST_LOGOUT_TEMPLATE']= 'templates/logout.html'
 
 
 app.config['SECURITY_USERNAME_ENABLE'] = True
@@ -94,10 +100,13 @@ def pers_info(id):
 def my_page():
     return render_template('mypage.html')
 
-@app.route("/log_out", methods=['GET', 'POST'])
+@app.route("/log_out")
 def log_out():
-    return "Bye!"
+    return "Logging out"
 
+@app.route("/post_logout")
+def post_logout():
+    return render_template("post_logout.html")
 
 #endregion
 
