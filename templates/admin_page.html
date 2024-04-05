@@ -5,8 +5,20 @@ Admin Page
 {% endblock %}
 
 {% block content %}
-    <h1>Admin page</h1>
-        <p>Page just for administrators!</p>
-        <a href="/log_out" class="template_btn">Logout</a>
+
+    <h1 class="title">
+        Admin page
+    </h1>
+
+    <h6 class="subtitle">
+        Page just for administrators!
+    </h6>
+    <br>
+
+    <div class="buttons text-center">
+        <a href="/log_out" class="btn btn-primary rounded w-lg btn-lg my-1">
+            Log out
+        </a>
+    </div> 
 {% endblock %}
 

@@ -6,6 +6,12 @@ Home
 
 {% block content %}
 
-<h1>Welcome, {{ current_user.username }}!</h1>
+    <h1 class="title">
+        Welcome, {{ current_user.username }}!
+    </h1>
+    
+    <div class="buttons text-center">
+        <a href="/log_out" class="btn btn-primary rounded w-lg btn-lg my-1">Log out</a>
+    </div>              
     
 {% endblock %}
