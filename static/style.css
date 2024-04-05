@@ -12171,6 +12171,19 @@ body, html
   height: auto;
 }
 
+.persinfo_box
+{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: left;
+  margin-top: 40px;
+}
 
+.persinfo_pic
+{
+  height: 200px;
+  margin-right: 50px;
+}
 
 /* #endregion custom */

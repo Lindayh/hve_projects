@@ -30,7 +30,9 @@
         <tbody>
                 {% for index in data %}
                     <tr>
-                        <td><a href="register/{{index.person_id}}"><img src="{{ index.img }}" alt="portrait" class="allpers_img"></a></td>
+                        <td>
+                            <a href="personal/{{ index.person_id }}"><img src="{{ index.img }}" alt="portrait" class="allpers_img"></a>
+                        </td>
                         <td>{{ index.name }}</td>
                         <td>{{ index.age }}</td>
                         <td>{{ index.phone_nr }}</td>
