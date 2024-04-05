@@ -1,4 +1,3 @@
-{% from 'security/_macros.html' import nav_link with context %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +20,6 @@
           
             {% if current_user.is_authenticated %} 
 
-            
             {% if current_user.roles[0].name == 'User' %}
             <li><a href="/mypage" class="template_btn">My Page</a></li>
             {% endif %}

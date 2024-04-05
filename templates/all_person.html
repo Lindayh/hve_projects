@@ -12,11 +12,11 @@
 <input type="search" name="search_field" id="search_field" placeholder="Search..."
 {% if s %}
 value="{{s}}"
-{% endif %}
-/>
+{% endif %}  />
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
 <input type="submit" value="&#128269;" id="search_btn"/>
 </form>
-
 
 <table>
     <thead>
@@ -28,22 +28,17 @@ value="{{s}}"
     </thead>
 
     <tbody>
-
-
             {% for index in data %}
                 <tr>
                     <td><a href="register/{{index.person_id}}"><img src="{{ index.img }}" alt="portrait" class="allpers_img"></a></td>
-                    <td>{{index.name}}</td>
+                    <td>{{ index.name }}</td>
                     <td>{{ index.age }}</td>
                     <td>{{ index.phone_nr }}</td>
                     <td>{{ index.country }}</td>
                 </tr>
             {% endfor %}
-
     </tbody>
 </table>
-
-
 
 {% if data %}  
 {% if data.has_prev %}
@@ -62,7 +57,5 @@ value="{{s}}"
 {% endif %}
 
 
-        
-
-
+    
 {% endblock %}

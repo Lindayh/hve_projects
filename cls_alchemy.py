@@ -17,7 +17,6 @@ class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
 
-
 class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, unique=True)
@@ -60,7 +59,6 @@ def seed_data():
             new_name = faker.name_female()
             new_img= f'static/images/face_woman/woman_{rand_nr}.jpg'
 
-
         new_age = randint(20,70)
         new_phone_nr = str(randint(1000000000, 9999999999))
         new_country = faker.country()
@@ -81,4 +79,3 @@ def seed_data():
         user_datastore.create_user(username=new_username, password= new_pw, roles=[new_roles])
 
         db.session.commit()
-

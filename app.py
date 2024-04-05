@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
-from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, login_required, roles_required
 from flask_wtf.csrf import CSRFProtect
 import os
-from cls_alchemy import db, Person, User, seed_data, user_datastore
+from cls_alchemy import db, Person, seed_data, user_datastore
 
 load_dotenv()
 app = Flask(__name__)
@@ -60,7 +59,7 @@ def all_person_page():
         if search_data.count()>30:           
             paged_search_data = search_data.paginate(page=page, per_page=30, error_out=True)
 
-            return render_template("all_person.html", data=paged_search_data, page=page, s=search_term)  # ,logged=log_status
+            return render_template("all_person.html", data=paged_search_data, page=page, s=search_term)
         elif page>1:
             return redirect(url_for("all_person_page", s=search_term, page=1))
         return render_template("all_person.html", data=search_data, page=page, s=search_term)
@@ -69,7 +68,6 @@ def all_person_page():
 
     return render_template("all_person.html", data=paged_data, searched=False, page=page)
     
-
 @app.route("/register/<int:id>", methods=['GET'])
 @login_required 
 def pers_info(id):
@@ -77,9 +75,6 @@ def pers_info(id):
             Person.person_id.like(id)).first()
     return render_template("pers_info.html", data=data)
 
-
-# NOTE /user/<user_id>
-# TODO Admin page
 @app.route("/mypage", methods= ["GET", "POST"])
 def my_page():
     return render_template('mypage.html')
