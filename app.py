@@ -68,9 +68,9 @@ def all_person_page():
 
     return render_template("all_person.html", data=paged_data, searched=False, page=page)
     
-@app.route("/register/<int:id>", methods=['GET'])
+@app.route("/personal/<int:id>", methods=['GET'])
 @login_required 
-def pers_info(id):
+def pers_information(id):
     data = Person.query.filter(
             Person.person_id.like(id)).first()
     return render_template("pers_info.html", data=data)
