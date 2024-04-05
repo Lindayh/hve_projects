@@ -1,46 +1,29 @@
 {% extends "base.html" %}   
 
-
 {% block title %}
 Login
 {% endblock %}
 
-
 {% block content %}
-<!--     
-    <h1>My Page</h1>
-
-    <form action="" method="post">
-    <input type="submit" name="Logout" value="Logout" class="template_btn">
-    </form>
-
- -->
 
     <h1>Login</h1>
 
     <form action="{{ url_for_security('login')}}" method="POST" class="login_form" name="login_user_form">
         
         <label for="username">Username:</label>
-        <!-- <input type="text" name="username" id="username"> -->
+
         {{ login_user_form.username }}     
         
         <label for="password">Password:</label>
         {{ login_user_form.password }}
 
-
         <p class="login_error">  
         {% if login_user_form.errors %}Invalid username or password.{% endif %}
         </p>
 
-
-
-
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         
-        <!-- <input type="submit" value="Login" class="template_btn"> -->
         {{ login_user_form.submit }}
-        
-        <input type="hidden" name="hidden_pw" value="{{ login_user_form.password.data }}"> 
     </form>
 
 {% endblock %}

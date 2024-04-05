@@ -2,12 +2,11 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from dotenv import load_dotenv
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
-from flask_security import Security, login_required
+from flask_security import Security, login_required, roles_required
 from flask_wtf.csrf import CSRFProtect
 import os
 from cls_alchemy import db, Person, User, seed_data, user_datastore
 
-#region init
 load_dotenv()
 app = Flask(__name__)
 
@@ -22,14 +21,6 @@ app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 app.config['SECURITY_LOGOUT_URL']= '/log_out'
 app.config['SECURITY_POST_LOGOUT_VIEW']= '/post_logout'
 
-
-# app.config['SECURITY_POST_LOGOUT_VIEW']= '/log_out'
-# app.config['SECURITY_POST_LOGOUT_VIEW']= '/'
-
-# app.config['SECURITY_LOGOUT_TEMPLATE']= 'templates/logout.html'
-# app.config['SECURITY_POST_LOGOUT_TEMPLATE']= 'templates/logout.html'
-
-
 app.config['SECURITY_USERNAME_ENABLE'] = True
 app.config['IDENTITY_ATTRIBUTES'] = 'username'
 
@@ -37,21 +28,16 @@ db.init_app(app)
 migrate = Migrate(app, db)
 security = Security(app, user_datastore)
 
-#endregion
 
-#region app routes
 @app.route("/")
 @login_required
 def home():
-    # log_status = loggedin_check()
     return render_template('home.html')
 
 
 @app.route("/register", methods=['POST', 'GET']) 
 @login_required 
 def all_person_page():
-    # log_status = loggedin_check()
-    
     data =  Person.query
     page = request.args.get('page', 1, type=int)
 
@@ -77,20 +63,18 @@ def all_person_page():
             return render_template("all_person.html", data=paged_search_data, page=page, s=search_term)  # ,logged=log_status
         elif page>1:
             return redirect(url_for("all_person_page", s=search_term, page=1))
-        return render_template("all_person.html", data=search_data, page=page, s=search_term)  # ,logged=log_status
+        return render_template("all_person.html", data=search_data, page=page, s=search_term)
             
     paged_data = data.paginate(page=page, per_page=30, error_out=True)
 
-    return render_template("all_person.html", data=paged_data, searched=False, page=page) # ,logged=log_status
+    return render_template("all_person.html", data=paged_data, searched=False, page=page)
     
 
 @app.route("/register/<int:id>", methods=['GET'])
 @login_required 
 def pers_info(id):
-
     data = Person.query.filter(
             Person.person_id.like(id)).first()
-
     return render_template("pers_info.html", data=data)
 
 
@@ -108,8 +92,10 @@ def log_out():
 def post_logout():
     return render_template("post_logout.html")
 
-#endregion
-
+@app.route('/admin')
+@roles_required("Admin")
+def admin_page():
+    return render_template('admin_page.html')
 
 
 if __name__ == "__main__":

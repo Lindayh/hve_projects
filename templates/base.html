@@ -20,9 +20,18 @@
             
           
             {% if current_user.is_authenticated %} 
+
+            
+            {% if current_user.roles[0].name == 'User' %}
             <li><a href="/mypage" class="template_btn">My Page</a></li>
+            {% endif %}
+            
+
+            {% if current_user.roles[0].name == 'Admin' %}
+            <li><a href="/admin" class="template_btn">Admin page</a></li>
+            {% endif %}
+            
             {% endif %} 
-         
         </ul>
     </div>
 
