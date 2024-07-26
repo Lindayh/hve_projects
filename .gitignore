@@ -1,0 +1,5 @@
+__pycache__
+.pytest_cache
+.vscode
+app/__pycache__/
+tests/__pycache__/
