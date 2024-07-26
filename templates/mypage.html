@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Page
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="title">
+        Personal page
+    </h1>
+
+    <h6 class="subtitle">
+        {{ current_user.username }}'s personal page
+    </h6>
+    <br>
+
+    <div class="buttons text-center">
+        <a href="/log_out" class="btn btn-primary rounded w-lg btn-lg my-1">
+            Log out
+        </a>
+    </div> 
+{% endblock %}
+

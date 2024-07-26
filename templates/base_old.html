@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- font icons -->
+    <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
+    <!-- Bootstrap + Creative Studio main styles -->
+	<link rel="stylesheet" href="static\style.css">
+    
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{{url_for('all_person_page')}}">Register</a></li>
+            
+          
+            {% if current_user.is_authenticated %} 
+
+            {% if current_user.roles[0].name == 'User' %}
+            <li><a href="/mypage" class="template_btn">My Page</a></li>
+            {% endif %}
+            
+
+            {% if current_user.roles[0].name == 'Admin' %}
+            <li><a href="/admin" class="template_btn">Admin page</a></li>
+            {% endif %}
+            
+            {% endif %} 
+        </ul>
+    </div>
+
+    <div class="main">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="footer"><p>Footer</p></div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}   
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="title">
+        Login
+    </h1>
+
+    <form action="{{ url_for_security('login')}}" method="POST" id="login_form" name="login_user_form">
+        
+        <label for="username" >
+        <h3>
+        Username:
+        </h3>
+        </label>
+    
+        <p id="{{login_user_form.username.id}}">
+            {{ login_user_form.username }}
+        </p>
+        
+        <label for="password">
+            <h3>
+                Password:
+            </h3>
+        </label>
+
+        <p id="{{login_user_form.password.id}}">
+            {{ login_user_form.password }}
+        </p>
+
+        <p class="font-weight-bold text-muted" id="login_error">  
+        {% if login_user_form.errors %}
+            Invalid username or password!
+        {% endif %}
+        </p>
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+   
+        <p class="btn btn-primary rounded" id="{{login_user_form.submit.id}}">
+            {{ login_user_form.submit }}
+        </p>
+
+    </form>
+
+{% endblock %}
