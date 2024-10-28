@@ -76,3 +76,37 @@ def make_gradcam_heatmap(img_array, model, last_conv_layer_name, pred_index=None
     # For visualization purpose, we will also normalize the heatmap between 0 & 1
     heatmap = tf.maximum(heatmap, 0) / tf.math.reduce_max(heatmap)
     return heatmap.numpy()
+
+
+def save_and_display_gradcam(img, heatmap, cam_path="cam.jpg", alpha=0.5):
+    # Load the original image
+    img = image.load_img(img)
+    img = keras.utils.img_to_array(img)
+
+    # Rescale heatmap to a range 0-255
+    heatmap = np.uint8(255 * heatmap)
+
+    # Use jet colormap to colorize heatmap
+    jet = mpl.colormaps["jet"]
+
+    # Use RGB values of the colormap
+    jet_colors = jet(np.arange(256))[:, :3]
+    jet_heatmap = jet_colors[heatmap]
+
+    # Create an image with RGB colorized heatmap
+    jet_heatmap = keras.utils.array_to_img(jet_heatmap)
+    jet_heatmap = jet_heatmap.resize((img.shape[1], img.shape[0]))
+    jet_heatmap = keras.utils.img_to_array(jet_heatmap)
+
+    # Superimpose the heatmap on original image
+    superimposed_img = jet_heatmap * alpha + img
+    superimposed_img = keras.utils.array_to_img(superimposed_img)
+
+    # # Save the superimposed image
+    # superimposed_img.save(cam_path)
+
+    # # Display Grad CAM
+    # display(Image(cam_path))
+
+    return superimposed_img
+

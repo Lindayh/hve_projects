@@ -1,5 +1,5 @@
 import streamlit as st 
-from  fns import make_gradcam_heatmap
+from  fns import make_gradcam_heatmap, save_and_display_gradcam
 
 import numpy as np
 import tensorflow as tf
@@ -30,6 +30,7 @@ warnings.filterwarnings('ignore')
 
 # Load model
 model = load_model('../models/vgg16_01.h5')
+model_base = ''
 
 # Streamlit
 st.set_page_config(layout="wide")
@@ -89,8 +90,23 @@ if user_image!=None:
                         try:
                                 heatmap = make_gradcam_heatmap(img, model, layer_name, pred_index=0)
 
-                                
-                        except:
+                                col2.write('Layer heatmap:')
+
+                                plt.figure(frameon=False)
+                                plt.matshow(heatmap, aspect='auto')
+                                plt.axis('off')
+                                plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
+
+                                # img = heatmap_matshow.imgsave
+                                # col2.write(type(heatmap))
+                                col2.image('layer_heatmap.png')
+
+                                col2.write('Superimposed heatmap:')
+                                superimposed_img = save_and_display_gradcam(user_image, heatmap)     
+                                col2.image(superimposed_img) 
+                         
+                        except Exception as e:
+                                # col2.write(e)
                                 col2.write('Error occurred while generating heatmap, choose another layer.')
 
 
