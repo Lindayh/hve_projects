@@ -54,11 +54,16 @@ if user_image!=None:
         col1, col2, col3 = row2.columns([0.3, 0.2, 0.7])
 
         # ---------- Col 2 ----------
-        row1_col2.write('Your image:')
+        # Show results
+        
+
         show_img = image.load_img(user_image)
         w, h = show_img.size
-        show_img = image.load_img(user_image, target_size= (int(h*0.3), int(w*0.3)))
-        row1_col2.image(show_img, width=500)
+
+        temp_ratio = h//250
+        w = w // temp_ratio
+
+        show_img = image.load_img(user_image, target_size= (250, w))
 
         # Process img as needed for the model
         img = image.load_img(user_image, target_size=(32, 32))
@@ -73,12 +78,13 @@ if user_image!=None:
         img_pred = model.predict(img)
         result = (img_pred > 0.5).astype(int)
 
-        # Show results
         if result == 0:
-                row1_col2.write('FAKE')
+                row1_col2.write('Image classified as: FAKE')
         else:
-                row1_col2.write('REAL')
+                row1_col2.write('Image classified as: REAL')
 
+        row1_col2.image(show_img)
+        
 
         # ---------- Col 1 ----------
         col1.write('Choose a convolutional layer to show GRAD-CAM:')
