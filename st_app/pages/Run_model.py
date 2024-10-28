@@ -92,7 +92,6 @@ if user_image!=None:
 
                                 col2.write('Layer heatmap:')
 
-                                plt.figure(frameon=False)
                                 plt.matshow(heatmap, aspect='auto')
                                 plt.axis('off')
                                 plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
