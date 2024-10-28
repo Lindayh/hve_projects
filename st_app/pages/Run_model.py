@@ -41,7 +41,9 @@ box = st.container()
 
 row1, row2 = box.container(), box.container()
 
-user_image = row1.file_uploader(label='Upload an image:', accept_multiple_files=False)
+row1_col1, row1_col2 = row1.columns(2)
+
+user_image = row1_col1.file_uploader(label='Upload an image:', accept_multiple_files=False)
 
 # try except if one upload a file that isnt an img
 
@@ -49,14 +51,14 @@ user_image = row1.file_uploader(label='Upload an image:', accept_multiple_files=
 if user_image!=None:
 
         result_box = st.container()
-        col1, col2 = row2.columns(2)
+        col1, col2, col3 = row2.columns([0.3, 0.2, 0.7])
 
         # ---------- Col 2 ----------
-        col2.write('Your image:')
+        row1_col2.write('Your image:')
         show_img = image.load_img(user_image)
         w, h = show_img.size
-        show_img = image.load_img(user_image, target_size= (int(h*0.5), int(w*0.5)))
-        col2.image(show_img )
+        show_img = image.load_img(user_image, target_size= (int(h*0.3), int(w*0.3)))
+        row1_col2.image(show_img, width=500)
 
         # Process img as needed for the model
         img = image.load_img(user_image, target_size=(32, 32))
@@ -73,40 +75,41 @@ if user_image!=None:
 
         # Show results
         if result == 0:
-                col2.write('FAKE')
+                row1_col2.write('FAKE')
         else:
-                col2.write('REAL')
+                row1_col2.write('REAL')
 
 
         # ---------- Col 1 ----------
         col1.write('Choose a convolutional layer to show GRAD-CAM:')
 
-
         for i, layer in enumerate(model.layers):
-                layer_name = col1.button(layer.name)
+                if "conv" in layer.name or 'pool' in layer.name:
 
-                if layer_name: 
-                        layer_name = layer.name
-                        try:
-                                heatmap = make_gradcam_heatmap(img, model, layer_name, pred_index=0)
+                        layer_name = col1.button(layer.name)
 
-                                col2.write('Layer heatmap:')
+                        if layer_name: 
+                                layer_name = layer.name
+                                try:
+                                        heatmap = make_gradcam_heatmap(img, model, layer_name, pred_index=0)
 
-                                plt.matshow(heatmap, aspect='auto')
-                                plt.axis('off')
-                                plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
+                                        col2.write('Layer heatmap:')
 
-                                # img = heatmap_matshow.imgsave
-                                # col2.write(type(heatmap))
-                                col2.image('layer_heatmap.png')
+                                        plt.matshow(heatmap, aspect='auto')
+                                        plt.axis('off')
+                                        plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
 
-                                col2.write('Superimposed heatmap:')
-                                superimposed_img = save_and_display_gradcam(user_image, heatmap)     
-                                col2.image(superimposed_img) 
-                         
-                        except Exception as e:
-                                # col2.write(e)
-                                col2.write('Error occurred while generating heatmap, choose another layer.')
+                                        # img = heatmap_matshow.imgsave
+                                        # col2.write(type(heatmap))
+                                        col2.image('layer_heatmap.png')
+
+                                        col3.write('Superimposed heatmap:')
+                                        superimposed_img = save_and_display_gradcam(user_image, heatmap)     
+                                        col3.image(superimposed_img) 
+                                
+                                except Exception as e:
+                                        # col2.write(e)
+                                        col2.write('Error occurred while generating heatmap, choose another layer.')
 
 
 
