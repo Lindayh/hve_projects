@@ -1,4 +1,5 @@
 import streamlit as st 
+from  fns import make_gradcam_heatmap
 
 import numpy as np
 import tensorflow as tf
@@ -27,16 +28,13 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-# Import model
-model = load_model('vgg16_01.h5')
+# Load model
+model = load_model('../models/vgg16_01.h5')
 
 # Streamlit
 st.set_page_config(layout="wide")
 
 st.write('Upload an img and get result + grad-cam')
-
-
-
 
 box = st.container()
 
@@ -48,11 +46,16 @@ user_image = row1.file_uploader(label='Upload an image:', accept_multiple_files=
 
 
 if user_image!=None:
-        row2.write('Your image:')
+
+        result_box = st.container()
+        col1, col2 = row2.columns(2)
+
+        # ---------- Col 2 ----------
+        col2.write('Your image:')
         show_img = image.load_img(user_image)
         w, h = show_img.size
         show_img = image.load_img(user_image, target_size= (int(h*0.5), int(w*0.5)))
-        row2.image(show_img )
+        col2.image(show_img )
 
         # Process img as needed for the model
         img = image.load_img(user_image, target_size=(32, 32))
@@ -68,7 +71,31 @@ if user_image!=None:
         result = (img_pred > 0.5).astype(int)
 
         # Show results
-        row2.write('FAKE') if result == 0 else 'REAL'
+        if result == 0:
+                col2.write('FAKE')
+        else:
+                col2.write('REAL')
+
+
+        # ---------- Col 1 ----------
+        col1.write('Choose a convolutional layer to show GRAD-CAM:')
+
+
+        for i, layer in enumerate(model.layers):
+                layer_name = col1.button(layer.name)
+
+                if layer_name: 
+                        layer_name = layer.name
+                        try:
+                                heatmap = make_gradcam_heatmap(img, model, layer_name, pred_index=0)
+
+                                
+                        except:
+                                col2.write('Error occurred while generating heatmap, choose another layer.')
+
+
+
+
 
 
 

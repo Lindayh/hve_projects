@@ -1,3 +1,4 @@
 CIFAKE
 .venv
 models/kaggle/
+st_app/__pycache__/fns.cpython-312.pyc
