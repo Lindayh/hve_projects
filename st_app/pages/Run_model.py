@@ -1,5 +1,5 @@
 import streamlit as st 
-from  fns import make_gradcam_heatmap, save_and_display_gradcam
+from  fns import make_gradcam_heatmap, save_and_display_gradcam, load_models
 
 import numpy as np
 import tensorflow as tf
@@ -29,8 +29,8 @@ warnings.filterwarnings('ignore')
 
 
 # Load model
-model = load_model('../models/vgg16_01.h5')
-model_base = ''
+model_base, model = load_models()
+
 
 # Streamlit
 st.set_page_config(layout="wide")
@@ -55,7 +55,6 @@ if user_image!=None:
 
         # ---------- Col 2 ----------
         # Show results
-        
 
         show_img = image.load_img(user_image)
         w, h = show_img.size
