@@ -34,8 +34,6 @@ model_base, model = load_models()
 # Streamlit
 st.set_page_config(layout="wide")
 
-st.write('Upload an img and get result + grad-cam')
-
 box = st.container()
 
 row1, row2 = box.container(), box.container()

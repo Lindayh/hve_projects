@@ -6,27 +6,14 @@ import numpy as np
 import tensorflow as tf
 import keras
 
-# Display
-from IPython.display import Image, display
 import matplotlib as mpl
-import matplotlib.pyplot as plt
-
 from keras import backend as K
 from keras.preprocessing import image
-from keras.applications.vgg16 import preprocess_input
-import pandas as pd
-from tensorflow.keras.applications.vgg16 import preprocess_input
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from keras.applications.vgg16 import decode_predictions
 import numpy as np
 import seaborn as sns
 import cv2
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.losses import CategoricalCrossentropy
-from tensorflow.keras.optimizers import Adam 
-from tensorflow.keras.models import load_model
 import tensorflow.keras
 
 import numpy as np
