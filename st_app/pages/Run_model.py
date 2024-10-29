@@ -31,7 +31,6 @@ warnings.filterwarnings('ignore')
 # Load model
 model_base, model = load_models()
 
-
 # Streamlit
 st.set_page_config(layout="wide")
 
@@ -55,14 +54,13 @@ if user_image!=None:
 
         # ---------- Col 2 ----------
         # Show results
-
         show_img = image.load_img(user_image)
         w, h = show_img.size
 
-        temp_ratio = h//250
-        w = w // temp_ratio
+        # temp_ratio = h//250
+        # w = w // temp_ratio
 
-        show_img = image.load_img(user_image, target_size= (250, w))
+        show_img = image.load_img(user_image, target_size= (h, w))
 
         # Process img as needed for the model
         img = image.load_img(user_image, target_size=(32, 32))
@@ -75,6 +73,7 @@ if user_image!=None:
 
         # Predict
         img_pred = model.predict(img)
+        print(img_pred)
         result = (img_pred > 0.5).astype(int)
 
         if result == 0:
@@ -88,7 +87,7 @@ if user_image!=None:
         # ---------- Col 1 ----------
         col1.write('Choose a convolutional layer to show GRAD-CAM:')
 
-        for i, layer in enumerate(model.layers):
+        for i, layer in enumerate(model_base.layers):
                 if "conv" in layer.name or 'pool' in layer.name:
 
                         layer_name = col1.button(layer.name)
@@ -96,7 +95,7 @@ if user_image!=None:
                         if layer_name: 
                                 layer_name = layer.name
                                 try:
-                                        heatmap = make_gradcam_heatmap(img, model, layer_name, pred_index=0)
+                                        heatmap = make_gradcam_heatmap(img, model_base, layer_name, pred_index=0)
 
                                         col2.write('Layer heatmap:')
 
