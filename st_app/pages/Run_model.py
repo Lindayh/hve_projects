@@ -40,7 +40,7 @@ row1, row2 = box.container(), box.container()
 
 row1_col1, row1_col2 = row1.columns(2)
 
-user_image = row1_col1.file_uploader(label='Upload an image:', accept_multiple_files=False)
+user_image = row1_col1.file_uploader(label='Upload an image:', accept_multiple_files=False, type=['png', 'jpg', 'webp', 'bmp'])
 
 # try except if one upload a file that isnt an img
 
@@ -78,6 +78,8 @@ if user_image!=None:
                 row1_col2.write('Image classified as: FAKE')
         else:
                 row1_col2.write('Image classified as: REAL')
+        
+        row1_col2.write(f'{img_pred}')
 
         row1_col2.image(show_img)
         
