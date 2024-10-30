@@ -6,12 +6,19 @@ import keras
 model_base, model = load_models()
 
 st.header(f'Model: {model_base.name.capitalize()}')
-# Layer details 
+st.write('')
+st.write(f'Optimizer: {model.optimizer.name}')
+st.write('')
+
+
+# Layers details 
 for i, layer in enumerate(model.layers):
 
     if type(layer).__name__=="Functional":
+        st.write(layer.name.capitalize())
+        col1, col2 = st.columns([0.03, 1])
         for j, nested_layer in enumerate(layer.layers):
-            layer_info_box = st.container(height=100)
+            layer_info_box = col2.container(height=100)
             cols = layer_info_box.columns(3)
 
             cols[0].write(f'{nested_layer.name}')
@@ -23,12 +30,6 @@ for i, layer in enumerate(model.layers):
             cols[1].write(f'Output: {nested_layer.output.shape}')
 
             if hasattr(nested_layer, 'activation'): cols[2].write(f'{nested_layer.activation.__name__}')
-
-
-        # activation_fn = layer.activation.__name__ if hasattr(layer, 'activation') else None,
-        # params = layer.count_params(),
-
-        # )
     else:
 
         layer_info_box = st.container(height=100)
@@ -37,7 +38,7 @@ for i, layer in enumerate(model.layers):
         cols[0].write(layer.name)
         cols[0].write(f'Type: {type(layer).__name__}')
 
-        if 'input' in layer.name: cols[1].write(f'Input: {layer.input}')
+        if 'input' in layer.name: cols[1].write(f'Input: {layer.input}') if layer.input != [] else ''
         if hasattr(layer, 'units'): cols[1].write(f'Neurons: {layer.units}')
         cols[1].write(f'Output: {layer.output.shape}')
 
