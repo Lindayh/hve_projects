@@ -55,10 +55,14 @@ if user_image!=None:
         show_img = image.load_img(user_image)
         w, h = show_img.size
 
-        # temp_ratio = h//250
-        # w = w // temp_ratio
+        base_height = 300
+        if h > base_height:
+                hpercent = base_height / float(h)
+                w = int(w * hpercent)
+                h = base_height
 
         show_img = image.load_img(user_image, target_size= (h, w))
+
 
         # Process img as needed for the model
         img = image.load_img(user_image, target_size=(32, 32))
@@ -85,7 +89,7 @@ if user_image!=None:
         
 
         # ---------- Col 1 ----------
-        col1.write('Choose a convolutional layer to show GRAD-CAM:')
+        col1.write('Choose a layer to show GRAD-CAM:')
 
         for i, layer in enumerate(model_base.layers):
                 if "conv" in layer.name or 'pool' in layer.name:
@@ -112,7 +116,6 @@ if user_image!=None:
                                         col3.image(superimposed_img) 
                                 
                                 except Exception as e:
-                                        # col2.write(e)
                                         col2.write('Error occurred while generating heatmap, choose another layer.')
 
 
