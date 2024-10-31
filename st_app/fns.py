@@ -86,7 +86,7 @@ def make_gradcam_heatmap(img_array, model, last_conv_layer_name, pred_index=None
     heatmap = tf.maximum(heatmap, 0) / tf.math.reduce_max(heatmap)
     return heatmap.numpy()
 
-def save_and_display_gradcam(img, heatmap, cam_path="cam.jpg", alpha=0.5):
+def save_and_display_gradcam(img, heatmap, cam_path="cam.jpg", alpha=0.9):
     img = image.load_img(img)
     img = keras.utils.img_to_array(img)
 
