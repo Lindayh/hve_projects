@@ -1,0 +1,7 @@
+CIFAKE
+.venv
+st_app/__pycache__/
+models/vgg16_01_.keras
+models/vgg16_01.keras
+models/VGG16_model.weights.h5
+streamlit_app/__pycache__/fns.cpython-312.pyc
