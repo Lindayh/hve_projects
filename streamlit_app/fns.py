@@ -58,7 +58,7 @@ def load_models():
         metrics = ['accuracy', tf.keras.metrics.Precision(), tf.keras.metrics.Recall()]
     )
 
-    VGG16_model.load_weights("models/kaggle/VGG16_model.weights.h5")
+    VGG16_model.load_weights("models/VGG16_model.weights.h5")
 
     return [VGG16_base_model, VGG16_model]
 

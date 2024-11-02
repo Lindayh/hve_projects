@@ -27,9 +27,9 @@ from tensorflow.keras.models import load_model
 import warnings 
 warnings.filterwarnings('ignore')
 
-
-# Load model
 model_base, model = load_models()
+
+
 
 # Streamlit
 st.set_page_config(layout="wide")
@@ -41,9 +41,6 @@ row1, row2 = box.container(), box.container()
 row1_col1, row1_col2 = row1.columns(2)
 
 user_image = row1_col1.file_uploader(label='Upload an image:', accept_multiple_files=False, type=['png', 'jpg', 'webp', 'bmp'])
-
-# try except if one upload a file that isnt an img
-
 
 if user_image!=None:
 
