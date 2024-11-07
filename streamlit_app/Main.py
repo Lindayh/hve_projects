@@ -5,5 +5,3 @@ import streamlit as st
 st.write('Welcome!')
 
 st.write('*Description about every page*')
-
-st.write('TODO: model info - 2 buttons, one for VGG and the other for custom model')

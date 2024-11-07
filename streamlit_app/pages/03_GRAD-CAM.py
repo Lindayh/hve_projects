@@ -19,7 +19,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from keras.applications.vgg16 import decode_predictions
 import numpy as np
 import seaborn as sns
-import cv2
+import os
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
@@ -27,7 +27,12 @@ from tensorflow.keras.models import load_model
 import warnings 
 warnings.filterwarnings('ignore')
 
-model_base, model = load_VGG_models()
+def dl_vgg16_weights():
+    import urllib.request
+    urllib.request.urlretrieve("https://drive.usercontent.google.com/download?id=1pjhNKzdLn1Oci58fp50dxU198rApb4_8&export=download&confirm=t&uuid=8513c6b5-33a4-43f9-a966-d2e464974dac", 
+                               "models/VGG16_model.weights.h5")
+
+
 
 
 
@@ -88,34 +93,47 @@ if user_image!=None:
         
 
         # ---------- Col 1 ----------
-        col1.write('Choose a layer to show GRAD-CAM:')
+        # Load model
 
-        for i, layer in enumerate(model_base.layers):
-                if "conv" in layer.name or 'pool' in layer.name:
+        if os.path.isfile('models/VGG16_model.weights.h5')==False:
+                st.write('Important: weights for VGG16 not found, can\'t run the model without them.')
+                st.write('Do you want to download?')
+                st.button('Download weights', on_click=dl_vgg16_weights)
 
-                        layer_name = col1.button(layer.name)
+        else:
 
-                        if layer_name: 
-                                layer_name = layer.name
-                                try:
-                                        heatmap = make_gradcam_heatmap(img, model_base, layer_name, pred_index=0)
+                model_base, model = load_VGG_models()
 
-                                        col2.write('Layer heatmap:')
+                col1.write('Choose a layer to show GRAD-CAM:')
 
-                                        plt.matshow(heatmap, aspect='auto')
-                                        plt.axis('off')
-                                        plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
+                for i, layer in enumerate(model_base.layers):
+                        if "conv" in layer.name or 'pool' in layer.name:
 
-                                        # img = heatmap_matshow.imgsave
-                                        # col2.write(type(heatmap))
-                                        col2.image('layer_heatmap.png')
+                                layer_name = col1.button(layer.name)
 
-                                        col3.write('Superimposed heatmap:')
-                                        superimposed_img = save_and_display_gradcam(user_image, heatmap)     
-                                        col3.image(superimposed_img) 
-                                
-                                except Exception as e:
-                                        col2.write('Error occurred while generating heatmap, choose another layer.')
+                                if layer_name: 
+                                        layer_name = layer.name
+                                        try:
+                                                heatmap = make_gradcam_heatmap(img, model_base, layer_name, pred_index=0)
+
+                                                col2.write('Layer heatmap:')
+
+                                                plt.matshow(heatmap, aspect='auto')
+                                                plt.axis('off')
+                                                plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
+
+                                                # img = heatmap_matshow.imgsave
+                                                # col2.write(type(heatmap))
+                                                col2.image('layer_heatmap.png')
+
+                                                col3.write('Superimposed heatmap:')
+                                                superimposed_img = save_and_display_gradcam(user_image, heatmap)     
+                                                col3.image(superimposed_img) 
+                                        
+                                        except Exception as e:
+                                                col2.write('Error occurred while generating heatmap, choose another layer.')
+
+
 
 
 

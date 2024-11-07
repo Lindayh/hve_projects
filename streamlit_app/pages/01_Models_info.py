@@ -49,12 +49,6 @@ def show_model_info(model_name, model_type:str):
 
             if hasattr(layer, 'activation'): cols[2].write(f'{layer.activation.__name__}')
 
-def dl_vgg16_weights():
-    import urllib.request
-    urllib.request.urlretrieve("https://drive.usercontent.google.com/download?id=1pjhNKzdLn1Oci58fp50dxU198rApb4_8&export=download&confirm=t&uuid=8513c6b5-33a4-43f9-a966-d2e464974dac", "models/VGG16_model.weights.h5")
-
-
-
 
 box1 = st.container()
 
