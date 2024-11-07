@@ -1,3 +1,3 @@
 import os
 
-os.system(f'streamlit run streamlit_app/Main.py')
+os.system(f'streamlit run streamlit_app/Home.py')

@@ -4,6 +4,8 @@ import os
 
 def show_model_info(model_name, model_type:str):
 
+    box2.header(f'{model_name}')
+
     if 'VGG' in model_name:
         from  fns import load_VGG_models
         model_base, model = load_VGG_models(load_weights=False)
@@ -12,8 +14,7 @@ def show_model_info(model_name, model_type:str):
         from tensorflow.keras.models import load_model
         model = load_model('models/GridSearch_customModel.keras') 
 
-    box2.header(f'Model: {model_name}')
-    box2.write('')
+    
     box2.write(f'Optimizer: {model.optimizer.name}')
     box2.write('')
 
