@@ -11,16 +11,16 @@ def show_model_info(model_name, model_type:str):
         from tensorflow.keras.models import load_model
         model = load_model('models/GridSearch_customModel.keras') 
 
-    st.header(f'Model: {model_name}')
-    st.write('')
-    st.write(f'Optimizer: {model.optimizer.name}')
-    st.write('')
+    box2.header(f'Model: {model_name}')
+    box2.write('')
+    box2.write(f'Optimizer: {model.optimizer.name}')
+    box2.write('')
 
     for i, layer in enumerate(model.layers):
 
         if type(layer).__name__==model_type:
-            st.write(layer.name.capitalize())
-            col1, col2 = st.columns([0.03, 1])
+            box2.write(layer.name.capitalize())
+            col1, col2 = box2.columns([0.03, 1])
             for j, nested_layer in enumerate(layer.layers):
                 layer_info_box = col2.container(height=100)
                 cols = layer_info_box.columns(3)
@@ -36,7 +36,7 @@ def show_model_info(model_name, model_type:str):
                 if hasattr(nested_layer, 'activation'): cols[2].write(f'{nested_layer.activation.__name__}')
         else:
 
-            layer_info_box = st.container(height=100)
+            layer_info_box = box2.container(height=100)
             cols = layer_info_box.columns(3)
 
             cols[0].write(layer.name)
@@ -49,11 +49,15 @@ def show_model_info(model_name, model_type:str):
             if hasattr(layer, 'activation'): cols[2].write(f'{layer.activation.__name__}')
 
 
-st.header('Models:')
+box1 = st.container()
 
-st.button('VGG 16', on_click=show_model_info, args=('VGG 16', 'Functional') )
-st.button('Custom CNN', on_click=show_model_info, args=('Custom CNN', 'Sequential'))
+box1.header('Models:')
+box1_col1, box1_col2, _ = box1.columns([0.2,0.2, 0.7])
 
+box1_col1.button('VGG 16', on_click=show_model_info, args=('VGG 16', 'Functional') )
+box1_col2.button('Custom CNN', on_click=show_model_info, args=('Custom CNN', 'Sequential'))
+
+box2 = st.container()
 
 
 
