@@ -1,15 +1,15 @@
 import streamlit as st
-from  fns import load_VGG_models
-import tensorflow as tf
 
 
 def show_model_info(model_name, model_type:str):
 
     if 'VGG' in model_name:
+        from  fns import load_VGG_models
         model_base, model = load_VGG_models()
     
     if model_name == 'Custom CNN':
-        model = tf.keras.models.load_model('models/GridSearch_customModel.keras') 
+        from tensorflow.keras.models import load_model
+        model = load_model('models/GridSearch_customModel.keras') 
 
     st.header(f'Model: {model_name}')
     st.write('')
