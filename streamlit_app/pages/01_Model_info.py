@@ -1,9 +1,9 @@
 import streamlit as st
-from  fns import load_models
+from  fns import load_VGG_models
 import keras
 
 
-model_base, model = load_models()
+model_base, model = load_VGG_models()
 
 st.header(f'Model: {model_base.name.capitalize()}')
 st.write('')

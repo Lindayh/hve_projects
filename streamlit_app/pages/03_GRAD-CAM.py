@@ -1,5 +1,5 @@
 import streamlit as st 
-from  fns import make_gradcam_heatmap, save_and_display_gradcam, load_models
+from  fns import make_gradcam_heatmap, save_and_display_gradcam, load_VGG_models
 
 import numpy as np
 import tensorflow as tf
@@ -27,7 +27,7 @@ from tensorflow.keras.models import load_model
 import warnings 
 warnings.filterwarnings('ignore')
 
-model_base, model = load_models()
+model_base, model = load_VGG_models()
 
 
 
@@ -71,16 +71,18 @@ if user_image!=None:
         img = np.expand_dims(img, axis=0)
 
         # Predict
-        img_pred = model.predict(img)
-        print(img_pred)
-        result = (img_pred > 0.5).astype(int)
+        # img_pred = model.predict(img)
+        # print(img_pred)
+        # result = (img_pred > 0.5).astype(int)
 
-        if result == 0:
-                row1_col2.write('Image classified as: FAKE')
-        else:
-                row1_col2.write('Image classified as: REAL')
+        # if result == 0:
+        #         row1_col2.write('Image classified as: FAKE')
+        # else:
+        #         row1_col2.write('Image classified as: REAL')
         
         # row1_col2.write(f'{img_pred}')
+
+        row1_col2.write('Your image:')
 
         row1_col2.image(show_img)
         

@@ -26,7 +26,7 @@ from IPython.display import Image
 import warnings 
 warnings.filterwarnings('ignore')
 
-def load_models():
+def load_VGG_models():
     VGG16_base_model = tf.keras.applications.VGG16(
     include_top = False, 
     weights = 'imagenet', 
