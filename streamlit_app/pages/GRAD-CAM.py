@@ -80,7 +80,7 @@ if user_image!=None:
         else:
                 row1_col2.write('Image classified as: REAL')
         
-        row1_col2.write(f'{img_pred}')
+        # row1_col2.write(f'{img_pred}')
 
         row1_col2.image(show_img)
         
