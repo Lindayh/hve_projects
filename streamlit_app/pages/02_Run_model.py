@@ -27,7 +27,7 @@ from tensorflow.keras.models import load_model
 import warnings 
 warnings.filterwarnings('ignore')
 
-model = tf.keras.models.load_model('models/GridSearch_customModel.keras')   # TODO Change to custom model
+model = tf.keras.models.load_model('models/GridSearch_customModel.keras')  
 
 
 
@@ -82,37 +82,6 @@ if user_image!=None:
         
 
         row1_col2.image(show_img)
-        
-
-        # # ---------- Col 1 ----------
-        # col1.write('Choose a layer to show GRAD-CAM:')
-
-        # for i, layer in enumerate(model_base.layers):
-        #         if "conv" in layer.name or 'pool' in layer.name:
-
-        #                 layer_name = col1.button(layer.name)
-
-        #                 if layer_name: 
-        #                         layer_name = layer.name
-        #                         try:
-        #                                 heatmap = make_gradcam_heatmap(img, model_base, layer_name, pred_index=0)
-
-        #                                 col2.write('Layer heatmap:')
-
-        #                                 plt.matshow(heatmap, aspect='auto')
-        #                                 plt.axis('off')
-        #                                 plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
-
-        #                                 # img = heatmap_matshow.imgsave
-        #                                 # col2.write(type(heatmap))
-        #                                 col2.image('layer_heatmap.png')
-
-        #                                 col3.write('Superimposed heatmap:')
-        #                                 superimposed_img = save_and_display_gradcam(user_image, heatmap)     
-        #                                 col3.image(superimposed_img) 
-                                
-        #                         except Exception as e:
-        #                                 col2.write('Error occurred while generating heatmap, choose another layer.')
 
 
 
