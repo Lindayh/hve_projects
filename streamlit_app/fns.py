@@ -26,7 +26,7 @@ from IPython.display import Image
 import warnings 
 warnings.filterwarnings('ignore')
 
-def load_VGG_models():
+def load_VGG_models(load_weights=True):
     VGG16_base_model = tf.keras.applications.VGG16(
     include_top = False, 
     weights = 'imagenet', 
@@ -58,7 +58,8 @@ def load_VGG_models():
         metrics = ['accuracy', tf.keras.metrics.Precision(), tf.keras.metrics.Recall()]
     )
 
-    VGG16_model.load_weights("models/VGG16_model.weights.h5")
+    if load_weights == True:
+        VGG16_model.load_weights("models/VGG16_model.weights.h5")
 
     return [VGG16_base_model, VGG16_model]
 

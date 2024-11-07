@@ -1,11 +1,12 @@
 import streamlit as st
+import os
 
 
 def show_model_info(model_name, model_type:str):
 
     if 'VGG' in model_name:
         from  fns import load_VGG_models
-        model_base, model = load_VGG_models()
+        model_base, model = load_VGG_models(load_weights=False)
     
     if model_name == 'Custom CNN':
         from tensorflow.keras.models import load_model
@@ -48,6 +49,12 @@ def show_model_info(model_name, model_type:str):
 
             if hasattr(layer, 'activation'): cols[2].write(f'{layer.activation.__name__}')
 
+def dl_vgg16_weights():
+    import urllib.request
+    urllib.request.urlretrieve("https://drive.usercontent.google.com/download?id=1pjhNKzdLn1Oci58fp50dxU198rApb4_8&export=download&confirm=t&uuid=8513c6b5-33a4-43f9-a966-d2e464974dac", "models/VGG16_model.weights.h5")
+
+
+
 
 box1 = st.container()
 
@@ -58,6 +65,7 @@ box1_col1.button('VGG 16', on_click=show_model_info, args=('VGG 16', 'Functional
 box1_col2.button('Custom CNN', on_click=show_model_info, args=('Custom CNN', 'Sequential'))
 
 box2 = st.container()
+
 
 
 
