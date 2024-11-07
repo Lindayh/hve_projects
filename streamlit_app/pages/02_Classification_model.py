@@ -75,13 +75,16 @@ if user_image!=None:
         print(img_pred)
         result = (img_pred > 0.5).astype(int)
 
+        row1_col2.image(show_img)
+
+
         if result == 0:
-                row1_col2.write('Image classified as: FAKE')
+                st.html('<center><h1>Image classified as: FAKE</h1></center>')
         else:
-                row1_col2.write('Image classified as: REAL')
+                st.html('<center><h1>Image classified as: REAL</h1></center>')
+
         
 
-        row1_col2.image(show_img)
 
 
 
