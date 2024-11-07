@@ -3,11 +3,14 @@ from  fns import load_VGG_models
 import tensorflow as tf
 
 
-model_base, model = load_VGG_models()
+def show_model_info(model_name, model_type:str):
 
-custom_CNN = tf.keras.models.load_model('models/GridSearch_customModel.keras') 
+    if 'VGG' in model_name:
+        model_base, model = load_VGG_models()
+    
+    if model_name == 'Custom CNN':
+        model = tf.keras.models.load_model('models/GridSearch_customModel.keras') 
 
-def show_model_info(model, model_name, model_type:str):
     st.header(f'Model: {model_name}')
     st.write('')
     st.write(f'Optimizer: {model.optimizer.name}')
@@ -45,13 +48,11 @@ def show_model_info(model, model_name, model_type:str):
 
             if hasattr(layer, 'activation'): cols[2].write(f'{layer.activation.__name__}')
 
-   
-
 
 st.header('Models:')
 
-st.button('VGG 16', on_click=show_model_info, args=(model, model_base.name.capitalize(), 'Functional') )
-st.button('Custom CNN', on_click=show_model_info, args=(custom_CNN, 'Custom CNN', 'Sequential'))
+st.button('VGG 16', on_click=show_model_info, args=('VGG 16', 'Functional') )
+st.button('Custom CNN', on_click=show_model_info, args=('Custom CNN', 'Sequential'))
 
 
 
