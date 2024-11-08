@@ -1,7 +1,5 @@
 import os
 
-# os.environ["KERAS_BACKEND"] = "tensorflow"
-
 import numpy as np
 import tensorflow as tf
 import keras
@@ -35,7 +33,6 @@ def load_VGG_models(load_weights=True):
     )
     VGG16_base_model.trainable = False
 
-    # Create a new model on top of the MobileNet base
     inputs = tf.keras.Input(shape = (32,32, 3))
     x = VGG16_base_model(inputs, training = False)
 
@@ -51,7 +48,6 @@ def load_VGG_models(load_weights=True):
     outputs = Dense(1, activation = 'sigmoid')(x)
     VGG16_model = tf.keras.Model(inputs, outputs)
 
-    # Compile the Transfer Learning model
     VGG16_model.compile(
         optimizer = 'adam',
         loss = tf.keras.losses.BinaryCrossentropy(),

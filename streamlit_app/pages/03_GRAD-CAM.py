@@ -6,7 +6,6 @@ import tensorflow as tf
 import keras
 
 # Display
-from IPython.display import Image, display
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
@@ -31,9 +30,6 @@ def dl_vgg16_weights():
     import urllib.request
     urllib.request.urlretrieve("https://drive.usercontent.google.com/download?id=1pjhNKzdLn1Oci58fp50dxU198rApb4_8&export=download&confirm=t&uuid=8513c6b5-33a4-43f9-a966-d2e464974dac", 
                                "models/VGG16_model.weights.h5")
-
-
-
 
 
 # Streamlit
@@ -65,7 +61,6 @@ if user_image!=None:
 
         show_img = image.load_img(user_image, target_size= (h, w))
 
-
         # Process img as needed for the model
         img = image.load_img(user_image, target_size=(32, 32))
 
@@ -75,22 +70,9 @@ if user_image!=None:
 
         img = np.expand_dims(img, axis=0)
 
-        # Predict
-        # img_pred = model.predict(img)
-        # print(img_pred)
-        # result = (img_pred > 0.5).astype(int)
-
-        # if result == 0:
-        #         row1_col2.write('Image classified as: FAKE')
-        # else:
-        #         row1_col2.write('Image classified as: REAL')
-        
-        # row1_col2.write(f'{img_pred}')
-
         row1_col2.write('Your image:')
 
         row1_col2.image(show_img)
-        
 
         # ---------- Col 1 ----------
         # Load model
@@ -122,8 +104,6 @@ if user_image!=None:
                                                 plt.axis('off')
                                                 plt.savefig('layer_heatmap.png', transparent=True, bbox_inches='tight')
 
-                                                # img = heatmap_matshow.imgsave
-                                                # col2.write(type(heatmap))
                                                 col2.image('layer_heatmap.png')
 
                                                 col3.write('Superimposed heatmap:')
